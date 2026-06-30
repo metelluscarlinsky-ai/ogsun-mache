@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TÈS LYEN</title>
+    <style>
+        body{background:#0a0a0a;color:white;font-family:Arial;padding:50px;text-align:center}
+        button{display:block;margin:10px auto;padding:15px 30px;background:#d4af37;color:black;border:none;border-radius:25px;cursor:pointer;font-size:18px;width:300px}
+        button:hover{background:#f4d03f}
+        a{color:#d4af37}
+    </style>
+</head>
+<body>
+    <h1>🧪 TÈS LYEN OGSUN</h1>
+    <p>Klike sou chak bouton pou verifye si paj la ekziste:</p>
+    
+    <button onclick="testPage('index.html')">🏠 index.html</button>
+    <button onclick="testPage('shop.html')">🛍️ shop.html</button>
+    <button onclick="testPage('product.html')">📦 product.html</button>
+    <button onclick="testPage('cart.html')">🛒 cart.html</button>
+    <button onclick="testPage('checkout.html')">💳 checkout.html</button>
+    <button onclick="testPage('account.html')">👤 account.html</button>
+    <button onclick="testPage('orders.html')">📋 orders.html</button>
+    <button onclick="testPage('about.html')">ℹ️ about.html</button>
+    <button onclick="testPage('contact.html')">📞 contact.html</button>
+    <button onclick="testPage('faq.html')">❓ faq.html</button>
+    <button onclick="testPage('admin.html')">👑 admin.html</button>
+    
+    <div id="result" style="margin-top:20px;padding:20px;border-radius:10px;"></div>
+    
+    <script>
+    function testPage(page) {
+        var resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '🔍 Tès: ' + page + '...';
+        resultDiv.style.background = '#333';
+        
+        fetch(page, { method: 'HEAD' })
+            .then(function(response) {
+                if (response.ok) {
+                    resultDiv.innerHTML = '✅ ' + page + ' EKZISTE! <br><a href="' + page + '">Klike pou ale →</a>';
+                    resultDiv.style.background = '#1a3a1a';
+                } else {
+                    resultDiv.innerHTML = '❌ ' + page + ' PA JWENN! (Status: ' + response.status + ')<br>Fichye a pa nan dosye a!';
+                    resultDiv.style.background = '#3a1a1a';
+                }
+            })
+            .catch(function(error) {
+                resultDiv.innerHTML = '❌ ' + page + ' PA JWENN!<br>Erè: ' + error.message + '<br><br>Fichye a PA nan dosye a!<br>Tcheke si ou kreye fichye ' + page;
+                resultDiv.style.background = '#3a1a1a';
+            });
+    }
+    
+    // Tès otomatik
+    var pages = ['index.html','shop.html','product.html','cart.html','checkout.html','account.html','orders.html','about.html','contact.html','faq.html','admin.html'];
+    var resultsHTML = '<h3>📊 REZILTA OTOMATIK:</h3>';
+    var count = 0;
+    
+    pages.forEach(function(page) {
+        fetch(page, { method: 'HEAD' })
+            .then(function(response) {
+                count++;
+                if (response.ok) {
+                    resultsHTML += '<p>✅ ' + page + ' - EKZISTE</p>';
+                } else {
+                    resultsHTML += '<p>❌ ' + page + ' - PA JWENN</p>';
+                }
+                if (count === pages.length) {
+                    document.getElementById('autoResult').innerHTML = resultsHTML;
+                }
+            })
+            .catch(function() {
+                count++;
+                resultsHTML += '<p>❌ ' + page + ' - PA JWENN</p>';
+                if (count === pages.length) {
+                    document.getElementById('autoResult').innerHTML = resultsHTML;
+                }
+            });
+    });
+    </script>
+    
+    <div id="autoResult" style="margin-top:30px;text-align:left;max-width:500px;margin-left:auto;margin-right:auto;"></div>
+</body>
+</html>

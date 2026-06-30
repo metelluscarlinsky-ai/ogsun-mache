@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ht" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGSUN | Swivi Kòmand</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
+        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+        .logo-img{width:50px;height:50px;object-fit:contain}
+        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
+        .nav-links{display:flex;gap:1.5rem;align-items:center}
+        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem}
+        .nav-link:hover{color:#d4af37}
+        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none}
+        .orders-page{padding:8rem 2rem 4rem;max-width:700px;margin:0 auto}
+        .back-link{color:#d4af37;text-decoration:none;display:inline-block;margin-bottom:1rem}
+        .order-title{font-family:'Space Grotesk',Arial,sans-serif;font-size:2rem;margin-bottom:0.5rem}
+        .timeline{position:relative;padding-left:3rem;margin:2rem 0}
+        .timeline::before{content:'';position:absolute;left:1.35rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#d4af37,rgba(255,255,255,0.1))}
+        .timeline-item{position:relative;margin-bottom:2rem}
+        .timeline-dot{position:absolute;left:-2.5rem;top:0;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+        .timeline-dot.done{background:#d4af37;color:#0a0a0a}
+        .timeline-dot.active{background:rgba(255,255,255,0.1);border:2px solid #ffc107;color:#ffc107}
+        .timeline-content h3{color:#d4af37}
+        .timeline-content .active-title{color:#ffc107}
+        .timeline-content p{color:#a0a0a0;font-size:0.9rem}
+        .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:15px;padding:1.5rem;margin-bottom:1rem}
+        .btn{background:#d4af37;color:#0a0a0a;border:none;padding:0.75rem 1.5rem;border-radius:25px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;margin-right:0.5rem}
+        .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.2);color:#fff}
+        .btn-danger{background:transparent;border:1px solid #ff4444;color:#ff4444}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="/Public/image/logo.png" alt="OGSUN" class="logo-img">
+                <span class="logo-text">OGSUN</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">🏠 Akèy</a>
+                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
+                <a href="account.html" class="nav-link">👤 Kont</a>
+            </div>
+            <a href="account.html" class="primary-btn">Kont Mwen</a>
+        </div>
+    </nav>
+
+    <main class="orders-page">
+        <a href="account.html" class="back-link">← Retounen nan Kont</a>
+        <h1 class="order-title">Kòmand #OGS-7845</h1>
+        <p style="color:#a0a0a0;">Kòmand pase 15 Janvye 2024</p>
+
+        <div class="card">
+            <h3 style="font-family:'Space Grotesk',Arial,sans-serif;">📍 Swivi Livrezon</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot done">✅</div>
+                    <div class="timeline-content"><h3>Kòmand Konfime</h3><p>15 Jan 2024 - 10:30 AM</p></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot done">✅</div>
+                    <div class="timeline-content"><h3>An Preparasyon</h3><p>16 Jan 2024 - 2:00 PM</p></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot done">✅</div>
+                    <div class="timeline-content"><h3>Ekspedisyon</h3><p>17 Jan 2024 - 9:00 AM</p></div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot active">⏳</div>
+                    <div class="timeline-content"><h3 class="active-title">An Transpò</h3><p>18 Jan 2024 - Kounya</p></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 style="font-family:'Space Grotesk',Arial,sans-serif;">📦 Pwodwi</h3>
+            <p><strong>Sak Pay Deluxe</strong> x2 - <span style="color:#d4af37;">$90.00</span></p>
+        </div>
+
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <button class="btn" onclick="alert('📄 Fakti telechaje!')">📄 Fakti</button>
+            <button class="btn btn-outline" onclick="window.location.href='contact.html'">💬 Sipò</button>
+            <button class="btn btn-danger" onclick="if(confirm('Anile kòmand?'))alert('❌ Kòmand anile!')">Anile</button>
+        </div>
+    </main>
+
+    <script>console.log('✅ Orders page chaje!');</script>
+</body>
+</html>

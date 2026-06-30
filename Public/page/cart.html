@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="ht" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGSUN | Panye</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
+        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+        .logo-img{width:50px;height:50px;object-fit:contain}
+        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
+        .nav-links{display:flex;gap:1.5rem;align-items:center}
+        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem}
+        .nav-link:hover,.nav-link.active{color:#d4af37}
+        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none}
+        .cart-page{padding:8rem 2rem 4rem;max-width:1000px;margin:0 auto}
+        .cart-title{font-family:'Space Grotesk',Arial,sans-serif;font-size:2.5rem;margin-bottom:2rem}
+        .cart-item{display:flex;gap:1.5rem;align-items:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:15px;padding:1.5rem;margin-bottom:1rem}
+        .cart-item img{width:80px;height:80px;object-fit:contain;background:rgba(255,255,255,0.05);border-radius:10px;padding:0.5rem}
+        .cart-item-info{flex:1}
+        .cart-item-info h3{font-family:'Space Grotesk',Arial,sans-serif}
+        .cart-item-info p{color:#a0a0a0}
+        .cart-item-price{color:#d4af37;font-weight:bold;font-size:1.25rem}
+        .qty-controls{display:flex;align-items:center;gap:0.5rem}
+        .qty-btn{background:rgba(255,255,255,0.1);border:none;color:#fff;width:30px;height:30px;border-radius:5px;cursor:pointer;font-size:1.2rem}
+        .qty-btn:hover{background:#d4af37;color:#0a0a0a}
+        .qty-input{width:50px;text-align:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:0.5rem;border-radius:5px}
+        .remove-btn{background:none;border:none;color:#ff4444;cursor:pointer;font-size:1.5rem}
+        .cart-summary{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;margin-top:2rem}
+        .cart-summary h3{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1rem}
+        .summary-row{display:flex;justify-content:space-between;margin-bottom:0.75rem;color:#a0a0a0}
+        .summary-total{display:flex;justify-content:space-between;font-size:1.5rem;font-weight:bold;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08)}
+        .summary-total span:last-child{color:#d4af37}
+        .checkout-btn{width:100%;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:1rem;border-radius:25px;font-weight:bold;font-size:1.1rem;cursor:pointer;margin-top:1.5rem}
+        .checkout-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
+        .empty-cart{text-align:center;padding:4rem;color:#a0a0a0}
+        .continue-shopping{display:inline-block;color:#d4af37;text-decoration:none;margin-top:1rem}
+        .continue-shopping:hover{text-decoration:underline}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="/Public/image/logo.png" alt="OGSUN" class="logo-img">
+                <span class="logo-text">OGSUN</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">🏠 Akèy</a>
+                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
+                <a href="cart.html" class="nav-link active">🛒 Panye</a>
+                <a href="account.html" class="nav-link">👤 Kont</a>
+                <a href="contact.html" class="nav-link">📞 Kontakte</a>
+            </div>
+            <a href="account.html" class="primary-btn">Konekte</a>
+        </div>
+    </nav>
+
+    <main class="cart-page">
+        <h1 class="cart-title">🛒 Panye w</h1>
+        
+        <div id="cartItems"></div>
+        
+        <a href="shop.html" class="continue-shopping">← Kontinye Achte</a>
+    </main>
+
+    <script>
+    // Chaje panye
+    var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
+    
+    function renderCart() {
+        var container = document.getElementById('cartItems');
+        
+        if (cart.length === 0) {
+            container.innerHTML = '<div class="empty-cart"><p style="font-size:3rem;">🛒</p><h2>Panye w vid</h2><p>Ajoute kèk pwodwi nan boutik la!</p><a href="shop.html" style="display:inline-block;margin-top:1rem;background:#d4af37;color:#0a0a0a;padding:1rem 2rem;border-radius:25px;text-decoration:none;font-weight:bold;">🛍️ Ale nan Boutik</a></div>';
+            return;
+        }
+        
+        var html = '';
+        var total = 0;
+        
+        cart.forEach(function(item, index) {
+            var itemTotal = item.price * item.quantity;
+            total += itemTotal;
+            
+            html += `
+                <div class="cart-item">
+                    <img src="logo.png" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <h3>${item.name}</h3>
+                        <p>Pri inite: $${item.price.toFixed(2)}</p>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty(${index},-1)">-</button>
+                            <input type="number" class="qty-input" value="${item.quantity}" min="1" onchange="setQty(${index},this.value)">
+                            <button class="qty-btn" onclick="updateQty(${index},1)">+</button>
+                        </div>
+                    </div>
+                    <div class="cart-item-price">$${itemTotal.toFixed(2)}</div>
+                    <button class="remove-btn" onclick="removeItem(${index})">🗑️</button>
+                </div>
+            `;
+        });
+        
+        html += `
+            <div class="cart-summary">
+                <h3>📋 Rezime Kòmand</h3>
+                <div class="summary-row"><span>Sou-total</span><span>$${total.toFixed(2)}</span></div>
+                <div class="summary-row"><span>Livrezon</span><span style="color:#4caf50;">Gratis 🎉</span></div>
+                <div class="summary-total"><span>Total</span><span>$${total.toFixed(2)}</span></div>
+                <button class="checkout-btn" onclick="goToCheckout()">💳 Fè Kòmand - $${total.toFixed(2)}</button>
+            </div>
+        `;
+        
+        container.innerHTML = html;
+    }
+    
+    function updateQty(index, change) {
+        cart[index].quantity = Math.max(1, cart[index].quantity + change);
+        saveCart();
+    }
+    
+    function setQty(index, value) {
+        cart[index].quantity = Math.max(1, parseInt(value) || 1);
+        saveCart();
+    }
+    
+    function removeItem(index) {
+        if (confirm('Èske w vle retire pwodwi sa a?')) {
+            cart.splice(index, 1);
+            saveCart();
+        }
+    }
+    
+    function saveCart() {
+        localStorage.setItem('ogsun-cart', JSON.stringify(cart));
+        renderCart();
+    }
+    
+    function goToCheckout() {
+        if (cart.length === 0) {
+            alert('❌ Panye w vid! Ajoute pwodwi avan.');
+            return;
+        }
+        window.location.href = 'checkout.html';
+    }
+    
+    renderCart();
+    console.log('✅ Cart chaje!');
+    </script>
+</body>
+</html>

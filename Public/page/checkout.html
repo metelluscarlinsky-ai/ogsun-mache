@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ht" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGSUN | Peman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
+        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+        .logo-img{width:50px;height:50px;object-fit:contain}
+        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
+        .nav-links{display:flex;gap:1.5rem;align-items:center}
+        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem}
+        .nav-link:hover{color:#d4af37}
+        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none}
+        .checkout-page{padding:8rem 2rem 4rem;max-width:800px;margin:0 auto}
+        .checkout-title{font-family:'Space Grotesk',Arial,sans-serif;font-size:2.5rem;margin-bottom:2rem;text-align:center}
+        .form-section{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;margin-bottom:1.5rem}
+        .form-section h2{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1.5rem}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+        .form-group{margin-bottom:1rem}
+        .form-group label{display:block;color:#a0a0a0;margin-bottom:0.5rem}
+        .form-group input,.form-group select,.form-group textarea{width:100%;padding:1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:'Outfit',Arial,sans-serif}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#d4af37}
+        .form-group textarea{resize:vertical}
+        .payment-option{display:flex;align-items:center;gap:1rem;padding:1.25rem;background:rgba(255,255,255,0.03);border:2px solid rgba(255,255,255,0.08);border-radius:15px;cursor:pointer;margin-bottom:0.75rem;transition:all 0.3s}
+        .payment-option:hover,.payment-option.selected{border-color:#d4af37}
+        .payment-option input[type="radio"]{accent-color:#d4af37;width:20px;height:20px}
+        .order-summary{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;margin-top:2rem}
+        .summary-row{display:flex;justify-content:space-between;margin-bottom:0.75rem;color:#a0a0a0}
+        .summary-total{display:flex;justify-content:space-between;font-size:1.5rem;font-weight:bold;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08)}
+        .summary-total span:last-child{color:#d4af37}
+        .place-order-btn{width:100%;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.2rem;cursor:pointer;margin-top:1.5rem}
+        .place-order-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
+        @media(max-width:768px){.form-row{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="/Public/image/logo.png" alt="OGSUN" class="logo-img">
+                <span class="logo-text">OGSUN</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">🏠 Akèy</a>
+                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
+                <a href="cart.html" class="nav-link">🛒 Panye</a>
+            </div>
+            <a href="account.html" class="primary-btn">Konekte</a>
+        </div>
+    </nav>
+
+    <main class="checkout-page">
+        <h1 class="checkout-title">💳 Finalize Kòmand</h1>
+        
+        <!-- Shipping Form -->
+        <div class="form-section">
+            <h2>📍 Enfòmasyon Livrezon</h2>
+            <form id="checkoutForm" onsubmit="return false;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Non *</label>
+                        <input type="text" required placeholder="Antre non w">
+                    </div>
+                    <div class="form-group">
+                        <label>Siyati *</label>
+                        <input type="text" required placeholder="Antre siyati w">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Imèl *</label>
+                    <input type="email" required placeholder="imel@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Telefòn *</label>
+                    <input type="tel" required placeholder="+509 0000 0000">
+                </div>
+                <div class="form-group">
+                    <label>Adrès *</label>
+                    <input type="text" required placeholder="Antre adrès livrezon ou">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Vil *</label>
+                        <input type="text" required placeholder="Pòtoprens">
+                    </div>
+                    <div class="form-group">
+                        <label>Depatman</label>
+                        <select>
+                            <option value="">Chwazi...</option>
+                            <option>Lwès</option>
+                            <option>Nò</option>
+                            <option>Sid</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="form-section">
+            <h2>💳 Metòd Peman</h2>
+            <label class="payment-option selected">
+                <input type="radio" name="payment" value="card" checked>
+                <span style="font-size:2rem;">💳</span>
+                <div><strong>Kat Kredi / Debi</strong><p style="color:#a0a0a0;font-size:0.875rem;">Visa, Mastercard</p></div>
+            </label>
+            <label class="payment-option">
+                <input type="radio" name="payment" value="moncash">
+                <span style="font-size:2rem;">📱</span>
+                <div><strong>MonCash</strong><p style="color:#a0a0a0;font-size:0.875rem;">Peman mobil</p></div>
+            </label>
+            <label class="payment-option">
+                <input type="radio" name="payment" value="cod">
+                <span style="font-size:2rem;">💵</span>
+                <div><strong>Peye a Livrezon</strong><p style="color:#a0a0a0;font-size:0.875rem;">Lè w resevwa pake a</p></div>
+            </label>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h2 style="font-family:'Space Grotesk',Arial,sans-serif;">📋 Rezime Kòmand</h2>
+            <div id="checkoutSummary"></div>
+            <button class="place-order-btn" onclick="placeOrder()">🚀 Konfime Kòmand</button>
+        </div>
+    </main>
+
+    <script>
+    // Chaje panye
+    var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
+    var total = cart.reduce(function(sum, item) { return sum + (item.price * item.quantity); }, 0);
+    
+    document.getElementById('checkoutSummary').innerHTML = 
+        cart.map(function(item) {
+            return '<div class="summary-row"><span>'+item.name+' x'+item.quantity+'</span><span>$'+(item.price*item.quantity).toFixed(2)+'</span></div>';
+        }).join('') +
+        '<div class="summary-row"><span>Livrezon</span><span style="color:#4caf50;">Gratis</span></div>' +
+        '<div class="summary-total"><span>Total</span><span>$'+total.toFixed(2)+'</span></div>';
+    
+    // Payment selection
+    document.querySelectorAll('.payment-option').forEach(function(opt) {
+        opt.addEventListener('click', function() {
+            document.querySelectorAll('.payment-option').forEach(function(o) { o.classList.remove('selected'); });
+            this.classList.add('selected');
+            this.querySelector('input').checked = true;
+        });
+    });
+    
+    function placeOrder() {
+        var form = document.getElementById('checkoutForm');
+        var inputs = form.querySelectorAll('input[required]');
+        var valid = true;
+        
+        inputs.forEach(function(input) {
+            if (!input.value.trim()) {
+                input.style.border = '2px solid #ff4444';
+                valid = false;
+            } else {
+                input.style.border = '1px solid rgba(255,255,255,0.1)';
+            }
+        });
+        
+        if (!valid) {
+            alert('❌ Tanpri ranpli tout chan obligatwa yo!');
+            return;
+        }
+        
+        var payment = document.querySelector('input[name="payment"]:checked').value;
+        var methods = {card:'Kat Kredi', moncash:'MonCash', cod:'Peye a Livrezon'};
+        
+        if (confirm('✅ Konfime kòmand $'+total.toFixed(2)+'?\nMetòd: '+methods[payment])) {
+            alert('🎉 Kòmand konfime! Mèsi pou acha w!');
+            localStorage.removeItem('ogsun-cart');
+            window.location.href = 'orders.html';
+        }
+    }
+    
+    console.log('✅ Checkout chaje! Total: $' + total.toFixed(2));
+    </script>
+</body>
+</html>
