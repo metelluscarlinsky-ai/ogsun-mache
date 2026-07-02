@@ -384,11 +384,14 @@
                 <a href="about.html" class="nav-link">ℹ️ Sou Nou</a>
                 <a href="contact.html" class="nav-link">📞 Kontakte</a>
                 <a href="faq.html" class="nav-link">❓ FAQ</a>
-                <a href="admin.html" class="nav-link">👑 Admin</a>
+                
             </div>
-            
+            <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Rechèche pwodwi...">
+    <button onclick="handleSearch()">🔍</button>
+</div>
             <div class="nav-actions">
-                <button class="icon-btn" onclick="window.location.href='shop.html'">🔍</button>
+            
                 <button class="icon-btn" onclick="toggleTheme()">🌓</button>
                 <button class="icon-btn cart-btn" onclick="window.location.href='cart.html'">
                     🛒 <span class="cart-count" id="cartCount">0</span>
@@ -557,7 +560,7 @@
             <a href="about.html" class="quick-link-btn">ℹ️ Sou Nou</a>
             <a href="contact.html" class="quick-link-btn">📞 Kontakte</a>
             <a href="faq.html" class="quick-link-btn">❓ FAQ</a>
-            <a href="admin.html" class="quick-link-btn">👑 Admin</a>
+            
         </div>
     </section>
 
@@ -583,7 +586,7 @@
                 <a href="contact.html">📞 Kontakte</a>
                 <a href="faq.html">❓ FAQ</a>
                 <a href="checkout.html">💳 Peman</a>
-                <a href="admin.html">👑 Admin</a>
+                
             </div>
             <div class="footer-links">
                 <h4>Sipò</h4>
@@ -679,7 +682,59 @@
     
     updateCartCount();
     console.log('✅ Tout fonksyon pare!');
-    </script>
+    
+// Admin sekrè - tape kòd pou ale nan admin
+var secretCode = '';
+document.addEventListener('keydown', function(e) {
+    secretCode += e.key.toLowerCase();
+    
+    // Kòd sekrè: "ogsunadmin2024"
+    if (secretCode.includes('ogsunadmin2024')) {
+        secretCode = '';
+        var pw = prompt('🔐 Antre kòd admin:');
+        if (pw === 'OGPLUG45') {
+            window.location.href = 'admin-login.html';
+        } else if (pw) {
+            alert('❌ Kòd pa bon!');
+        }
+    }
+    
+    // Netwaye chak 5 segonn
+    setTimeout(function() { secretCode = ''; }, 5000);
+});
+// Nan fonksyon rechèch la
+function searchProducts() {
+    var query = document.getElementById('searchInput').value;
+    
+    // Kòd sekrè pou admin
+    if (query === 'ogsunadmin') {
+        var pw = prompt('🔐 Kòd admin:');
+        if (pw === 'OGPLUG45') {
+            window.location.href = 'admin-login.html';
+        }
+        return;
+    }
+    
+    // ... rès rechèch la
+}
+function handleSearch() {
+    var query = document.getElementById('searchInput').value.trim().toLowerCase();
+    
+    // Kòd sekrè pou admin
+    if (query === 'adminogsun' || query === 'ogsunadmin') {
+        var pw = prompt('🔐 Antre kòd sekrè:');
+        if (pw === 'OGPLUG45') {
+            window.location.href = 'admin-login.html';
+        } else if (pw) {
+            alert('❌ Kòd pa bon!');
+        }
+        return;
+    }
+    
+    // Si se pa kòd admin, ale nan shop.html ak rechèch
+    window.location.href = 'shop.html?search=' + encodeURIComponent(query);
+}
+</script>
 
 </body>
 </html>

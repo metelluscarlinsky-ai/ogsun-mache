@@ -3,88 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Login Admin</title>
+    <title>OGSUN | Admin Login</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:Arial,sans-serif;background:#0a0a0a;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-        .box{background:#111;border:2px solid #222;border-radius:20px;padding:30px;max-width:380px;width:100%;text-align:center}
-        .box h1{color:#d4af37;margin-bottom:5px;font-size:1.8rem}
-        .box p{color:#888;margin-bottom:20px;font-size:0.9rem}
-        input{width:100%;padding:14px;margin:8px 0;background:#1a1a1a;border:1px solid #333;border-radius:10px;color:#fff;font-size:16px}
-        input:focus{outline:none;border-color:#d4af37}
-        button{width:100%;padding:14px;background:#d4af37;color:#000;border:none;border-radius:25px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:10px}
-        button:hover{background:#f4d03f}
-        #msg{padding:10px;border-radius:10px;margin-top:15px;display:none;font-size:0.9rem}
-        #msg.error{display:block;background:rgba(255,0,0,0.1);border:1px solid #ff4444;color:#ff4444}
-        #msg.success{display:block;background:rgba(0,255,0,0.1);border:1px solid #4caf50;color:#4caf50}
-        a{color:#888;text-decoration:none;display:block;margin-top:15px;font-size:0.85rem}
-        a:hover{color:#d4af37}
+        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+        .login-box{background:#111;border:1px solid #222;border-radius:20px;padding:40px 30px;max-width:400px;width:100%;text-align:center}
+        .login-box h1{font-size:1.8rem;color:#d4af37;margin-bottom:5px}
+        .login-box p{color:#888;margin-bottom:25px;font-size:0.9rem}
+        .input-group{margin-bottom:15px;text-align:left}
+        .input-group label{display:block;color:#aaa;margin-bottom:5px;font-size:0.85rem}
+        .input-group input{width:100%;padding:14px;background:#1a1a1a;border:1px solid #333;border-radius:10px;color:#fff;font-size:1rem;font-family:'Outfit',Arial,sans-serif}
+        .input-group input:focus{outline:none;border-color:#d4af37}
+        .login-btn{width:100%;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#000;border:none;padding:14px;border-radius:25px;font-weight:bold;font-size:1rem;cursor:pointer;margin-top:10px;transition:all 0.3s}
+        .login-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
+        .error-msg{background:rgba(255,0,0,0.1);border:1px solid #ff4444;color:#ff4444;padding:10px;border-radius:10px;margin-bottom:15px;display:none;font-size:0.9rem}
+        .error-msg.show{display:block}
+        .success-msg{background:rgba(0,255,0,0.1);border:1px solid #4caf50;color:#4caf50;padding:10px;border-radius:10px;margin-bottom:15px;display:none;font-size:0.9rem}
+        .success-msg.show{display:block}
+        .back-link{display:block;margin-top:20px;color:#888;text-decoration:none;font-size:0.85rem}
+        .back-link:hover{color:#d4af37}
+        .shield{font-size:3rem;margin-bottom:15px}
     </style>
 </head>
 <body>
 
-    <div class="box">
-        <div style="font-size:3rem;margin-bottom:10px;">🔐</div>
+    <div class="login-box">
+        <div class="shield">🔐</div>
         <h1>Admin OGSUN</h1>
-        <p>Antre imèl ak kòd ou</p>
+        <p>Zòn sekirize - Antre imèl ak kòd ou</p>
         
-        <input type="email" id="email" placeholder="Imèl" value="metelluscarlinsky@gmail.com">
-        <input type="password" id="password" placeholder="Kòd" value="OGPLUG45">
-        <button onclick="login()">🔓 Konekte</button>
+        <div class="error-msg" id="errorMsg">❌ Imèl oswa kòd pa bon!</div>
+        <div class="success-msg" id="successMsg">✅ Koneksyon reyisi! Ale nan admin...</div>
         
-        <div id="msg"></div>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="input-group">
+                <label>📧 Imèl</label>
+                <input type="email" id="email" placeholder="Antre imèl ou" required autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label>🔑 Kòd</label>
+                <input type="password" id="password" placeholder="Antre kòd ou" required autocomplete="off">
+            </div>
+            <button type="submit" class="login-btn">🔓 Konekte</button>
+        </form>
         
-        <a href="index.html">← Retounen sou sit la</a>
+        <a href="index.html" class="back-link">← Retounen sou sit la</a>
     </div>
 
     <script>
-    async function login() {
+    // API URL - konekte ak backend Render
+    var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
+    
+    function handleLogin(event) {
+        event.preventDefault();
+        
         var email = document.getElementById('email').value.trim();
         var password = document.getElementById('password').value;
-        var msg = document.getElementById('msg');
+        var errorMsg = document.getElementById('errorMsg');
+        var successMsg = document.getElementById('successMsg');
         
-        // Montre mesaj chajman
-        msg.className = 'success';
-        msg.textContent = '⏳ Koneksyon...';
+        // Kache mesaj avan yo
+        errorMsg.classList.remove('show');
+        successMsg.classList.remove('show');
         
-        try {
-           var response = await fetch('http://127.0.0.1:3000/api/admin/login', { 
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, password: password })
-            });
-            
-            var data = await response.json();
-            console.log('Repons API:', data);
-            
+        // Verifye chan yo
+        if (!email || !password) {
+            errorMsg.textContent = '❌ Ranpli tout chan yo!';
+            errorMsg.classList.add('show');
+            return;
+        }
+        
+        // Montre chajman
+        errorMsg.textContent = '⏳ Koneksyon...';
+        errorMsg.style.color = '#d4af37';
+        errorMsg.classList.add('show');
+        
+        fetch(API + '/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password })
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(data) {
             if (data.success) {
                 // Sove token
                 localStorage.setItem('ogsun-admin-token', data.token);
                 localStorage.setItem('ogsun-admin-email', email);
                 
-                msg.className = 'success';
-                msg.textContent = '✅ Byenveni! Ale nan admin...';
+                errorMsg.classList.remove('show');
+                successMsg.classList.add('show');
                 
                 // Ale nan admin apre 1 segonn
                 setTimeout(function() {
                     window.location.href = 'admin.html';
                 }, 1000);
             } else {
-                msg.className = 'error';
-                msg.textContent = '❌ Imèl oswa kòd pa bon!';
+                errorMsg.textContent = '❌ ' + (data.error || 'Imèl oswa kòd pa bon!');
+                errorMsg.style.color = '#ff4444';
+                errorMsg.classList.add('show');
+                successMsg.classList.remove('show');
             }
-        } catch (err) {
-            console.log('Erè:', err);
-            msg.className = 'error';
-            msg.textContent = '❌ Pa ka konekte ak sèvè a. Tcheke si backend ap mache sou pòt 3000.';
-        }
+        })
+        .catch(function(err) {
+            errorMsg.textContent = '❌ Pa ka konekte ak sèvè a. Tcheke koneksyon ou.';
+            errorMsg.style.color = '#ff4444';
+            errorMsg.classList.add('show');
+            successMsg.classList.remove('show');
+        });
+        
+        return false;
     }
     
     // Si deja konekte, ale dirèk nan admin
-    var token = localStorage.getItem('ogsun-admin-token');
-    if (token) {
-        window.location.href = 'admin.html';
-    }
+    (function() {
+        var token = localStorage.getItem('ogsun-admin-token');
+        if (token) {
+            fetch(API + '/admin/verify', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.valid) {
+                    window.location.href = 'admin.html';
+                }
+            })
+            .catch(function() {
+                // Token pa valab, rete sou paj login
+            });
+        }
+    })();
     </script>
 
 </body>
