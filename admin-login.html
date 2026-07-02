@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGSUN | Login Admin</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:Arial,sans-serif;background:#0a0a0a;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+        .box{background:#111;border:2px solid #222;border-radius:20px;padding:30px;max-width:380px;width:100%;text-align:center}
+        .box h1{color:#d4af37;margin-bottom:5px;font-size:1.8rem}
+        .box p{color:#888;margin-bottom:20px;font-size:0.9rem}
+        input{width:100%;padding:14px;margin:8px 0;background:#1a1a1a;border:1px solid #333;border-radius:10px;color:#fff;font-size:16px}
+        input:focus{outline:none;border-color:#d4af37}
+        button{width:100%;padding:14px;background:#d4af37;color:#000;border:none;border-radius:25px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:10px}
+        button:hover{background:#f4d03f}
+        #msg{padding:10px;border-radius:10px;margin-top:15px;display:none;font-size:0.9rem}
+        #msg.error{display:block;background:rgba(255,0,0,0.1);border:1px solid #ff4444;color:#ff4444}
+        #msg.success{display:block;background:rgba(0,255,0,0.1);border:1px solid #4caf50;color:#4caf50}
+        a{color:#888;text-decoration:none;display:block;margin-top:15px;font-size:0.85rem}
+        a:hover{color:#d4af37}
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <div style="font-size:3rem;margin-bottom:10px;">🔐</div>
+        <h1>Admin OGSUN</h1>
+        <p>Antre imèl ak kòd ou</p>
+        
+        <input type="email" id="email" placeholder="Imèl" value="metelluscarlinsky@gmail.com">
+        <input type="password" id="password" placeholder="Kòd" value="OGPLUG45">
+        <button onclick="login()">🔓 Konekte</button>
+        
+        <div id="msg"></div>
+        
+        <a href="index.html">← Retounen sou sit la</a>
+    </div>
+
+    <script>
+    async function login() {
+        var email = document.getElementById('email').value.trim();
+        var password = document.getElementById('password').value;
+        var msg = document.getElementById('msg');
+        
+        // Montre mesaj chajman
+        msg.className = 'success';
+        msg.textContent = '⏳ Koneksyon...';
+        
+        try {
+           var response = await fetch('http://127.0.0.1:3000/api/admin/login', { 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: password })
+            });
+            
+            var data = await response.json();
+            console.log('Repons API:', data);
+            
+            if (data.success) {
+                // Sove token
+                localStorage.setItem('ogsun-admin-token', data.token);
+                localStorage.setItem('ogsun-admin-email', email);
+                
+                msg.className = 'success';
+                msg.textContent = '✅ Byenveni! Ale nan admin...';
+                
+                // Ale nan admin apre 1 segonn
+                setTimeout(function() {
+                    window.location.href = 'admin.html';
+                }, 1000);
+            } else {
+                msg.className = 'error';
+                msg.textContent = '❌ Imèl oswa kòd pa bon!';
+            }
+        } catch (err) {
+            console.log('Erè:', err);
+            msg.className = 'error';
+            msg.textContent = '❌ Pa ka konekte ak sèvè a. Tcheke si backend ap mache sou pòt 3000.';
+        }
+    }
+    
+    // Si deja konekte, ale dirèk nan admin
+    var token = localStorage.getItem('ogsun-admin-token');
+    if (token) {
+        window.location.href = 'admin.html';
+    }
+    </script>
+
+</body>
+</html>

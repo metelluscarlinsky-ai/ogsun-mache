@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ht" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGSUN | Kont Mwen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
+        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+        .logo-img{width:50px;height:50px;object-fit:contain}
+        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
+        .nav-links{display:flex;gap:1.5rem;align-items:center}
+        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem}
+        .nav-link:hover,.nav-link.active{color:#d4af37}
+        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none}
+        .account-page{padding:8rem 2rem 4rem;max-width:1200px;margin:0 auto}
+        .account-header{display:flex;align-items:center;gap:2rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;margin-bottom:2rem}
+        .avatar{width:80px;height:80px;background:linear-gradient(135deg,#d4af37,#f4d03f);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.5rem}
+        .account-tabs{display:flex;gap:0.5rem;margin-bottom:2rem;flex-wrap:wrap}
+        .tab-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#a0a0a0;padding:0.75rem 1.5rem;border-radius:25px;cursor:pointer;transition:all 0.3s}
+        .tab-btn.active{background:#d4af37;color:#0a0a0a;border-color:#d4af37}
+        .tab-content{display:none}
+        .tab-content.active{display:block}
+        .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:15px;padding:1.5rem;margin-bottom:1rem}
+        .card h3{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:0.5rem}
+        .card p{color:#a0a0a0}
+        .btn{background:#d4af37;color:#0a0a0a;border:none;padding:0.75rem 1.5rem;border-radius:25px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="/Public/image/logo.png" alt="OGSUN" class="logo-img">
+                <span class="logo-text">OGSUN</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">🏠 Akèy</a>
+                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
+                <a href="cart.html" class="nav-link">🛒 Panye</a>
+                <a href="account.html" class="nav-link active">👤 Kont</a>
+            </div>
+            <a href="index.html" class="primary-btn" onclick="logout()">Dekonekte</a>
+        </div>
+    </nav>
+
+    <main class="account-page">
+        <div class="account-header">
+            <div class="avatar">👤</div>
+            <div>
+                <h1 style="font-family:'Space Grotesk',Arial,sans-serif;">Jean Pierre</h1>
+                <p style="color:#a0a0a0;">jeanpierre@email.com</p>
+                <p style="color:#4caf50;">✅ Kont verifye</p>
+            </div>
+        </div>
+
+        <div class="account-tabs">
+            <button class="tab-btn active" onclick="showTab('dashboard')">📊 Tablodbò</button>
+            <button class="tab-btn" onclick="showTab('orders')">📦 Kòmand</button>
+            <button class="tab-btn" onclick="showTab('settings')">⚙️ Paramèt</button>
+        </div>
+
+        <div id="dashboard" class="tab-content active">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;">
+                <div class="card" style="text-align:center;"><div style="font-size:2.5rem;">📦</div><h3>12</h3><p>Kòmand Total</p></div>
+                <div class="card" style="text-align:center;"><div style="font-size:2.5rem;">⏳</div><h3>2</h3><p>An Atant</p></div>
+                <div class="card" style="text-align:center;"><div style="font-size:2.5rem;">❤️</div><h3>8</h3><p>Wishlist</p></div>
+                <div class="card" style="text-align:center;"><div style="font-size:2.5rem;">💰</div><h3>$1,250</h3><p>Depanse</p></div>
+            </div>
+        </div>
+
+        <div id="orders" class="tab-content">
+            <div class="card">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div><h3>#OGS-7845</h3><p>15 Jan 2024</p></div>
+                    <span style="background:rgba(76,175,80,0.2);color:#4caf50;padding:0.25rem 0.75rem;border-radius:20px;">✅ Livre</span>
+                    <strong style="color:#d4af37;">$90.00</strong>
+                    <a href="orders.html" class="btn">Detay</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings" class="tab-content">
+            <div class="card">
+                <h3>Enfòmasyon Pèsonèl</h3>
+                <form onsubmit="event.preventDefault();alert('✅ Pwofil mete ajou!')">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;">
+                        <input type="text" value="Jean" style="padding:0.75rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;width:100%">
+                        <input type="text" value="Pierre" style="padding:0.75rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;width:100%">
+                    </div>
+                    <input type="email" value="jeanpierre@email.com" style="padding:0.75rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;width:100%;margin-bottom:1rem">
+                    <button type="submit" class="btn">💾 Anrejistre</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    function showTab(tabId) {
+        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
+        event.target.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+    }
+    
+    function logout() {
+        if (confirm('Dekonekte?')) {
+            alert('👋 Orevwa!');
+            window.location.href = 'index.html';
+        }
+    }
+    
+    console.log('✅ Account page chaje!');
+    </script>
+</body>
+</html>

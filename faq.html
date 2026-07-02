@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ht" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGSUN | FAQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
+        
+        /* Navbar */
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
+        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+        .logo-img{width:50px;height:50px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(212,175,55,0.3))}
+        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
+        .nav-links{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem;transition:color 0.3s}
+        .nav-link:hover,.nav-link.active{color:#d4af37}
+        .nav-actions{display:flex;align-items:center;gap:0.75rem}
+        .icon-btn{background:none;border:none;color:#a0a0a0;cursor:pointer;padding:0.5rem;font-size:1.25rem;transition:color 0.3s}
+        .icon-btn:hover{color:#d4af37}
+        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s}
+        .primary-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
+        .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
+        .mobile-menu-btn span{width:25px;height:2px;background:#fff;transition:all 0.3s}
+
+        /* FAQ Page */
+        .faq-page{padding:8rem 2rem 4rem;max-width:900px;margin:0 auto}
+        .faq-hero{text-align:center;margin-bottom:4rem}
+        .faq-title{font-family:'Space Grotesk',Arial,sans-serif;font-size:clamp(2.5rem,5vw,3.5rem);margin-bottom:1rem;background:linear-gradient(135deg,#fff,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .faq-subtitle{color:#a0a0a0;font-size:1.2rem}
+        .faq-search{max-width:500px;margin:2rem auto;display:flex;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:50px;overflow:hidden}
+        .faq-search input{flex:1;padding:1rem 1.5rem;background:transparent;border:none;color:#fff;font-family:'Outfit',Arial,sans-serif;font-size:1rem}
+        .faq-search input:focus{outline:none}
+        .faq-search input::placeholder{color:#666}
+        .faq-search button{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:1rem 2rem;cursor:pointer;font-weight:bold;font-size:1rem}
+        .faq-list{display:flex;flex-direction:column;gap:1rem}
+        .faq-item{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:15px;overflow:hidden;transition:all 0.3s}
+        .faq-item:hover{border-color:rgba(212,175,55,0.2)}
+        .faq-question{width:100%;padding:1.5rem;background:none;border:none;color:#fff;text-align:left;font-size:1.1rem;font-weight:bold;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-family:'Space Grotesk',Arial,sans-serif;transition:all 0.3s}
+        .faq-question:hover{color:#d4af37}
+        .faq-icon{font-size:1.5rem;transition:transform 0.3s;color:#d4af37}
+        .faq-icon.open{transform:rotate(180deg)}
+        .faq-answer{padding:0 1.5rem 1.5rem;color:#a0a0a0;line-height:1.8;display:none}
+        .faq-answer.show{display:block}
+        .faq-categories{display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;margin-bottom:2rem}
+        .faq-cat-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#a0a0a0;padding:0.5rem 1.5rem;border-radius:25px;cursor:pointer;transition:all 0.3s;font-size:0.9rem}
+        .faq-cat-btn:hover,.faq-cat-btn.active{background:#d4af37;color:#0a0a0a;border-color:#d4af37}
+        .contact-cta{text-align:center;margin-top:4rem;padding:3rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px}
+        .contact-cta h2{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1rem}
+        .contact-cta p{color:#a0a0a0;margin-bottom:1.5rem}
+        .btn-gold{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:1rem 2.5rem;border-radius:50px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;font-size:1rem;transition:all 0.3s}
+        .btn-gold:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
+        
+        /* Footer */
+        .site-footer{background:#111;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,255,255,0.08);margin-top:4rem}
+        .footer-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-bottom:2rem}
+        .footer-logo{width:60px;margin-bottom:1rem}
+        .footer-links h4{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1rem;color:#fff}
+        .footer-links a{display:block;color:#a0a0a0;text-decoration:none;margin-bottom:0.5rem;transition:color 0.3s}
+        .footer-links a:hover{color:#d4af37}
+        .footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.08);color:#666}
+        
+        @media(max-width:768px){
+            .nav-links{display:none}
+            .nav-links.active{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#111;padding:1rem;z-index:999}
+            .mobile-menu-btn{display:flex}
+            .faq-title{font-size:2rem}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="/Public/image/logo.png" alt="OGSUN" class="logo-img">
+                <span class="logo-text">OGSUN</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">🏠 Akèy</a>
+                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
+                <a href="cart.html" class="nav-link">🛒 Panye</a>
+                <a href="product.html" class="nav-link">📦 Pwodwi</a>
+                <a href="account.html" class="nav-link">👤 Kont</a>
+                <a href="orders.html" class="nav-link">📋 Kòmand</a>
+                <a href="about.html" class="nav-link">ℹ️ Sou Nou</a>
+                <a href="contact.html" class="nav-link">📞 Kontakte</a>
+                <a href="faq.html" class="nav-link active">❓ FAQ</a>
+                <a href="admin.html" class="nav-link">👑 Admin</a>
+            </div>
+            <div class="nav-actions">
+                <button class="icon-btn" onclick="window.location.href='shop.html'">🔍</button>
+                <button class="icon-btn" id="themeToggle">🌓</button>
+                <button class="icon-btn" onclick="window.location.href='cart.html'">🛒</button>
+                <a href="account.html" class="primary-btn">Konekte</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+
+    <!-- FAQ MAIN -->
+    <main class="faq-page">
+        
+        <!-- Hero -->
+        <div class="faq-hero">
+            <h1 class="faq-title">Kesyon Frekan</h1>
+            <p class="faq-subtitle">Tout sa w bezwen konnen sou OGSUN</p>
+            
+            <!-- Search -->
+            <div class="faq-search">
+                <input type="text" id="faqSearch" placeholder="Rechèche yon kesyon..." oninput="searchFAQ()">
+                <button onclick="searchFAQ()">🔍</button>
+            </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="faq-categories">
+            <button class="faq-cat-btn active" onclick="filterFAQ('all', this)">Tout</button>
+            <button class="faq-cat-btn" onclick="filterFAQ('kòmand', this)">🛒 Kòmand</button>
+            <button class="faq-cat-btn" onclick="filterFAQ('peman', this)">💳 Peman</button>
+            <button class="faq-cat-btn" onclick="filterFAQ('livrezon', this)">🚚 Livrezon</button>
+            <button class="faq-cat-btn" onclick="filterFAQ('pwodwi', this)">📦 Pwodwi</button>
+        </div>
+
+        <!-- FAQ List -->
+        <div class="faq-list" id="faqList">
+            
+            <div class="faq-item" data-category="kòmand">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    🛒 Kòman pou m fè yon kòmand?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Ou ka fè yon kòmand dirèkteman sou sit la. Chwazi pwodwi w renmen an, ajoute l nan panye, epi swiv etap yo pou finalize peman an. Ou pral resevwa yon konfimasyon imedya pa imèl.
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="peman">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    💳 Ki metòd peman ki disponib?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Nou aksepte kat kredi/debi (Visa, Mastercard), MonCash, transfè bankè, ak peman a livrezon (cash on delivery). Tout peman yo sekirize ak pwoteje.
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="livrezon">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    🚚 Konbyen tan livrezon pran?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Livrezon estanda pran 3-5 jou ouvrab nan zòn metwopolitèn Pòtoprens. Pou lòt zòn, sa ka pran 5-10 jou. Livrezon entènasyonal disponib sou demann. Nou ofri livrezon gratis pou kòmand ki depase $50!
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="pwodwi">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    ↩️ Èske m ka retounen yon pwodwi?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Wi! Ou gen 30 jou pou retounen yon pwodwi si l pa satisfè w. Pwodwi a dwe nan menm eta li te ye a. Kontakte sipò nou an pou plis detay oswa vizite paj Kontakte nou.
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="pwodwi">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    🎨 Èske pwodwi yo otantik?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Absoliman! Tout pwodwi nou yo se 100% otantik, fèt ak men pa atizan ayisyen kalifye. Chak pwodwi vini ak yon sètifika otantisite ki garanti orijin li ak kalite li.
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="kòmand">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    📦 Kòman m ka swiv kòmand mwen?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Ou ka swiv kòmand ou nan paj "Kòmand mwen yo" nan kont ou. W ap resevwa yon nimewo swivi ki pèmèt ou wè ki etap kòmand ou ye. Ou ka kontakte sipò nou an tou pou plis enfòmasyon.
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="peman">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    🔒 Èske peman mwen sekirize?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Wi, tout peman yo trete ak teknoloji SSL ki kripte done w yo. Nou pa janm estoke enfòmasyon kat kredi w sou sèvè nou yo. Tout tranzaksyon yo pwoteje kont fwòd.
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="kòmand">
+                <button class="faq-question" onclick="toggleFAQ(this)">
+                    ❌ Kòman pou m anile yon kòmand?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Ou ka anile yon kòmand si l poko ekspedye. Ale nan "Kòmand mwen yo", chwazi kòmand lan, epi klike "Anile". Si kòmand lan deja ekspedye, kontakte sipò nou an pou asistans.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Contact CTA -->
+        <div class="contact-cta">
+            <h2>Pa jwenn sa w t ap chèche?</h2>
+            <p>Kontakte ekip sipò nou an. Nou la pou ede w!</p>
+            <a href="contact.html" class="btn-gold">📞 Kontakte Nou</a>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div>
+                <img src="logo.png" alt="OGSUN" class="footer-logo">
+                <p style="color:#a0a0a0;">Pi bon platfòm e-commerce lokal an Ayiti.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navigate</h4>
+                <a href="index.html">🏠 Akèy</a>
+                <a href="shop.html">🛍️ Boutik</a>
+                <a href="cart.html">🛒 Panye</a>
+                <a href="account.html">👤 Kont</a>
+                <a href="admin.html">👑 Admin</a>
+            </div>
+            <div class="footer-links">
+                <h4>Enfòmasyon</h4>
+                <a href="about.html">ℹ️ Sou Nou</a>
+                <a href="contact.html">📞 Kontakte</a>
+                <a href="faq.html">❓ FAQ</a>
+            </div>
+            <div class="footer-links">
+                <h4>Sipò</h4>
+                <a href="faq.html">Livrezon</a>
+                <a href="faq.html">Retounen</a>
+                <a href="contact.html">Èd</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 OGSUN. Tout dwa rezève. | <a href="index.html" style="color:#d4af37;">Akèy</a></p>
+        </div>
+    </footer>
+
+    <script>
+    console.log('🔥 OGSUN FAQ Page Loaded!');
+    
+    // Toggle FAQ
+    function toggleFAQ(btn) {
+        var answer = btn.nextElementSibling;
+        var icon = btn.querySelector('.faq-icon');
+        
+        // Fèmen tout lòt
+        document.querySelectorAll('.faq-answer').forEach(function(a) {
+            if (a !== answer) {
+                a.classList.remove('show');
+                a.previousElementSibling.querySelector('.faq-icon').classList.remove('open');
+            }
+        });
+        
+        // Toggle sa a
+        answer.classList.toggle('show');
+        icon.classList.toggle('open');
+    }
+    
+    // Search FAQ
+    function searchFAQ() {
+        var query = document.getElementById('faqSearch').value.toLowerCase();
+        var items = document.querySelectorAll('.faq-item');
+        
+        items.forEach(function(item) {
+            var question = item.querySelector('.faq-question').textContent.toLowerCase();
+            var answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+            
+            if (question.includes(query) || answer.includes(query) || query === '') {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+    
+    // Filter by category
+    function filterFAQ(category, btn) {
+        // Update active button
+        document.querySelectorAll('.faq-cat-btn').forEach(function(b) {
+            b.classList.remove('active');
+        });
+        btn.classList.add('active');
+        
+        // Filter items
+        var items = document.querySelectorAll('.faq-item');
+        items.forEach(function(item) {
+            if (category === 'all' || item.getAttribute('data-category') === category) {
+                item.style.display = '';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+    
+    // Mobile menu
+    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+        document.getElementById('navLinks').classList.toggle('active');
+    });
+    
+    // Theme toggle
+    document.getElementById('themeToggle').addEventListener('click', function() {
+        var html = document.documentElement;
+        var current = html.getAttribute('data-theme');
+        var newTheme = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('ogsun-theme', newTheme);
+    });
+    
+    // Load saved theme
+    var savedTheme = localStorage.getItem('ogsun-theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    
+    console.log('✅ FAQ page ready!');
+    </script>
+</body>
+</html>

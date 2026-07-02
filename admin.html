@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ht" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGSUN | Admin Panel Reyèl</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           OGSUN ADMIN CSS - REYÈL VÈSYON
+           ============================================ */
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
+        
+        .admin-layout{display:flex;min-height:100vh}
+        
+        /* Sidebar */
+        .admin-sidebar{width:280px;background:#111;border-right:1px solid rgba(255,255,255,0.08);padding:1.5rem;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
+        .admin-logo{display:flex;align-items:center;gap:0.75rem;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+        .admin-logo img{width:45px;height:45px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(212,175,55,0.3))}
+        .admin-logo span{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.25rem;font-weight:700;color:#d4af37;letter-spacing:2px}
+        .admin-nav{display:flex;flex-direction:column;gap:0.25rem}
+        .nav-item{display:flex;align-items:center;gap:1rem;padding:0.875rem 1rem;border-radius:12px;color:#a0a0a0;text-decoration:none;font-weight:500;transition:all 0.3s;cursor:pointer;border:none;background:none;width:100%;font-size:1rem}
+        .nav-item:hover{background:rgba(255,255,255,0.05);color:#fff}
+        .nav-item.active{background:rgba(212,175,55,0.15);color:#d4af37}
+        .nav-icon{font-size:1.25rem}
+        
+        /* Main */
+        .admin-main{flex:1;margin-left:280px;padding:2rem}
+        .admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+        .admin-header h2{font-family:'Space Grotesk',Arial,sans-serif;font-size:2rem;background:linear-gradient(135deg,#fff,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .admin-header-actions{display:flex;align-items:center;gap:1.5rem}
+        .back-link{color:#d4af37;text-decoration:none;font-weight:500}
+        .back-link:hover{text-decoration:underline}
+        .refresh-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#a0a0a0;padding:0.5rem 1rem;border-radius:25px;cursor:pointer;transition:all 0.3s}
+        .refresh-btn:hover{border-color:#d4af37;color:#d4af37}
+        
+        /* Stats */
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-bottom:2rem}
+        .stat-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:1.5rem;display:flex;gap:1rem;transition:all 0.3s}
+        .stat-card:hover{transform:translateY(-5px);border-color:rgba(212,175,55,0.3)}
+        .stat-icon{font-size:2.5rem;width:60px;height:60px;display:flex;align-items:center;justify-content:center;background:rgba(212,175,55,0.1);border-radius:12px}
+        .stat-info h3{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;color:#d4af37}
+        .stat-info p{color:#a0a0a0;font-size:0.875rem}
+        
+        /* Content Cards */
+        .admin-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;margin-bottom:1.5rem}
+        .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+        .card-header h3{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.25rem}
+        
+        /* Table */
+        .table-wrapper{overflow-x:auto}
+        table{width:100%;border-collapse:collapse}
+        th{text-align:left;padding:1rem;color:#a0a0a0;font-weight:600;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,0.08)}
+        td{padding:1rem;border-bottom:1px solid rgba(255,255,255,0.03);color:#ccc;font-size:0.9rem}
+        tr:hover{background:rgba(255,255,255,0.02)}
+        
+        /* Status */
+        .status{display:inline-block;padding:0.25rem 0.75rem;border-radius:20px;font-size:0.75rem;font-weight:500}
+        .status.pending{background:rgba(255,193,7,0.2);color:#ffc107}
+        .status.completed{background:rgba(76,175,80,0.2);color:#4caf50}
+        .status.cancelled{background:rgba(255,68,68,0.2);color:#ff4444}
+        
+        /* Buttons */
+        .btn{padding:0.5rem 1rem;border-radius:8px;border:none;cursor:pointer;font-weight:500;transition:all 0.3s;font-size:0.85rem}
+        .btn-gold{background:#d4af37;color:#0a0a0a}
+        .btn-gold:hover{background:#f4d03f}
+        .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.2);color:#a0a0a0}
+        .btn-outline:hover{border-color:#d4af37;color:#d4af37}
+        .btn-danger{background:transparent;border:1px solid #ff4444;color:#ff4444}
+        .btn-danger:hover{background:rgba(255,68,68,0.1)}
+        .btn-sm{padding:0.35rem 0.75rem;font-size:0.8rem}
+        
+        /* Modal */
+        .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:999;align-items:center;justify-content:center}
+        .modal-overlay.show{display:flex}
+        .modal{background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:2rem;max-width:500px;width:90%;max-height:80vh;overflow-y:auto}
+        .modal h3{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1.5rem;color:#d4af37}
+        .modal .form-group{margin-bottom:1rem}
+        .modal label{display:block;color:#a0a0a0;margin-bottom:0.5rem;font-size:0.9rem}
+        .modal input,.modal select,.modal textarea{width:100%;padding:0.75rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:'Outfit',Arial,sans-serif}
+        .modal input:focus,.modal select:focus,.modal textarea:focus{outline:none;border-color:#d4af37}
+        .modal-actions{display:flex;gap:0.75rem;justify-content:flex-end;margin-top:1.5rem}
+        
+        /* Toast */
+        .toast{position:fixed;bottom:30px;right:30px;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;padding:15px 25px;border-radius:30px;font-weight:bold;z-index:9999;animation:slideIn 0.3s ease}
+        @keyframes slideIn{from{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}
+        
+        /* Empty State */
+        .empty-state{text-align:center;padding:3rem;color:#666}
+        .empty-state .icon{font-size:4rem;margin-bottom:1rem}
+        
+        @media(max-width:1024px){.admin-sidebar{width:80px;padding:1rem 0.5rem}.admin-logo span,.nav-item span:not(.nav-icon){display:none}.nav-item{justify-content:center}.admin-main{margin-left:80px}}
+        @media(max-width:768px){.admin-layout{flex-direction:column}.admin-sidebar{width:100%;position:static;flex-direction:row;overflow-x:auto}.admin-nav{flex-direction:row}.admin-main{margin-left:0;padding:1rem}.stats-grid{grid-template-columns:repeat(2,1fr)}}
+    </style>
+</head>
+<body>
+
+    <div class="admin-layout">
+        
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <img src="/Public/image/logo.png" alt="OGSUN">
+                <span>OGSUN Admin</span>
+            </div>
+     <nav class="admin-nav">
+    <button class="nav-item active" onclick="showTab('dashboard', this)">
+        <span class="nav-icon">📊</span><span>Tablodbò</span>
+    </button>
+    <button class="nav-item" onclick="showTab('products', this)">
+        <span class="nav-icon">📦</span><span>Pwodwi</span>
+    </button>
+    <button class="nav-item" onclick="showTab('orders', this)">
+        <span class="nav-icon">🛒</span><span>Kòmand</span>
+    </button>
+    <button class="nav-item" onclick="showTab('contacts', this)">
+        <span class="nav-icon">📧</span><span>Mesaj</span>
+    </button>
+    
+    <a href="index.html" class="nav-item">
+        <span class="nav-icon">🏠</span><span>Retounen Sit</span>
+    </a>
+    
+    <!-- BOUTON DEKONEKTE - mete l anba tout -->
+    <button class="nav-item" onclick="logout()" style="color:#ff4444;">
+        <span class="nav-icon">🚪</span><span>Dekonekte</span>
+    </button>
+</nav>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="admin-main">
+            
+            <header class="admin-header">
+                <h2>👋 Bònjou, Admin!</h2>
+                <div class="admin-header-actions">
+                    <button class="refresh-btn" onclick="loadAll()">🔄 Rafrechi</button>
+                    <a href="index.html" class="back-link">← Retounen Sit</a>
+                </div>
+            </header>
+
+            <!-- DASHBOARD TAB -->
+            <div id="tab-dashboard" class="tab-content">
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card"><div class="stat-icon">💰</div><div class="stat-info"><h3 id="statRevenue">...</h3><p>Revni Total</p></div></div>
+                    <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-info"><h3 id="statOrders">...</h3><p>Kòmand Total</p></div></div>
+                    <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-info"><h3 id="statPending">...</h3><p>An Atant</p></div></div>
+                    <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-info"><h3 id="statProducts">...</h3><p>Pwodwi</p></div></div>
+                </div>
+                
+                <div class="admin-card">
+                    <div class="card-header"><h3>📋 Dènye Kòmand Yo</h3></div>
+                    <div class="table-wrapper">
+                        <table><thead><tr><th>N° Kòmand</th><th>Kliyan</th><th>Total</th><th>Stati</th><th>Dat</th><th>Aksyon</th></tr></thead>
+                            <tbody id="recentOrders"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCTS TAB -->
+            <div id="tab-products" class="tab-content" style="display:none;">
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h3>📦 Tout Pwodwi</h3>
+                        <button class="btn btn-gold" onclick="openProductModal()">➕ Ajoute Pwodwi</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table><thead><tr><th>ID</th><th>Non</th><th>Kategori</th><th>Pri</th><th>Stock</th><th>Aksyon</th></tr></thead>
+                            <tbody id="allProducts"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ORDERS TAB -->
+            <div id="tab-orders" class="tab-content" style="display:none;">
+                <div class="admin-card">
+                    <div class="card-header"><h3>🛒 Tout Kòmand</h3></div>
+                    <div class="table-wrapper">
+                        <table><thead><tr><th>N° Kòmand</th><th>Kliyan</th><th>Total</th><th>Peman</th><th>Stati</th><th>Dat</th><th>Aksyon</th></tr></thead>
+                            <tbody id="allOrders"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTACTS TAB -->
+            <div id="tab-contacts" class="tab-content" style="display:none;">
+                <div class="admin-card">
+                    <div class="card-header"><h3>📧 Mesaj Kontak</h3></div>
+                    <div class="table-wrapper">
+                        <table><thead><tr><th>Non</th><th>Imèl</th><th>Sijè</th><th>Dat</th><th>Aksyon</th></tr></thead>
+                            <tbody id="allContacts"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal">
+            <h3 id="modalTitle">➕ Ajoute Pwodwi</h3>
+            <input type="hidden" id="productId">
+            <div class="form-group"><label>Non Pwodwi</label><input type="text" id="prodName" placeholder="Antre non pwodwi"></div>
+            <div class="form-group"><label>Kategori</label><select id="prodCategory"><option value="">Chwazi...</option><option>Atizana</option><option>Rad</option><option>Dekorasyon</option><option>Manje</option><option>Pwodwi Natirèl</option></select></div>
+            <div class="form-group"><label>Pri ($)</label><input type="number" id="prodPrice" placeholder="45.00" step="0.01"></div>
+            <div class="form-group"><label>Ansyen Pri ($)</label><input type="number" id="prodOldPrice" placeholder="65.00" step="0.01"></div>
+            <div class="form-group"><label>Stock</label><input type="number" id="prodStock" placeholder="50"></div>
+            <div class="form-group"><label>Badge</label><select id="prodBadge"><option value="">Okenn</option><option>Nouvo</option><option>Popilè</option><option>Eko</option></select></div>
+            <div class="form-group"><label>Deskripsyon</label><textarea id="prodDesc" rows="3" placeholder="Deskripsyon pwodwi..."></textarea></div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" onclick="closeProductModal()">Anile</button>
+                <button class="btn btn-gold" onclick="saveProduct()">💾 Anrejistre</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // ===================================
+    // OGSUN ADMIN REYÈL - KONEKTE AK API
+    // ===================================
+    // Verifye si admin konekte
+const ADMIN_TOKEN = localStorage.getItem('ogsun-admin-token');
+const ADMIN_EMAIL = localStorage.getItem('ogsun-admin-email');
+
+if (!ADMIN_TOKEN) {
+    window.location.href = 'admin-login.html';
+}
+
+// Ajoute token nan tout requèt API
+async function fetchAPI(url, options = {}) {
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + ADMIN_TOKEN
+    };
+    
+    const response = await fetch(url, {
+        ...options,
+        headers: { ...headers, ...(options.headers || {}) }
+    });
+    
+    if (response.status === 401) {
+        localStorage.removeItem('ogsun-admin-token');
+        localStorage.removeItem('ogsun-admin-email');
+        window.location.href = 'admin-login.html';
+        return null;
+    }
+    
+    return response;
+}
+
+// Bouton dekonekte
+function logout() {
+    localStorage.removeItem('ogsun-admin-token');
+    localStorage.removeItem('ogsun-admin-email');
+    window.location.href = 'admin-login.html';
+}
+    const API = 'http://localhost:3000/api';
+    let currentTab = 'dashboard';
+    
+    console.log('🔥 OGSUN Admin Reyèl Chaje!');
+    
+    // ===== LOAD ALL DATA =====
+    function loadAll() {
+        showToast('🔄 Rafrechi...');
+        if (currentTab === 'dashboard') loadDashboard();
+        else if (currentTab === 'products') loadProducts();
+        else if (currentTab === 'orders') loadOrders();
+        else if (currentTab === 'contacts') loadContacts();
+    }
+    
+    // ===== DASHBOARD =====
+    async function loadDashboard() {
+        try {
+            // Load stats
+            const statsRes = await fetchAPI(API + '/admin/stats');
+            const stats = await statsRes.json();
+            
+            document.getElementById('statRevenue').textContent = '$' + (stats.totalRevenue || 0).toLocaleString();
+            document.getElementById('statOrders').textContent = stats.totalOrders || 0;
+            document.getElementById('statPending').textContent = stats.pendingOrders || 0;
+            document.getElementById('statProducts').textContent = stats.totalProducts || 0;
+            
+            // Load recent orders
+            const ordersRes = await fetchAPI(API + '/orders');
+            const orders = await ordersRes.json();
+            
+            const tbody = document.getElementById('recentOrders');
+            if (orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#666;">Pa gen kòmand ankò</td></tr>';
+            } else {
+                tbody.innerHTML = orders.slice(0, 5).map(o => `
+                    <tr>
+                        <td><strong>#${o.order_number}</strong></td>
+                        <td>${o.customer_name || 'N/A'}</td>
+                        <td><strong>$${o.total.toFixed(2)}</strong></td>
+                        <td><span class="status ${o.status}">${o.status === 'pending' ? '⏳ An Atant' : o.status === 'completed' ? '✅ Konplè' : '❌ Anile'}</span></td>
+                        <td>${new Date(o.created_at).toLocaleDateString('ht')}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline" onclick="updateOrderStatus(${o.id}, 'completed')">✅</button>
+                            <button class="btn btn-sm btn-danger" onclick="updateOrderStatus(${o.id}, 'cancelled')">❌</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        } catch (err) {
+            console.error('Erè dashboard:', err);
+            showToast('❌ Erè koneksyon API');
+        }
+    }
+    
+    // ===== PRODUCTS =====
+    async function loadProducts() {
+        try {
+            const res = await fetch(API + '/products');
+            const products = await res.json();
+            
+            const tbody = document.getElementById('allProducts');
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#666;">Pa gen pwodwi</td></tr>';
+            } else {
+                tbody.innerHTML = products.map(p => `
+                    <tr>
+                        <td>#${p.id}</td>
+                        <td><strong>${p.name}</strong></td>
+                        <td>${p.category || 'N/A'}</td>
+                        <td><strong style="color:#d4af37;">$${p.price.toFixed(2)}</strong></td>
+                        <td>${p.stock || 0}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline" onclick="editProduct(${p.id})">✏️</button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})">🗑️</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        } catch (err) {
+            console.error('Erè products:', err);
+            showToast('❌ Erè chaje pwodwi');
+        }
+    }
+    
+    // ===== ORDERS =====
+    async function loadOrders() {
+        try {
+            const res = await fetch(API + '/orders');
+            const orders = await res.json();
+            
+            const tbody = document.getElementById('allOrders');
+            if (orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#666;">Pa gen kòmand ankò</td></tr>';
+            } else {
+                tbody.innerHTML = orders.map(o => `
+                    <tr>
+                        <td><strong>#${o.order_number}</strong></td>
+                        <td>${o.customer_name || 'N/A'}</td>
+                        <td><strong style="color:#d4af37;">$${o.total.toFixed(2)}</strong></td>
+                        <td>${o.payment_method === 'card' ? '💳 Kat' : o.payment_method === 'moncash' ? '📱 MonCash' : o.payment_method === 'cod' ? '💵 Livrezon' : o.payment_method || 'N/A'}</td>
+                        <td><span class="status ${o.status}">${o.status}</span></td>
+                        <td>${new Date(o.created_at).toLocaleDateString('ht')}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline" onclick="updateOrderStatus(${o.id}, 'completed')">✅</button>
+                            <button class="btn btn-sm btn-danger" onclick="updateOrderStatus(${o.id}, 'cancelled')">❌</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        } catch (err) {
+            console.error('Erè orders:', err);
+            showToast('❌ Erè chaje kòmand');
+        }
+    }
+    
+    // ===== CONTACTS =====
+    
+    async function loadContacts() {
+        try {
+            const res = await fetch(API + '/contacts');
+            const contacts = await res.json();
+            
+            const tbody = document.getElementById('allContacts');
+            if (!contacts || contacts.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:#666;">Pa gen mesaj ankò</td></tr>';
+            } else {
+                tbody.innerHTML = contacts.map(c => `
+                    <tr>
+                        <td><strong>${c.name}</strong></td>
+                        <td>${c.email}</td>
+                        <td>${c.subject || 'N/A'}</td>
+                        <td>${new Date(c.created_at).toLocaleDateString('ht')}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline" onclick="viewContact('${c.name}', '${c.email}', '${c.subject || ''}', '${c.message || ''}')">👁️</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        } catch (err) {
+            console.error('Erè contacts:', err);
+            showToast('❌ Erè chaje mesaj');
+        }
+    }
+    
+    // ===== ACTIONS =====
+    async function updateOrderStatus(id, status) {
+        try {
+            await fetch(API + '/orders/' + id, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status })
+            });
+            showToast('✅ Kòmand mete ajou!');
+            loadAll();
+        } catch (err) {
+            showToast('❌ Erè mete ajou');
+        }
+    }
+    
+    function openProductModal() {
+        document.getElementById('modalTitle').textContent = '➕ Ajoute Pwodwi';
+        document.getElementById('productId').value = '';
+        document.getElementById('prodName').value = '';
+        document.getElementById('prodCategory').value = '';
+        document.getElementById('prodPrice').value = '';
+        document.getElementById('prodOldPrice').value = '';
+        document.getElementById('prodStock').value = '';
+        document.getElementById('prodBadge').value = '';
+        document.getElementById('prodDesc').value = '';
+        document.getElementById('productModal').classList.add('show');
+    }
+    
+    async function editProduct(id) {
+        try {
+            const res = await fetch(API + '/products/' + id);
+            const p = await res.json();
+            document.getElementById('modalTitle').textContent = '✏️ Modifye Pwodwi';
+            document.getElementById('productId').value = p.id;
+            document.getElementById('prodName').value = p.name;
+            document.getElementById('prodCategory').value = p.category || '';
+            document.getElementById('prodPrice').value = p.price;
+            document.getElementById('prodOldPrice').value = p.old_price || '';
+            document.getElementById('prodStock').value = p.stock;
+            document.getElementById('prodBadge').value = p.badge || '';
+            document.getElementById('prodDesc').value = p.description || '';
+            document.getElementById('productModal').classList.add('show');
+        } catch (err) {
+            showToast('❌ Erè chaje pwodwi');
+        }
+    }
+    
+    async function saveProduct() {
+        const id = document.getElementById('productId').value;
+        const data = {
+            name: document.getElementById('prodName').value,
+            category: document.getElementById('prodCategory').value,
+            price: parseFloat(document.getElementById('prodPrice').value),
+            old_price: document.getElementById('prodOldPrice').value ? parseFloat(document.getElementById('prodOldPrice').value) : null,
+            stock: parseInt(document.getElementById('prodStock').value) || 0,
+            badge: document.getElementById('prodBadge').value,
+            description: document.getElementById('prodDesc').value
+        };
+        
+        if (!data.name || !data.price) {
+            alert('❌ Non ak pri obligatwa!');
+            return;
+        }
+        
+        try {
+            const url = id ? API + '/products/' + id : API + '/products';
+            const method = id ? 'PUT' : 'POST';
+            
+            await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            closeProductModal();
+            showToast('✅ Pwodwi anrejistre!');
+            loadAll();
+        } catch (err) {
+            showToast('❌ Erè anrejistre');
+        }
+    }
+    
+    async function deleteProduct(id) {
+        if (!confirm('Èske w sèten w vle efase pwodwi #' + id + '?')) return;
+        try {
+            await fetch(API + '/products/' + id, { method: 'DELETE' });
+            showToast('🗑️ Pwodwi efase!');
+            loadAll();
+        } catch (err) {
+            showToast('❌ Erè efase');
+        }
+    }
+    
+    function closeProductModal() {
+        document.getElementById('productModal').classList.remove('show');
+    }
+    
+    function viewContact(name, email, subject, message) {
+        alert('👁️ Mesaj Kontak\n\nNon: ' + name + '\nImèl: ' + email + '\nSijè: ' + (subject || 'N/A') + '\n\nMesaj:\n' + (message || 'Pa gen mesaj'));
+    }
+    
+    // ===== TABS =====
+    function showTab(tab, btn) {
+        currentTab = tab;
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+        document.getElementById('tab-' + tab).style.display = 'block';
+        
+        if (tab === 'dashboard') loadDashboard();
+        else if (tab === 'products') loadProducts();
+        else if (tab === 'orders') loadOrders();
+        else if (tab === 'contacts') loadContacts();
+    }
+    
+    // ===== TOAST =====
+    function showToast(msg) {
+        const existing = document.querySelector('.toast');
+        if (existing) existing.remove();
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = msg;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2500);
+    }
+    
+    // Close modal on overlay click
+    document.getElementById('productModal').addEventListener('click', function(e) {
+        if (e.target === this) closeProductModal();
+    });
+    
+    // Init
+    loadDashboard();
+    console.log('✅ Admin Reyèl pare!');
+    console.log('📡 API: ' + API);
+    console.log('📊 Tab: Dashboard, Products, Orders, Contacts');
+    </script>
+
+</body>
+</html>

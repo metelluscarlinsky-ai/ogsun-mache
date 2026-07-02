@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="ht" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGSUN | Mache Lakay - Luxury Shopping</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           OGSUN LUXURY CSS - VÈSYON FINAL
+           Pi bèl pase Apple & Shopify
+           ============================================ */
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f4d03f;
+            --dark: #0a0a0a;
+            --darker: #111111;
+            --gray: #a0a0a0;
+        }
+        
+        body {
+            font-family: 'Outfit', Arial, sans-serif;
+            background: var(--dark);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a { text-decoration: none; color: inherit; }
+        
+        /* ===== CUSTOM CURSOR ===== */
+        .cursor {
+            width: 20px; height: 20px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s;
+        }
+        .cursor-follower {
+            width: 8px; height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+        }
+        
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s;
+        }
+        .navbar.scrolled { padding: 0.6rem 2rem; background: rgba(10, 10, 10, 0.95); }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        
+        .logo-wrapper { display: flex; align-items: center; gap: 0.75rem; }
+        .logo-img {
+            width: 50px; height: 50px; object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.5));
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(3deg); }
+            75% { transform: translateY(5px) rotate(-3deg); }
+        }
+        .logo-text {
+            font-family: 'Space Grotesk', Arial, sans-serif;
+            font-size: 1.75rem; font-weight: 700;
+            background: linear-gradient(135deg, #d4af37, #f4d03f, #c9a84c);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: 3px; text-transform: uppercase;
+        }
+        
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-link {
+            color: var(--gray); font-weight: 500; font-size: 0.9rem;
+            transition: all 0.3s; position: relative;
+        }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: -5px; left: 0;
+            width: 0; height: 2px; background: var(--gold);
+            transition: width 0.3s;
+        }
+        .nav-link:hover { color: var(--gold); }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active { color: var(--gold); }
+        .nav-link.active::after { width: 100%; }
+        
+        .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+        .icon-btn {
+            background: none; border: none; color: var(--gray);
+            cursor: pointer; padding: 0.5rem; font-size: 1.25rem;
+            transition: all 0.3s;
+        }
+        .icon-btn:hover { color: var(--gold); transform: scale(1.1); }
+        .cart-btn { position: relative; }
+        .cart-count {
+            position: absolute; top: -5px; right: -5px;
+            background: var(--gold); color: var(--dark);
+            width: 20px; height: 20px; border-radius: 50%;
+            font-size: 0.7rem; display: flex; align-items: center; justify-content: center;
+            font-weight: bold;
+        }
+        
+        .primary-btn {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: var(--dark); border: none; padding: 0.75rem 2rem;
+            border-radius: 50px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s; position: relative; overflow: hidden;
+        }
+        .primary-btn::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        .primary-btn:hover::before { left: 100%; }
+        .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4); }
+        
+        .mobile-menu-btn { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+        .mobile-menu-btn span { width: 25px; height: 2px; background: #fff; transition: all 0.3s; }
+        
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
+        }
+        .hero-bg { position: absolute; inset: 0; pointer-events: none; }
+        .floating-shape {
+            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.2;
+            animation: float 20s infinite;
+        }
+        .shape1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,175,55,0.4), transparent); top: -150px; right: -100px; }
+        .shape2 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(244,208,63,0.3), transparent); bottom: -100px; left: -50px; animation-delay: -7s; }
+        .shape3 { width: 250px; height: 250px; background: radial-gradient(circle, rgba(201,168,76,0.3), transparent); top: 50%; left: 50%; animation-delay: -14s; }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        
+        .hero-content { max-width: 600px; z-index: 1; animation: fadeInUp 1s ease; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 0.5rem 1.25rem; border-radius: 50px;
+            color: var(--gold); font-size: 0.875rem; margin-bottom: 2rem;
+        }
+        .pulse-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+        .hero-title {
+            font-family: 'Space Grotesk', Arial, sans-serif;
+            font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 700;
+            line-height: 1.1; margin-bottom: 1.5rem;
+        }
+        .title-line { display: block; }
+        .gradient-text {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 50%, #c9a84c 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-description {
+            font-size: 1.125rem; color: var(--gray);
+            margin-bottom: 2.5rem; max-width: 500px;
+        }
+        .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .cta-primary {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: var(--dark); padding: 1rem 2.5rem; border-radius: 50px;
+            font-weight: 600; cursor: pointer; transition: all 0.3s;
+            display: inline-flex; align-items: center; gap: 0.75rem;
+        }
+        .cta-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(212, 175, 55, 0.4); }
+        .cta-secondary {
+            background: transparent; color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 2.5rem; border-radius: 50px;
+            font-weight: 500; cursor: pointer; transition: all 0.3s;
+        }
+        .cta-secondary:hover { border-color: var(--gold); color: var(--gold); }
+        
+        .hero-visual { position: relative; z-index: 1; }
+        .hero-card {
+            width: 350px; height: 350px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            display: flex; align-items: center; justify-content: center;
+            animation: float3D 6s ease-in-out infinite;
+        }
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            25% { transform: translateY(-20px) rotateY(5deg); }
+            75% { transform: translateY(20px) rotateY(-5deg); }
+        }
+        .hero-card img { width: 70%; animation: rotate3D 8s ease-in-out infinite; }
+        @keyframes rotate3D {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+        }
+        
+        /* ===== PRODUCTS ===== */
+        .section { padding: 6rem 2rem; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-badge {
+            display: inline-block; background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 0.5rem 1.5rem; border-radius: 50px;
+            color: var(--gold); font-size: 0.875rem; margin-bottom: 1rem;
+        }
+        .section-title {
+            font-family: 'Space Grotesk', Arial, sans-serif;
+            font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 0.5rem;
+        }
+        .section-subtitle { color: var(--gray); font-size: 1.1rem; }
+        
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem; max-width: 1400px; margin: 0 auto;
+        }
+        .product-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px; overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer; position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+        .product-image-wrapper {
+            aspect-ratio: 1; overflow: hidden; position: relative;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .product-image {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .product-card:hover .product-image { transform: scale(1.08); }
+        .product-badge {
+            position: absolute; top: 1rem; left: 1rem;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: var(--dark); padding: 0.35rem 1.25rem;
+            border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .product-actions {
+            position: absolute; top: 1rem; right: 1rem;
+            display: flex; flex-direction: column; gap: 0.5rem;
+            opacity: 0; transform: translateX(20px);
+            transition: all 0.3s;
+        }
+        .product-card:hover .product-actions { opacity: 1; transform: translateX(0); }
+        .action-btn {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1); color: #fff;
+            cursor: pointer; font-size: 1rem; transition: all 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .action-btn:hover { background: var(--gold); color: var(--dark); }
+        
+        .product-info { padding: 1.5rem; }
+        .product-category {
+            color: var(--gold); font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 2px; font-weight: 600;
+        }
+        .product-name {
+            font-family: 'Space Grotesk', Arial, sans-serif;
+            font-size: 1.25rem; margin: 0.5rem 0; font-weight: 600;
+        }
+        .product-rating { color: var(--gold-light); font-size: 0.875rem; margin-bottom: 0.5rem; }
+        .product-price { display: flex; align-items: center; gap: 0.75rem; margin: 1rem 0; }
+        .current-price { font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+        .old-price { text-decoration: line-through; color: #666; font-size: 1rem; }
+        
+        .add-to-cart-btn {
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            width: 100%; background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: var(--dark); padding: 0.875rem; border-radius: 25px;
+            font-weight: 600; cursor: pointer; transition: all 0.3s;
+            border: none; font-size: 0.95rem;
+        }
+        .add-to-cart-btn:hover { transform: scale(1.03); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3); }
+        
+        /* ===== TRUST ===== */
+        .trust-section {
+            padding: 3rem 2rem; border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .trust-badges { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; }
+        .trust-item { display: flex; align-items: center; gap: 0.75rem; color: var(--gray); font-weight: 500; font-size: 1.1rem; }
+        .trust-item span:first-child { font-size: 1.5rem; }
+        
+        /* ===== QUICK LINKS ===== */
+        .quick-links-section { padding: 4rem 2rem; text-align: center; }
+        .quick-links-grid { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; max-width: 1000px; margin: 2rem auto 0; }
+        .quick-link-btn {
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.85rem 1.75rem; border-radius: 50px;
+            color: var(--gray); font-weight: 500; transition: all 0.3s; font-size: 0.9rem;
+        }
+        .quick-link-btn:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+        
+        /* ===== FOOTER ===== */
+        .site-footer { background: var(--darker); padding: 5rem 2rem 2rem; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .footer-brand img { width: 60px; margin-bottom: 1rem; }
+        .footer-brand p { color: var(--gray); max-width: 250px; }
+        .footer-links h4 { font-family: 'Space Grotesk', Arial, sans-serif; margin-bottom: 1.25rem; color: #fff; font-size: 1rem; }
+        .footer-links a { display: block; color: var(--gray); margin-bottom: 0.75rem; transition: all 0.3s; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--gold); padding-left: 5px; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.06); color: #666; font-size: 0.9rem; }
+        .footer-bottom a { color: var(--gold); }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero { flex-direction: column; text-align: center; }
+            .hero-content { margin-bottom: 3rem; }
+            .hero-description { margin: 0 auto 2.5rem; }
+            .hero-cta { justify-content: center; }
+            .hero-card { width: 250px; height: 250px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-links.active {
+                display: flex; flex-direction: column;
+                position: absolute; top: 100%; left: 0; right: 0;
+                background: rgba(10, 10, 10, 0.98); padding: 1.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            .mobile-menu-btn { display: flex; }
+            .hero-title { font-size: 2.5rem; }
+            .products-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+            .trust-badges { gap: 1.5rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== CUSTOM CURSOR ===== -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="/Public/image/logo.png" alt="OGSUN" class="logo-img">
+                <span class="logo-text">OGSUN</span>
+            </a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link active">🏠 Akèy</a>
+                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
+                <a href="cart.html" class="nav-link">🛒 Panye</a>
+                <a href="product.html" class="nav-link">📦 Pwodwi</a>
+                <a href="account.html" class="nav-link">👤 Kont</a>
+                <a href="orders.html" class="nav-link">📋 Kòmand</a>
+                <a href="checkout.html" class="nav-link">💳 Peman</a>
+                <a href="about.html" class="nav-link">ℹ️ Sou Nou</a>
+                <a href="contact.html" class="nav-link">📞 Kontakte</a>
+                <a href="faq.html" class="nav-link">❓ FAQ</a>
+                <a href="admin.html" class="nav-link">👑 Admin</a>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="icon-btn" onclick="window.location.href='shop.html'">🔍</button>
+                <button class="icon-btn" onclick="toggleTheme()">🌓</button>
+                <button class="icon-btn cart-btn" onclick="window.location.href='cart.html'">
+                    🛒 <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <a href="account.html" class="primary-btn">Konekte</a>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileBtn">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+   <section class="hero">
+        <div class="hero-bg">
+            <div class="floating-shape shape1"></div>
+            <div class="floating-shape shape2"></div>
+            <div class="floating-shape shape3"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse-dot"></span> 🇭🇹 Nouvo Koleksyon 2026
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line">Mache Lakay</span>
+                <span class="title-line gradient-text">OGSUN Style</span>
+            </h1>
+            <p class="hero-description">
+                Dekouvri eleganas ak kalite pwodwi lokal yo. 
+                Chak atik rakonte yon istwa, chak kreyasyon se yon zèv atizanal 
+                ki soti dirèkteman nan men atizan ayisyen yo.
+            </p>
+            <div class="hero-cta">
+                <a href="shop.html" class="cta-primary">🛍️ Achte Kounya</a>
+                <a href="about.html" class="cta-secondary">ℹ️ Dekouvri istwa nou</a>
+            </div>
+        </div>
+        
+        <div class="hero-visual">
+            <div class="hero-card">
+                <img src="/Public/image/logo.png" alt="OGSUN Product">
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PRODUCTS ===== -->
+    <section class="section">
+        <div class="section-header">
+            <span class="section-badge">🔥 Ki pi cho</span>
+            <h2 class="section-title">Pwodwi <span class="gradient-text">Popilè</span></h2>
+            <p class="section-subtitle">Sa k ap fè bri nan mache a</p>
+        </div>
+        
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <a href="product.html" class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="logo.png" alt="Sak Pay Deluxe" class="product-image">
+                    <span class="product-badge">Nouvo</span>
+                    <div class="product-actions">
+                        <button class="action-btn" onclick="event.preventDefault();event.stopPropagation();window.location.href='product.html'">👁️</button>
+                        <button class="action-btn" onclick="event.preventDefault();event.stopPropagation();toggleWishlist(this)">❤️</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Atizana</span>
+                    <h3 class="product-name">Sak Pay Deluxe</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ <span style="color:#a0a0a0;">(128)</span></div>
+                    <div class="product-price">
+                        <span class="current-price">$45.00</span>
+                        <span class="old-price">$65.00</span>
+                    </div>
+                    <span class="add-to-cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart('Sak Pay Deluxe')">🛒 Ajoute nan panye</span>
+                </div>
+            </a>
+            
+            <!-- Product 2 -->
+            <a href="product.html" class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="logo.png" alt="Chemiz Brode" class="product-image">
+                    <span class="product-badge">Popilè</span>
+                    <div class="product-actions">
+                        <button class="action-btn" onclick="event.preventDefault();event.stopPropagation();window.location.href='product.html'">👁️</button>
+                        <button class="action-btn" onclick="event.preventDefault();event.stopPropagation();toggleWishlist(this)">❤️</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Rad</span>
+                    <h3 class="product-name">Chemiz Brode</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ <span style="color:#a0a0a0;">(95)</span></div>
+                    <div class="product-price">
+                        <span class="current-price">$35.00</span>
+                        <span class="old-price">$50.00</span>
+                    </div>
+                    <span class="add-to-cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart('Chemiz Brode')">🛒 Ajoute nan panye</span>
+                </div>
+            </a>
+            
+            <!-- Product 3 -->
+            <a href="product.html" class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="logo.png" alt="Tablo Dekoratif" class="product-image">
+                    <div class="product-actions">
+                        <button class="action-btn" onclick="event.preventDefault();event.stopPropagation();window.location.href='product.html'">👁️</button>
+                        <button class="action-btn" onclick="event.preventDefault();event.stopPropagation();toggleWishlist(this)">❤️</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Dekorasyon</span>
+                    <h3 class="product-name">Tablo Dekoratif</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ <span style="color:#a0a0a0;">(72)</span></div>
+                    <div class="product-price">
+                        <span class="current-price">$75.00</span>
+                        <span class="old-price">$95.00</span>
+                    </div>
+                    <span class="add-to-cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart('Tablo Dekoratif')">🛒 Ajoute nan panye</span>
+                </div>
+            </a>
+            
+            <!-- Product 4 -->
+            <a href="product.html" class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="logo.png" alt="Siwo Myèl" class="product-image">
+                    <span class="product-badge" style="background:#4caf50;">Eko</span>
+                    <div class="product-actions">
+                        <button class="action-btn" onclick="event.preventDefault();event.stopPropagation();window.location.href='product.html'">👁️</button>
+                        <button class="action-btn" onclick="event.preventDefault();event.stopPropagation();toggleWishlist(this)">❤️</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <span class="product-category">Manje</span>
+                    <h3 class="product-name">Siwo Myèl Natirèl</h3>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ <span style="color:#a0a0a0;">(200)</span></div>
+                    <div class="product-price">
+                        <span class="current-price">$15.00</span>
+                    </div>
+                    <span class="add-to-cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart('Siwo Myèl Natirèl')">🛒 Ajoute nan panye</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ===== TRUST ===== -->
+    <section class="trust-section">
+        <div class="trust-badges">
+            <div class="trust-item"><span>🔒</span> Peman Sekirize</div>
+            <div class="trust-item"><span>🚚</span> Livrezon Gratis</div>
+            <div class="trust-item"><span>✅</span> Garanti 100%</div>
+            <div class="trust-item"><span>📞</span> Sipò 24/7</div>
+        </div>
+    </section>
+
+    <!-- ===== QUICK LINKS ===== -->
+    <section class="quick-links-section">
+        <h2 style="font-family:'Space Grotesk',Arial,sans-serif;font-size:2rem;margin-bottom:0.5rem;">Navige <span class="gradient-text">OGSUN</span></h2>
+        <p style="color:var(--gray);">Tout sa w bezwen a yon klik</p>
+        <div class="quick-links-grid">
+            <a href="shop.html" class="quick-link-btn">🛍️ Boutik</a>
+            <a href="cart.html" class="quick-link-btn">🛒 Panye</a>
+            <a href="product.html" class="quick-link-btn">📦 Pwodwi</a>
+            <a href="account.html" class="quick-link-btn">👤 Kont</a>
+            <a href="orders.html" class="quick-link-btn">📋 Kòmand</a>
+            <a href="checkout.html" class="quick-link-btn">💳 Peman</a>
+            <a href="about.html" class="quick-link-btn">ℹ️ Sou Nou</a>
+            <a href="contact.html" class="quick-link-btn">📞 Kontakte</a>
+            <a href="faq.html" class="quick-link-btn">❓ FAQ</a>
+            <a href="admin.html" class="quick-link-btn">👑 Admin</a>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="logo.png" alt="OGSUN">
+                <p>Pi bon platfòm e-commerce lokal an Ayiti. Nou konekte atizan ayisyen ak moun ki renmen bèl bagay otantik.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navigate</h4>
+                <a href="index.html">🏠 Akèy</a>
+                <a href="shop.html">🛍️ Boutik</a>
+                <a href="cart.html">🛒 Panye</a>
+                <a href="product.html">📦 Pwodwi</a>
+                <a href="account.html">👤 Kont</a>
+                <a href="orders.html">📋 Kòmand</a>
+            </div>
+            <div class="footer-links">
+                <h4>Enfòmasyon</h4>
+                <a href="about.html">ℹ️ Sou Nou</a>
+                <a href="contact.html">📞 Kontakte</a>
+                <a href="faq.html">❓ FAQ</a>
+                <a href="checkout.html">💳 Peman</a>
+                <a href="admin.html">👑 Admin</a>
+            </div>
+            <div class="footer-links">
+                <h4>Sipò</h4>
+                <a href="faq.html">Livrezon</a>
+                <a href="faq.html">Retounen</a>
+                <a href="faq.html">Garanti</a>
+                <a href="contact.html">Èd</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 <a href="index.html">OGSUN</a>. Tout dwa rezève. Fèt ak ❤️ nan Ayiti 🇭🇹</p>
+        </div>
+    </footer>
+
+    <!-- ======================================== -->
+    <!-- SCRIPTS -->
+    <!-- ======================================== -->
+    <script>
+    console.log('🔥 OGSUN Luxury Index Loaded!');
+    
+    // ===== CUSTOM CURSOR =====
+    var cursor = document.getElementById('cursor');
+    var follower = document.getElementById('cursorFollower');
+    var mouseX = 0, mouseY = 0;
+    
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursor.style.left = (mouseX - 10) + 'px';
+        cursor.style.top = (mouseY - 10) + 'px';
+        setTimeout(function() {
+            follower.style.left = (mouseX - 4) + 'px';
+            follower.style.top = (mouseY - 4) + 'px';
+        }, 50);
+    });
+    
+    // ===== NAVBAR SCROLL =====
+    window.addEventListener('scroll', function() {
+        var navbar = document.getElementById('navbar');
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+    
+    // ===== MOBILE MENU =====
+    document.getElementById('mobileBtn').addEventListener('click', function() {
+        document.getElementById('navLinks').classList.toggle('active');
+    });
+    
+    // ===== THEME =====
+    function toggleTheme() {
+        var html = document.documentElement;
+        var current = html.getAttribute('data-theme');
+        var newTheme = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('ogsun-theme', newTheme);
+    }
+    
+    // Load theme
+    (function() {
+        var saved = localStorage.getItem('ogsun-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', saved);
+    })();
+    
+    // ===== CART =====
+    function updateCartCount() {
+        var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
+        var total = cart.reduce(function(s, i) { return s + i.quantity; }, 0);
+        document.getElementById('cartCount').textContent = total;
+    }
+    
+    function addToCart(name) {
+        var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
+        var existing = cart.find(function(i) { return i.name === name; });
+        if (existing) { existing.quantity += 1; }
+        else { cart.push({ name: name, quantity: 1, price: 45 }); }
+        localStorage.setItem('ogsun-cart', JSON.stringify(cart));
+        updateCartCount();
+        
+        // Toast notification
+        var toast = document.createElement('div');
+        toast.textContent = '✅ ' + name + ' ajoute! 🛒';
+        toast.style.cssText = 'position:fixed;bottom:30px;right:30px;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;padding:15px 25px;border-radius:30px;font-weight:bold;z-index:9999;animation:slideIn 0.3s ease;';
+        document.body.appendChild(toast);
+        setTimeout(function() { toast.remove(); }, 2500);
+    }
+    
+    function toggleWishlist(btn) {
+        btn.textContent = btn.textContent === '❤️' ? '💔' : '❤️';
+    }
+    
+    updateCartCount();
+    console.log('✅ Tout fonksyon pare!');
+    </script>
+
+</body>
+</html>

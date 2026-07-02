@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ht" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OGSUN | Detay Pwodwi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
+        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+        .logo-img{width:50px;height:50px;object-fit:contain}
+        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
+        .nav-links{display:flex;gap:1.5rem;align-items:center}
+        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem}
+        .nav-link:hover{color:#d4af37}
+        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none}
+        .product-page{padding:8rem 2rem 4rem;max-width:1200px;margin:0 auto}
+        .breadcrumb{margin-bottom:2rem;color:#a0a0a0}
+        .breadcrumb a{color:#d4af37;text-decoration:none}
+        .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+        .product-image-main{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;text-align:center}
+        .product-image-main img{width:100%;max-height:400px;object-fit:contain}
+        .product-details h1{font-family:'Space Grotesk',Arial,sans-serif;font-size:2.5rem;margin-bottom:0.5rem}
+        .product-details .category{color:#d4af37;text-transform:uppercase;letter-spacing:2px;font-size:0.875rem}
+        .product-details .rating{color:#f4d03f;margin:1rem 0}
+        .product-details .price{font-size:2rem;font-weight:bold;color:#d4af37;margin:1rem 0}
+        .product-details .old-price{text-decoration:line-through;color:#666;font-size:1.25rem;margin-left:1rem}
+        .product-details .description{color:#a0a0a0;line-height:1.8;margin:1.5rem 0}
+        .qty-section{display:flex;align-items:center;gap:1rem;margin:1.5rem 0}
+        .qty-btn{background:rgba(255,255,255,0.1);border:none;color:#fff;width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:1.5rem}
+        .qty-input{width:60px;text-align:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:0.5rem;border-radius:10px;font-size:1.1rem}
+        .add-to-cart-big{width:100%;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.2rem;cursor:pointer;margin-bottom:1rem}
+        .add-to-cart-big:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
+        .whatsapp-btn{width:100%;background:#25D366;color:#fff;border:none;padding:1rem;border-radius:30px;font-weight:bold;font-size:1.1rem;cursor:pointer}
+        .trust-badges{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem;padding:1.5rem;background:rgba(255,255,255,0.03);border-radius:15px;text-align:center}
+        @media(max-width:768px){.product-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="/Public/image/logo.png" alt="OGSUN" class="logo-img">
+                <span class="logo-text">OGSUN</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">🏠 Akèy</a>
+                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
+                <a href="cart.html" class="nav-link">🛒 Panye</a>
+                <a href="contact.html" class="nav-link">📞 Kontakte</a>
+            </div>
+            <a href="account.html" class="primary-btn">Konekte</a>
+        </div>
+    </nav>
+
+    <main class="product-page">
+        <div class="breadcrumb">
+            <a href="index.html">Akèy</a> / <a href="shop.html">Boutik</a> / <span>Sak Pay Deluxe</span>
+        </div>
+        
+        <div class="product-grid">
+            <div class="product-image-main">
+                <img src="/Public/image/logo.png" alt="Sak Pay Deluxe">
+            </div>
+            <div class="product-details">
+                <p class="category">Atizana</p>
+                <h1>Sak Pay Deluxe</h1>
+                <div class="rating">⭐⭐⭐⭐⭐ <span style="color:#a0a0a0;">(128 avis)</span></div>
+                <div class="price">$45.00 <span class="old-price">$65.00</span> <span style="background:#d4af37;color:#0a0a0a;padding:0.25rem 1rem;border-radius:20px;font-size:0.875rem;">-31%</span></div>
+                <p class="description">Yon bèl sak pay atizanal ki fèt ak men ak anpil lanmou. Chak detay rakonte yon istwa e pote yon moso kilti ayisyen.</p>
+                
+                <div class="qty-section">
+                    <span style="color:#a0a0a0;">Kantite:</span>
+                    <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                    <input type="number" class="qty-input" id="qty" value="1" min="1" max="10">
+                    <button class="qty-btn" onclick="changeQty(1)">+</button>
+                    <span style="color:#4caf50;">✅ 50 an stock</span>
+                </div>
+                
+                <button class="add-to-cart-big" onclick="addToCart()">🛒 Ajoute nan Panye</button>
+                <button class="whatsapp-btn" onclick="alert('💬 Ouvri WhatsApp! +509 32924776')">💬 Achte sou WhatsApp</button>
+                
+                <div class="trust-badges">
+                    <div><div style="font-size:2rem;">🔒</div><small style="color:#a0a0a0;">Peman Sekirize</small></div>
+                    <div><div style="font-size:2rem;">🚚</div><small style="color:#a0a0a0;">Livrezon Gratis</small></div>
+                    <div><div style="font-size:2rem;">↩️</div><small style="color:#a0a0a0;">Retou 30 Jou</small></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    function changeQty(delta) {
+        var input = document.getElementById('qty');
+        var val = parseInt(input.value) + delta;
+        input.value = Math.max(1, Math.min(10, val));
+    }
+    
+    function addToCart() {
+        var qty = parseInt(document.getElementById('qty').value);
+        var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
+        var existing = cart.find(function(item) { return item.name === 'Sak Pay Deluxe'; });
+        
+        if (existing) {
+            existing.quantity += qty;
+        } else {
+            cart.push({name:'Sak Pay Deluxe', quantity:qty, price:45});
+        }
+        
+        localStorage.setItem('ogsun-cart', JSON.stringify(cart));
+        alert('✅ ' + qty + ' x Sak Pay Deluxe ajoute nan panye! 🛒');
+    }
+    console.log('✅ Product page chaje!');
+    </script>
+</body>
+</html>
