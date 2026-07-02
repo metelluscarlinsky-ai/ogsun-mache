@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OGSUN | Peman</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
@@ -17,26 +16,44 @@
         .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem}
         .nav-link:hover{color:#d4af37}
         .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none}
+        
         .checkout-page{padding:8rem 2rem 4rem;max-width:800px;margin:0 auto}
         .checkout-title{font-family:'Space Grotesk',Arial,sans-serif;font-size:2.5rem;margin-bottom:2rem;text-align:center}
+        .checkout-title span{color:#d4af37}
+        
         .form-section{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;margin-bottom:1.5rem}
-        .form-section h2{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1.5rem}
+        .form-section h2{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1.5rem;font-size:1.3rem}
         .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
         .form-group{margin-bottom:1rem}
-        .form-group label{display:block;color:#a0a0a0;margin-bottom:0.5rem}
-        .form-group input,.form-group select,.form-group textarea{width:100%;padding:1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:'Outfit',Arial,sans-serif}
+        .form-group label{display:block;color:#a0a0a0;margin-bottom:0.5rem;font-size:0.9rem}
+        .form-group input,.form-group select,.form-group textarea{width:100%;padding:1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:'Outfit',Arial,sans-serif;font-size:1rem}
         .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#d4af37}
-        .form-group textarea{resize:vertical}
-        .payment-option{display:flex;align-items:center;gap:1rem;padding:1.25rem;background:rgba(255,255,255,0.03);border:2px solid rgba(255,255,255,0.08);border-radius:15px;cursor:pointer;margin-bottom:0.75rem;transition:all 0.3s}
-        .payment-option:hover,.payment-option.selected{border-color:#d4af37}
-        .payment-option input[type="radio"]{accent-color:#d4af37;width:20px;height:20px}
+        .form-group textarea{resize:vertical;min-height:80px}
+        
+        .payment-options{display:flex;flex-direction:column;gap:0.75rem}
+        .payment-btn{width:100%;padding:1.25rem;border-radius:15px;border:2px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:#fff;font-weight:bold;font-size:1.1rem;cursor:pointer;text-align:left;display:flex;align-items:center;gap:1rem;transition:all 0.3s}
+        .payment-btn:hover{border-color:#d4af37;transform:translateY(-2px)}
+        .payment-btn.selected{border-color:#d4af37;background:rgba(212,175,55,0.1)}
+        .payment-icon{font-size:2rem}
+        
         .order-summary{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;margin-top:2rem}
         .summary-row{display:flex;justify-content:space-between;margin-bottom:0.75rem;color:#a0a0a0}
         .summary-total{display:flex;justify-content:space-between;font-size:1.5rem;font-weight:bold;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08)}
         .summary-total span:last-child{color:#d4af37}
-        .place-order-btn{width:100%;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.2rem;cursor:pointer;margin-top:1.5rem}
+        
+        .place-order-btn{width:100%;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.2rem;cursor:pointer;margin-top:1.5rem;transition:all 0.3s}
         .place-order-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
-        @media(max-width:768px){.form-row{grid-template-columns:1fr}}
+        
+        .whatsapp-btn{width:100%;background:#25D366;color:#fff;border:none;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.1rem;cursor:pointer;margin-top:0.75rem;transition:all 0.3s}
+        .whatsapp-btn:hover{transform:translateY(-2px)}
+        
+        .natcash-btn{width:100%;background:#E91E63;color:#fff;border:none;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.1rem;cursor:pointer;margin-top:0.75rem;transition:all 0.3s}
+        .natcash-btn:hover{transform:translateY(-2px)}
+        
+        .email-btn{width:100%;background:transparent;color:#d4af37;border:2px solid #d4af37;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.1rem;cursor:pointer;margin-top:0.75rem;transition:all 0.3s}
+        .email-btn:hover{background:rgba(212,175,55,0.1)}
+        
+        @media(max-width:768px){.form-row{grid-template-columns:1fr}.checkout-title{font-size:2rem}}
     </style>
 </head>
 <body>
@@ -44,7 +61,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo-wrapper">
-                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="logo-img">
+                 <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="logo-img">
                 <span class="logo-text">OGSUN</span>
             </a>
             <div class="nav-links">
@@ -52,156 +69,260 @@
                 <a href="shop.html" class="nav-link">🛍️ Boutik</a>
                 <a href="cart.html" class="nav-link">🛒 Panye</a>
             </div>
-            <a href="account.html" class="primary-btn">Konekte</a>
+            <a href="index.html" class="primary-btn">Akèy</a>
         </div>
     </nav>
 
     <main class="checkout-page">
-        <h1 class="checkout-title">💳 Finalize Kòmand</h1>
+        <h1 class="checkout-title">💳 Finalize <span>Kòmand</span></h1>
         
-        <!-- Shipping Form -->
+        <!-- Fòm Livrezon -->
         <div class="form-section">
             <h2>📍 Enfòmasyon Livrezon</h2>
             <form id="checkoutForm" onsubmit="return false;">
                 <div class="form-row">
                     <div class="form-group">
                         <label>Non *</label>
-                        <input type="text" required placeholder="Antre non w">
+                        <input type="text" id="firstName" placeholder="Antre non w" required>
                     </div>
                     <div class="form-group">
                         <label>Siyati *</label>
-                        <input type="text" required placeholder="Antre siyati w">
+                        <input type="text" id="lastName" placeholder="Antre siyati w" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Imèl *</label>
-                    <input type="email" required placeholder="imel@example.com">
+                    <label>Imèl</label>
+                    <input type="email" id="email" placeholder="imel@example.com">
                 </div>
                 <div class="form-group">
                     <label>Telefòn *</label>
-                    <input type="tel" required placeholder="+509 0000 0000">
+                    <input type="tel" id="phone" placeholder="+509 0000 0000" required>
                 </div>
                 <div class="form-group">
-                    <label>Adrès *</label>
-                    <input type="text" required placeholder="Antre adrès livrezon ou">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Vil *</label>
-                        <input type="text" required placeholder="Pòtoprens">
-                    </div>
-                    <div class="form-group">
-                        <label>Depatman</label>
-                        <select>
-                            <option value="">Chwazi...</option>
-                            <option>Lwès</option>
-                            <option>Nò</option>
-                            <option>Sid</option>
-                        </select>
-                    </div>
+                    <label>Adrès Livrezon *</label>
+                    <textarea id="address" placeholder="Antre adrès konplè ou..." required></textarea>
                 </div>
             </form>
         </div>
 
-        <!-- Payment Method -->
+        <!-- Metòd Peman -->
         <div class="form-section">
-            <h2>💳 Metòd Peman</h2>
-            <label class="payment-option selected">
-                <input type="radio" name="payment" value="card" checked>
-                <span style="font-size:2rem;">💳</span>
-                <div><strong>Kat Kredi / Debi</strong><p style="color:#a0a0a0;font-size:0.875rem;">Visa, Mastercard</p></div>
-            </label>
-            <label class="payment-option">
-                <input type="radio" name="payment" value="moncash">
-                <span style="font-size:2rem;">📱</span>
-                <div><strong>MonCash</strong><p style="color:#a0a0a0;font-size:0.875rem;">Peman mobil</p></div>
-            </label>
-            <label class="payment-option">
-                <input type="radio" name="payment" value="cod">
-                <span style="font-size:2rem;">💵</span>
-                <div><strong>Peye a Livrezon</strong><p style="color:#a0a0a0;font-size:0.875rem;">Lè w resevwa pake a</p></div>
-            </label>
+            <h2>💳 Chwazi Metòd Peman</h2>
+            <div class="payment-options">
+                <button class="payment-btn natcash-btn" onclick="selectPayment('natcash')" id="btnNatcash">
+                    <span class="payment-icon">📱</span>
+                    <div>
+                        <strong>NatCash</strong>
+                        <p style="font-size:0.85rem;opacity:0.8;">Peye ak NatCash - Nimewo: 32924776</p>
+                    </div>
+                </button>
+                <button class="payment-btn whatsapp-btn" onclick="selectPayment('whatsapp')" id="btnWhatsapp">
+                    <span class="payment-icon">💬</span>
+                    <div>
+                        <strong>WhatsApp</strong>
+                        <p style="font-size:0.85rem;opacity:0.8;">Kòmande dirèk sou WhatsApp</p>
+                    </div>
+                </button>
+                <button class="payment-btn email-btn" onclick="selectPayment('email')" id="btnEmail">
+                    <span class="payment-icon">📧</span>
+                    <div>
+                        <strong>Imèl</strong>
+                        <p style="font-size:0.85rem;opacity:0.8;">Voye kòmand pa imèl</p>
+                    </div>
+                </button>
+            </div>
         </div>
 
-        <!-- Order Summary -->
+        <!-- Rezime Kòmand -->
         <div class="order-summary">
             <h2 style="font-family:'Space Grotesk',Arial,sans-serif;">📋 Rezime Kòmand</h2>
-            <div id="checkoutSummary"></div>
+            <div id="checkoutSummary"><p style="color:#a0a0a0;">⏳ Chajman...</p></div>
+            
             <button class="place-order-btn" onclick="placeOrder()">🚀 Konfime Kòmand</button>
+            <button class="natcash-btn" onclick="payWithNatCash()">📱 Peye ak NatCash </button>
+            <button class="whatsapp-btn" onclick="orderViaWhatsApp()">💬 Kòmande sou WhatsApp</button>
+            <button class="email-btn" onclick="orderViaEmail()">📧 Voye Kòmand pa Imèl</button>
         </div>
     </main>
 
     <script>
-    // Chaje panye
+    // ===== KONFIGIRASYON =====
+    var NATCASH_NUMBER = '50932924776';
+    var WHATSAPP_NUMBER = '50932924776';
+    var EMAIL_ADDRESS = 'metelluscarlinsky@gmail.com';
+    var selectedPayment = 'natcash';
+    
+    // ===== CHAJE PANYE =====
     var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
     var total = cart.reduce(function(sum, item) { return sum + (item.price * item.quantity); }, 0);
     
-    document.getElementById('checkoutSummary').innerHTML = 
-        cart.map(function(item) {
-            return '<div class="summary-row"><span>'+item.name+' x'+item.quantity+'</span><span>$'+(item.price*item.quantity).toFixed(2)+'</span></div>';
-        }).join('') +
-        '<div class="summary-row"><span>Livrezon</span><span style="color:#4caf50;">Gratis</span></div>' +
-        '<div class="summary-total"><span>Total</span><span>$'+total.toFixed(2)+'</span></div>';
+    // Montre rezime
+    var summaryHTML = cart.map(function(item) {
+        return '<div class="summary-row"><span>' + item.name + ' x' + item.quantity + '</span><span>$' + (item.price * item.quantity).toFixed(2) + '</span></div>';
+    }).join('');
     
-    // Payment selection
-    document.querySelectorAll('.payment-option').forEach(function(opt) {
-        opt.addEventListener('click', function() {
-            document.querySelectorAll('.payment-option').forEach(function(o) { o.classList.remove('selected'); });
-            this.classList.add('selected');
-            this.querySelector('input').checked = true;
+    summaryHTML += '<div class="summary-row"><span>Livrezon</span><span style="color:#4caf50;">Gratis 🎉</span></div>';
+    summaryHTML += '<div class="summary-total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
+    
+    document.getElementById('checkoutSummary').innerHTML = summaryHTML;
+    
+    // ===== SELEKSYON PEMAN =====
+    function selectPayment(method) {
+        selectedPayment = method;
+        document.querySelectorAll('.payment-btn').forEach(function(btn) {
+            btn.classList.remove('selected');
         });
-    });
+        document.getElementById('btn' + method.charAt(0).toUpperCase() + method.slice(1))?.classList.add('selected');
+    }
     
+    // ===== KONFIME KÒMAND (SIMILASYON) =====
     function placeOrder() {
-        var form = document.getElementById('checkoutForm');
-        var inputs = form.querySelectorAll('input[required]');
-        var valid = true;
+        var name = document.getElementById('firstName').value.trim();
+        var lastName = document.getElementById('lastName').value.trim();
+        var phone = document.getElementById('phone').value.trim();
+        var address = document.getElementById('address').value.trim();
         
-        inputs.forEach(function(input) {
-            if (!input.value.trim()) {
-                input.style.border = '2px solid #ff4444';
-                valid = false;
-            } else {
-                input.style.border = '1px solid rgba(255,255,255,0.1)';
-            }
-        });
-        
-        if (!valid) {
-            alert('❌ Tanpri ranpli tout chan obligatwa yo!');
+        if (!name || !phone || !address) {
+            alert('❌ Ranpli Non, Telefòn, ak Adrès!');
             return;
         }
         
-        var payment = document.querySelector('input[name="payment"]:checked').value;
-        var methods = {card:'Kat Kredi', moncash:'MonCash', cod:'Peye a Livrezon'};
+        if (cart.length === 0) {
+            alert('❌ Panye w vid!');
+            return;
+        }
         
-        if (confirm('✅ Konfime kòmand $'+total.toFixed(2)+'?\nMetòd: '+methods[payment])) {
-            alert('🎉 Kòmand konfime! Mèsi pou acha w!');
-            localStorage.removeItem('ogsun-cart');
-            window.location.href = 'orders.html';
+        // Chwazi bon metòd
+        if (selectedPayment === 'natcash') {
+            payWithNatCash();
+        } else if (selectedPayment === 'whatsapp') {
+            orderViaWhatsApp();
+        } else if (selectedPayment === 'email') {
+            orderViaEmail();
+        } else {
+            alert('✅ Kòmand anrejistre! Nou pral kontakte w. Mèsi! 🙏');
         }
     }
     
-    console.log('✅ Checkout chaje! Total: $' + total.toFixed(2));
-    <script>
-// Admin sekrè - tape kòd pou ale nan admin
-var secretCode = '';
-document.addEventListener('keydown', function(e) {
-    secretCode += e.key.toLowerCase();
-    
-    // Kòd sekrè: "ogsunadmin2024"
-    if (secretCode.includes('ogsunadmin2024')) {
-        secretCode = '';
-        var pw = prompt('🔐 Antre kòd admin:');
-        if (pw === 'OGPLUG45') {
-            window.location.href = 'admin-login.html';
-        } else if (pw) {
-            alert('❌ Kòd pa bon!');
+    // ===== PEMAN NATCASH =====
+    function payWithNatCash() {
+        var name = (document.getElementById('firstName')?.value || '') + ' ' + (document.getElementById('lastName')?.value || '');
+        var phone = document.getElementById('phone')?.value || '';
+        var address = document.getElementById('address')?.value || '';
+        
+        if (!name.trim() || !phone || !address) {
+            alert('❌ Ranpli enfòmasyon livrezon anvan!');
+            return;
         }
+        
+        if (cart.length === 0) {
+            alert('❌ Panye w vid!');
+            return;
+        }
+        
+        var productList = '';
+        cart.forEach(function(item, i) {
+            productList += (i+1) + '. ' + item.name + ' x' + item.quantity + ' = $' + (item.price * item.quantity).toFixed(2) + '%0A';
+        });
+        
+        var message = '🛒 *NOUVO KÒMAND OGSUN*%0A%0A';
+        message += '*Non:* ' + name + '%0A';
+        message += '*Telefòn:* ' + phone + '%0A';
+        message += '*Adrès:* ' + address + '%0A%0A';
+        message += '*Pwodwi:*%0A' + productList + '%0A';
+        message += '*Total: $' + total.toFixed(2) + '*%0A%0A';
+        message += '💳 *PEMAN NATCASH*%0A';
+        message += '📱 *Nimewo:* 32924776%0A';
+        message += '💰 *Montan:* $' + total.toFixed(2) + '%0A%0A';
+        message += '⬆️ _Voye kopi tranzaksyon NatCash la isit la_';
+        
+        var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + message;
+        
+        alert('💳 *Enstriksyon Peman NatCash:*\n\n' +
+              '1️⃣ Ouvri app NatCash\n' +
+              '2️⃣ Chwazi "Voye Lajan"\n' +
+              '3️⃣ Nimewo: 32924776\n' +
+              '4️⃣ Montan: $' + total.toFixed(2) + '\n' +
+              '5️⃣ Konfime peman an\n' +
+              '6️⃣ Voye kopi tranzaksyon sou WhatsApp');
+        
+        window.open(url, '_blank');
     }
     
-    // Netwaye chak 5 segonn
-    setTimeout(function() { secretCode = ''; }, 5000);
-});
-</script>
+    // ===== WHATSAPP =====
+    function orderViaWhatsApp() {
+        var name = (document.getElementById('firstName')?.value || '') + ' ' + (document.getElementById('lastName')?.value || '');
+        var phone = document.getElementById('phone')?.value || '';
+        var address = document.getElementById('address')?.value || '';
+        
+        if (!name.trim() || !phone || !address) {
+            alert('❌ Ranpli enfòmasyon livrezon anvan!');
+            return;
+        }
+        
+        if (cart.length === 0) {
+            alert('❌ Panye w vid!');
+            return;
+        }
+        
+        var productList = '';
+        cart.forEach(function(item, i) {
+            productList += (i+1) + '. ' + item.name + ' x' + item.quantity + ' = $' + (item.price * item.quantity).toFixed(2) + '%0A';
+        });
+        
+        var message = '🛒 *NOUVO KÒMAND OGSUN*%0A%0A';
+        message += '*Non:* ' + name + '%0A';
+        message += '*Telefòn:* ' + phone + '%0A';
+        message += '*Adrès:* ' + address + '%0A%0A';
+        message += '*Pwodwi:*%0A' + productList + '%0A';
+        message += '*Total: $' + total.toFixed(2) + '*';
+        
+        var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + message;
+        window.open(url, '_blank');
+    }
+    
+    // ===== IMEÈL =====
+    function orderViaEmail() {
+        var name = (document.getElementById('firstName')?.value || '') + ' ' + (document.getElementById('lastName')?.value || '');
+        var email = document.getElementById('email')?.value || '';
+        var phone = document.getElementById('phone')?.value || '';
+        var address = document.getElementById('address')?.value || '';
+        
+        if (!name.trim() || !phone || !address) {
+            alert('❌ Ranpli enfòmasyon livrezon anvan!');
+            return;
+        }
+        
+        if (cart.length === 0) {
+            alert('❌ Panye w vid!');
+            return;
+        }
+        
+        var productList = '';
+        cart.forEach(function(item, i) {
+            productList += (i+1) + '. ' + item.name + ' x' + item.quantity + ' = $' + (item.price * item.quantity).toFixed(2) + '\n';
+        });
+        
+        var message = 'NOUVO KÒMAND OGSUN\n\n';
+        message += 'Non: ' + name + '\n';
+        message += 'Imèl: ' + email + '\n';
+        message += 'Telefòn: ' + phone + '\n';
+        message += 'Adrès: ' + address + '\n\n';
+        message += 'Pwodwi:\n' + productList + '\n';
+        message += 'Total: $' + total.toFixed(2) + '\n\n';
+        message += 'Metòd Peman: ' + selectedPayment.toUpperCase();
+        
+        var subject = 'Nouvo Kòmand OGSUN - ' + name.trim();
+        var mailto = 'mailto:' + EMAIL_ADDRESS + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(message);
+        window.location.href = mailto;
+    }
+    
+    console.log('✅ Checkout OGSUN pare!');
+    console.log('💳 NatCash: ' + NATCASH_NUMBER);
+    console.log('💬 WhatsApp: ' + WHATSAPP_NUMBER);
+    console.log('📧 Imèl: ' + EMAIL_ADDRESS);
+    console.log('💰 Total: $' + total.toFixed(2));
+    </script>
+
 </body>
 </html>
