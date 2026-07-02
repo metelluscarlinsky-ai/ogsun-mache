@@ -77,7 +77,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo-wrapper">
-                <img src="/Public/image/logo.png" alt="OGSUN" class="logo-img">
+                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="logo-img">
                 <span class="logo-text">OGSUN</span>
             </a>
             <div class="nav-links" id="navLinks">
@@ -90,7 +90,7 @@
                 <a href="about.html" class="nav-link">ℹ️ Sou Nou</a>
                 <a href="contact.html" class="nav-link">📞 Kontakte</a>
                 <a href="faq.html" class="nav-link active">❓ FAQ</a>
-                <a href="admin.html" class="nav-link">👑 Admin</a>
+                
             </div>
             <div class="nav-actions">
                 <button class="icon-btn" onclick="window.location.href='shop.html'">🔍</button>
@@ -223,7 +223,7 @@
     <footer class="site-footer">
         <div class="footer-content">
             <div>
-                <img src="logo.png" alt="OGSUN" class="footer-logo">
+                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" class="footer-logo">
                 <p style="color:#a0a0a0;">Pi bon platfòm e-commerce lokal an Ayiti.</p>
             </div>
             <div class="footer-links">
@@ -328,6 +328,26 @@
     document.documentElement.setAttribute('data-theme', savedTheme);
     
     console.log('✅ FAQ page ready!');
-    </script>
+    
+// Admin sekrè - tape kòd pou ale nan admin
+var secretCode = '';
+document.addEventListener('keydown', function(e) {
+    secretCode += e.key.toLowerCase();
+    
+    // Kòd sekrè: "ogsunadmin2024"
+    if (secretCode.includes('ogsunadmin2024')) {
+        secretCode = '';
+        var pw = prompt('🔐 Antre kòd admin:');
+        if (pw === 'OGPLUG45') {
+            window.location.href = 'admin-login.html';
+        } else if (pw) {
+            alert('❌ Kòd pa bon!');
+        }
+    }
+    
+    // Netwaye chak 5 segonn
+    setTimeout(function() { secretCode = ''; }, 5000);
+});
+</script>
 </body>
 </html>

@@ -40,7 +40,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo-wrapper">
-                <img src="/Public/image/logo.png" alt="OGSUN" class="logo-img">
+                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="logo-img">
                 <span class="logo-text">OGSUN</span>
             </a>
             <div class="nav-links">
@@ -91,6 +91,27 @@
         </div>
     </main>
 
-    <script>console.log('✅ Orders page chaje!');</script>
+    <script>console.log('✅ Orders page chaje!');
+    
+// Admin sekrè - tape kòd pou ale nan admin
+var secretCode = '';
+document.addEventListener('keydown', function(e) {
+    secretCode += e.key.toLowerCase();
+    
+    // Kòd sekrè: "ogsunadmin2024"
+    if (secretCode.includes('ogsunadmin2024')) {
+        secretCode = '';
+        var pw = prompt('🔐 Antre kòd admin:');
+        if (pw === 'OGPLUG45') {
+            window.location.href = 'admin-login.html';
+        } else if (pw) {
+            alert('❌ Kòd pa bon!');
+        }
+    }
+    
+    // Netwaye chak 5 segonn
+    setTimeout(function() { secretCode = ''; }, 5000);
+});
+</script>
 </body>
 </html>
