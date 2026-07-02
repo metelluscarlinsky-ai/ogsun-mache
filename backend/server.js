@@ -243,7 +243,8 @@ const server = http.createServer(async (req, res) => {
     
     // Serve Static Files
     let filePath = pathname === '/' ? 'index.html' : pathname.replace(/^\//, '');
-    filePath = path.join(__dirname, filePath);
+    // Soti nan backend/ pou ale nan rasin
+filePath = path.join(__dirname, '..', filePath);
     serveFile(res, filePath);
 });
 
