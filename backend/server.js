@@ -1,3 +1,5 @@
+let users = [];
+let userIdCounter = 1;
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
@@ -240,7 +242,140 @@ const server = http.createServer(async (req, res) => {
         res.end(JSON.stringify(contacts));
         return;
     }
+    // ===== USERS - REGISTER =====
+if (pathname === '/api/users/register' && req.method === 'POST') {
+    const body = await getBody(req);
     
+    if (!body.name || !body.email || !body.password) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Non, imèl, ak modpas obligatwa!' }));
+        return;
+    }
+    
+    // Tcheke si imèl deja egziste
+    const existing = users.find(u => u.email === body.email);
+    if (existing) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Imèl sa a deja itilize!' }));
+        return;
+    }
+    
+    const user = {
+        id: userIdCounter++,
+        name: body.name,
+        email: body.email,
+        password: body.password,
+        phone: body.phone || '',
+        address: body.address || '',
+        created_at: new Date().toISOString()
+    };
+    users.push(user);
+    
+    console.log('👤 Nouvo itilizatè: ' + user.name + ' (' + user.email + ')');
+    
+    res.writeHead(201, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ 
+        success: true, 
+        message: '✅ Kont kreye avèk siksè!',
+        user: { id: user.id, name: user.name, email: user.email, phone: user.phone }
+    }));
+    return;
+}
+
+// ===== USERS - LOGIN =====
+if (pathname === '/api/users/login' && req.method === 'POST') {
+    const body = await getBody(req);
+    
+    const user = users.find(u => u.email === body.email && u.password === body.password);
+    
+    if (user) {
+        const token = crypto.randomBytes(16).toString('hex');
+        user.token = token;
+        
+        console.log('🔓 Itilizatè konekte: ' + user.email);
+        
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ 
+            success: true, 
+            token: token,
+            user: { id: user.id, name: user.name, email: user.email, phone: user.phone }
+        }));
+    } else {
+        res.writeHead(401, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, error: '❌ Imèl oswa modpas pa bon!' }));
+    }
+    return;
+}
+
+// ===== USERS - GET PROFILE =====
+if (pathname === '/api/users/me' && req.method === 'GET') {
+    const auth = req.headers['authorization'];
+    if (!auth) {
+        res.writeHead(401, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Pa konekte' }));
+        return;
+    }
+    
+    const token = auth.replace('Bearer ', '');
+    const user = users.find(u => u.token === token);
+    
+    if (user) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ 
+            id: user.id, 
+            name: user.name, 
+            email: user.email, 
+            phone: user.phone,
+            address: user.address,
+            created_at: user.created_at
+        }));
+    } else {
+        res.writeHead(401, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Pa otorize' }));
+    }
+    return;
+}
+
+// ===== USERS - GET ALL (ADMIN ONLY) =====
+if (pathname === '/api/users' && req.method === 'GET') {
+    if (!checkAdmin(req)) { 
+        res.writeHead(401, { 'Content-Type': 'application/json' }); 
+        res.end(JSON.stringify({ error: 'Admin only' })); 
+        return; 
+    }
+    
+    const safeUsers = users.map(u => ({
+        id: u.id,
+        name: u.name,
+        email: u.email,
+        phone: u.phone,
+        created_at: u.created_at
+    }));
+    
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(safeUsers));
+    return;
+}
+
+// ===== USERS - DELETE (ADMIN ONLY) =====
+const userMatch = pathname.match(/^\/api\/users\/(\d+)$/);
+if (userMatch && req.method === 'DELETE') {
+    if (!checkAdmin(req)) { 
+        res.writeHead(401, { 'Content-Type': 'application/json' }); 
+        res.end(JSON.stringify({ error: 'Admin only' })); 
+        return; 
+    }
+    
+    const id = parseInt(userMatch[1]);
+    const userName = users.find(u => u.id === id)?.name;
+    users = users.filter(u => u.id !== id);
+    
+    console.log('🗑️ Itilizatè efase: #' + id + ' - ' + userName);
+    
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'Itilizatè efase!', user: userName }));
+    return;
+}
     // Serve Static Files
     let filePath = pathname === '/' ? 'index.html' : pathname.replace(/^\//, '');
     // Soti nan backend/ pou ale nan rasin

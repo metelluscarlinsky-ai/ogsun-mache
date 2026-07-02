@@ -109,7 +109,17 @@
                     <div class="stat-card"><div class="stat-icon">📦</div><div class="stat-info"><h3 id="statProducts">0</h3><p>Total Pwodwi</p></div></div>
                     <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-info"><h3 id="statRate">0%</h3><p>To Konvèsyon</p></div></div>
                 </div>
-                
+                <button class="nav-item" onclick="showTab('users', this)">👥 Itilizatè</button>
+                <div id="tab-users" class="tab-content" style="display:none;">
+    <div class="admin-card">
+        <div class="card-header"><h3>👥 Tout Itilizatè</h3></div>
+        <div class="table-wrapper">
+            <table><thead><tr><th>ID</th><th>Non</th><th>Imèl</th><th>Telefòn</th><th>Dat</th><th>Aksyon</th></tr></thead>
+                <tbody id="allUsers"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
                 <div class="admin-card">
                     <div class="card-header"><h3>📋 Dènye Kòmand Yo</h3></div>
                     <div class="table-wrapper">
@@ -216,7 +226,34 @@
         var t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
         document.body.appendChild(t); setTimeout(function() { t.remove(); }, 2500);
     }
+function loadUsers() {
+    fetchAPI(API + '/users').then(function(users) {
+        var tbody = document.getElementById('allUsers');
+        if (!users || users.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#666;">Pa gen itilizatè ankò</td></tr>';
+        } else {
+            tbody.innerHTML = users.map(function(u) {
+                return '<tr>' +
+                    '<td>#' + u.id + '</td>' +
+                    '<td><strong>' + u.name + '</strong></td>' +
+                    '<td>' + u.email + '</td>' +
+                    '<td>' + (u.phone || 'N/A') + '</td>' +
+                    '<td>' + new Date(u.created_at).toLocaleDateString() + '</td>' +
+                    '<td><button class="btn btn-danger" onclick="deleteUser(' + u.id + ')">🗑️ Efase</button></td>' +
+                '</tr>';
+            }).join('');
+        }
+    });
+}
 
+function deleteUser(id) {
+    if (confirm('⚠️ Efase itilizatè #' + id + '?')) {
+        fetchAPI(API + '/users/' + id, { method: 'DELETE' }).then(function() {
+            loadUsers();
+            showToast('🗑️ Itilizatè efase!');
+        });
+    }
+}
     // ===== DASHBOARD =====
     function loadDashboard() {
         fetchAPI(API + '/admin/stats').then(function(stats) {
