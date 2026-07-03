@@ -1,140 +1,100 @@
 <!DOCTYPE html>
-<html lang="ht" data-theme="dark">
+<html lang="ht">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Detay Pwodwi</title>
+    <title>OGSUN | Pwodwi 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
-        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
-        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
-        .logo-img{width:50px;height:50px;object-fit:contain}
-        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
-        .nav-links{display:flex;gap:1.5rem;align-items:center}
-        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem}
-        .nav-link:hover{color:#d4af37}
-        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none}
-        .product-page{padding:8rem 2rem 4rem;max-width:1200px;margin:0 auto}
-        .breadcrumb{margin-bottom:2rem;color:#a0a0a0}
-        .breadcrumb a{color:#d4af37;text-decoration:none}
-        .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
-        .product-image-main{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;text-align:center}
-        .product-image-main img{width:100%;max-height:400px;object-fit:contain}
-        .product-details h1{font-family:'Space Grotesk',Arial,sans-serif;font-size:2.5rem;margin-bottom:0.5rem}
-        .product-details .category{color:#d4af37;text-transform:uppercase;letter-spacing:2px;font-size:0.875rem}
-        .product-details .rating{color:#f4d03f;margin:1rem 0}
-        .product-details .price{font-size:2rem;font-weight:bold;color:#d4af37;margin:1rem 0}
-        .product-details .old-price{text-decoration:line-through;color:#666;font-size:1.25rem;margin-left:1rem}
-        .product-details .description{color:#a0a0a0;line-height:1.8;margin:1.5rem 0}
-        .qty-section{display:flex;align-items:center;gap:1rem;margin:1.5rem 0}
-        .qty-btn{background:rgba(255,255,255,0.1);border:none;color:#fff;width:40px;height:40px;border-radius:10px;cursor:pointer;font-size:1.5rem}
-        .qty-input{width:60px;text-align:center;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;padding:0.5rem;border-radius:10px;font-size:1.1rem}
-        .add-to-cart-big{width:100%;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.2rem;cursor:pointer;margin-bottom:1rem}
-        .add-to-cart-big:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
-        .whatsapp-btn{width:100%;background:#25D366;color:#fff;border:none;padding:1rem;border-radius:30px;font-weight:bold;font-size:1.1rem;cursor:pointer}
-        .trust-badges{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem;padding:1.5rem;background:rgba(255,255,255,0.03);border-radius:15px;text-align:center}
-        @media(max-width:768px){.product-grid{grid-template-columns:1fr}}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #b8960f; --gold-light: #d4af37; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; --green: #2e7d32; }
+        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.7; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo-wrapper { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.88rem; }
+        .nav-link:hover { color: var(--gold); }
+        .product-page { padding: 7rem 2rem 3rem; max-width: 1000px; margin: 0 auto; }
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .product-img-main { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; text-align: center; }
+        .product-img-main img { width: 100%; max-height: 400px; object-fit: contain; }
+        .product-details h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; margin-bottom: 0.5rem; }
+        .product-details .cat { color: var(--gold); text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; font-weight: 600; }
+        .product-details .price { font-size: 2rem; font-weight: 700; color: var(--gold); margin: 1rem 0; }
+        .product-details .old-price { text-decoration: line-through; color: #aaa; font-size: 1.2rem; margin-left: 0.8rem; }
+        .product-details .desc { color: var(--gray); line-height: 1.8; margin: 1rem 0; }
+        .qty-section { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; }
+        .qty-btn { width: 40px; height: 40px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 1.2rem; border-radius: 10px; }
+        .qty-input { width: 60px; text-align: center; border: 1px solid var(--border); border-radius: 10px; padding: 0.5rem; font-family: 'Outfit', sans-serif; }
+        .add-btn { width: 100%; background: var(--gold); color: #fff; border: none; padding: 1rem; border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 1.05rem; }
+        .add-btn:hover { background: var(--gold-light); }
+        .stock-info { color: var(--green); font-weight: 500; margin-top: 0.5rem; }
+        .footer { background: #1a1a1a; padding: 4rem 2rem 2rem; color: #aaa; margin-top: 3rem; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+        .footer h4 { color: #fff; margin-bottom: 1rem; font-weight: 600; }
+        .footer a { display: block; color: #888; text-decoration: none; margin-bottom: 0.5rem; font-size: 0.82rem; }
+        .footer a:hover { color: var(--gold-light); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #333; color: #666; font-size: 0.78rem; }
+        .footer-bottom a { color: var(--gold-light); text-decoration: none; }
+        .toast { position: fixed; top: 18px; right: 18px; z-index: 9999; padding: 13px 20px; border-radius: 10px; font-weight: 600; font-size: 0.88rem; box-shadow: 0 8px 25px rgba(0,0,0,0.12); animation: slideIn 0.35s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .toast-success { background: #e8f5e9; color: var(--green); border: 1px solid #c8e6c9; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: translateX(0); } }
+        @media (max-width: 768px) { .product-grid { grid-template-columns: 1fr; } .nav-links { display: none; } .footer-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo-wrapper">
-                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="logo-img">
-                <span class="logo-text">OGSUN</span>
-            </a>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">🏠 Akèy</a>
-                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
-                <a href="cart.html" class="nav-link">🛒 Panye</a>
-                <a href="contact.html" class="nav-link">📞 Kontakte</a>
-            </div>
-            <a href="account.html" class="primary-btn">Konekte</a>
+            <a href="index.html" class="logo-wrapper" <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
+alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
+            <div class="nav-links"><a href="index.html" class="nav-link">Akèy</a><a href="shop.html" class="nav-link">Boutik</a><a href="cart.html" class="nav-link">Panye</a><a href="account.html" class="nav-link">Kont</a></div>
+            <a href="index.html" class="nav-btn">Akèy</a>
         </div>
     </nav>
 
     <main class="product-page">
-        <div class="breadcrumb">
-            <a href="index.html">Akèy</a> / <a href="shop.html">Boutik</a> / <span>Sak Pay Deluxe</span>
-        </div>
-        
         <div class="product-grid">
-            <div class="product-image-main">
-                <img src="/Public/image/logo.png" alt="Sak Pay Deluxe">
-            </div>
+            <div class="product-img-main"><img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
+ alt="Pwodwi" id="productImage"></div>
             <div class="product-details">
-                <p class="category">Atizana</p>
-                <h1>Sak Pay Deluxe</h1>
-                <div class="rating">⭐⭐⭐⭐⭐ <span style="color:#a0a0a0;">(128 avis)</span></div>
-                <div class="price">$45.00 <span class="old-price">$65.00</span> <span style="background:#d4af37;color:#0a0a0a;padding:0.25rem 1rem;border-radius:20px;font-size:0.875rem;">-31%</span></div>
-                <p class="description">Yon bèl sak pay atizanal ki fèt ak men ak anpil lanmou. Chak detay rakonte yon istwa e pote yon moso kilti ayisyen.</p>
-                
+                <span class="cat" id="productCategory"></span>
+                <h1 id="productName">Chajman...</h1>
+                <div class="price"><span id="productPrice"></span><span class="old-price" id="productOldPrice"></span></div>
+                <p class="desc" id="productDesc">Chajman deskripsyon...</p>
                 <div class="qty-section">
-                    <span style="color:#a0a0a0;">Kantite:</span>
                     <button class="qty-btn" onclick="changeQty(-1)">-</button>
                     <input type="number" class="qty-input" id="qty" value="1" min="1" max="10">
                     <button class="qty-btn" onclick="changeQty(1)">+</button>
-                    <span style="color:#4caf50;">✅ 50 an stock</span>
                 </div>
-                
-                <button class="add-to-cart-big" onclick="addToCart()">🛒 Ajoute nan Panye</button>
-                <button class="whatsapp-btn" onclick="alert('💬 Ouvri WhatsApp! +509 32924776')">💬 Achte sou WhatsApp</button>
-                
-                <div class="trust-badges">
-                    <div><div style="font-size:2rem;">🔒</div><small style="color:#a0a0a0;">Peman Sekirize</small></div>
-                    <div><div style="font-size:2rem;">🚚</div><small style="color:#a0a0a0;">Livrezon Gratis</small></div>
-                    <div><div style="font-size:2rem;">↩️</div><small style="color:#a0a0a0;">Retou 30 Jou</small></div>
-                </div>
+                <p class="stock-info" id="productStock"></p>
+                <button class="add-btn" onclick="addToCart()">Ajoute nan Panye</button>
             </div>
         </div>
     </main>
 
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+<p style="color:#888;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
+            <div><h4>Navigate</h4><a href="index.html">Akèy</a><a href="shop.html">Boutik</a><a href="cart.html">Panye</a></div>
+            <div><h4>Enfòmasyon</h4><a href="about.html">Sou Nou</a><a href="contact.html">Kontakte</a><a href="faq.html">FAQ</a></div>
+            <div><h4>Sipò</h4><a href="faq.html">Livrezon</a><a href="faq.html">Retounen</a><a href="contact.html">Èd</a></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève.</p></div>
+    </footer>
+
     <script>
-    function changeQty(delta) {
-        var input = document.getElementById('qty');
-        var val = parseInt(input.value) + delta;
-        input.value = Math.max(1, Math.min(10, val));
-    }
-    
-    function addToCart() {
-        var qty = parseInt(document.getElementById('qty').value);
-        var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
-        var existing = cart.find(function(item) { return item.name === 'Sak Pay Deluxe'; });
-        
-        if (existing) {
-            existing.quantity += qty;
-        } else {
-            cart.push({name:'Sak Pay Deluxe', quantity:qty, price:45});
-        }
-        
-        localStorage.setItem('ogsun-cart', JSON.stringify(cart));
-        alert('✅ ' + qty + ' x Sak Pay Deluxe ajoute nan panye! 🛒');
-    }
-    console.log('✅ Product page chaje!');
-    
-// Admin sekrè - tape kòd pou ale nan admin
-var secretCode = '';
-document.addEventListener('keydown', function(e) {
-    secretCode += e.key.toLowerCase();
-    
-    // Kòd sekrè: "ogsunadmin2024"
-    if (secretCode.includes('ogsunadmin2024')) {
-        secretCode = '';
-        var pw = prompt('🔐 Antre kòd admin:');
-        if (pw === 'OGPLUG45') {
-            window.location.href = 'admin-login.html';
-        } else if (pw) {
-            alert('❌ Kòd pa bon!');
-        }
-    }
-    
-    // Netwaye chak 5 segonn
-    setTimeout(function() { secretCode = ''; }, 5000);
-});
-</script>
+    var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
+    var productId = new URLSearchParams(window.location.search).get('id') || 1;
+    function showToast(m){var t=document.createElement('div');t.className='toast toast-success';t.innerHTML='<span>✓</span> '+m;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(80px)';t.style.transition='all 0.3s';setTimeout(function(){t.remove();},300);},2500);}
+    function changeQty(d){var i=document.getElementById('qty');var v=parseInt(i.value)+d;i.value=Math.max(1,Math.min(10,v));}
+    function addToCart(){var n=document.getElementById('productName').textContent;var p=parseFloat(document.getElementById('productPrice').textContent.replace('$',''));var q=parseInt(document.getElementById('qty').value);var c=JSON.parse(localStorage.getItem('ogsun-cart')||'[]');var e=c.find(function(i){return i.name===n;});if(e){e.quantity+=q;}else{c.push({name:n,quantity:q,price:p});}localStorage.setItem('ogsun-cart',JSON.stringify(c));showToast(q+' x '+n+' ajoute nan panye!');}
+    fetch(API+'/products/'+productId).then(function(r){return r.json();}).then(function(p){document.getElementById('productName').textContent=p.name;document.getElementById('productCategory').textContent=p.category||'';document.getElementById('productPrice').textContent='$'+(p.price||0).toFixed(2);document.getElementById('productOldPrice').textContent=p.old_price?'$'+p.old_price.toFixed(2):'';document.getElementById('productDesc').textContent=p.description||'';document.getElementById('productStock').textContent='✅ '+(p.stock||0)+' an stock';document.getElementById('productImage').src=p.image||p.image_url||'logo.png';}).catch(function(){document.getElementById('productName').textContent='Pa ka chaje pwodwi';});
+    </script>
+
 </body>
 </html>

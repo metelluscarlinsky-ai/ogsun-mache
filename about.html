@@ -1,264 +1,96 @@
 <!DOCTYPE html>
-<html lang="ht" data-theme="dark">
+<html lang="ht">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Sou Nou</title>
+    <title>OGSUN | Sou Nou 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
-        
-        /* Navbar */
-        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
-        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
-        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
-        .logo-img{width:50px;height:50px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(212,175,55,0.3))}
-        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
-        .nav-links{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
-        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem;transition:color 0.3s}
-        .nav-link:hover,.nav-link.active{color:#d4af37}
-        .nav-actions{display:flex;align-items:center;gap:0.75rem}
-        .icon-btn{background:none;border:none;color:#a0a0a0;cursor:pointer;padding:0.5rem;font-size:1.25rem;transition:color 0.3s}
-        .icon-btn:hover{color:#d4af37}
-        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.3s}
-        .primary-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
-        .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
-        .mobile-menu-btn span{width:25px;height:2px;background:#fff;transition:all 0.3s}
-
-        /* About Page */
-        .about-page{padding:8rem 2rem 4rem;max-width:1200px;margin:0 auto}
-        .about-hero{text-align:center;margin-bottom:4rem}
-        .about-badge{display:inline-block;background:rgba(212,175,55,0.1);color:#d4af37;padding:0.5rem 1.5rem;border-radius:20px;font-size:0.875rem;margin-bottom:1rem;border:1px solid rgba(212,175,55,0.2)}
-        .about-title{font-family:'Space Grotesk',Arial,sans-serif;font-size:clamp(2.5rem,5vw,4rem);margin:1rem 0;background:linear-gradient(135deg,#fff,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .about-subtitle{color:#a0a0a0;font-size:1.2rem;max-width:700px;margin:0 auto}
-        .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-bottom:4rem}
-        .about-text h2{font-family:'Space Grotesk',Arial,sans-serif;font-size:2rem;margin-bottom:1.5rem}
-        .about-text h2 span{color:#d4af37}
-        .about-text p{color:#a0a0a0;line-height:1.8;font-size:1.1rem;margin-bottom:1rem}
-        .about-stats{background:linear-gradient(135deg,rgba(212,175,55,0.1),rgba(244,208,63,0.05));border:1px solid rgba(212,175,55,0.2);border-radius:20px;padding:3rem;text-align:center}
-        .about-stats .big-number{font-size:3rem;font-weight:bold;color:#d4af37;display:block}
-        .about-stats p{color:#a0a0a0;margin-bottom:1.5rem}
-        .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-top:2rem}
-        .team-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;text-align:center;transition:all 0.3s}
-        .team-card:hover{transform:translateY(-5px);border-color:rgba(212,175,55,0.3)}
-        .team-avatar{width:100px;height:100px;background:linear-gradient(135deg,#d4af37,#f4d03f);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:3rem}
-        .team-card h3{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:0.25rem}
-        .team-card p{color:#a0a0a0;font-size:0.9rem}
-        .values-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:2rem}
-        .value-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:15px;padding:2rem;text-align:center;transition:all 0.3s}
-        .value-card:hover{border-color:#d4af37}
-        .value-icon{font-size:3rem;margin-bottom:1rem}
-        .value-card h3{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:0.5rem}
-        .value-card p{color:#a0a0a0;font-size:0.9rem}
-        
-        /* Footer */
-        .site-footer{background:#111;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,255,255,0.08);margin-top:4rem}
-        .footer-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-bottom:2rem}
-        .footer-logo{width:60px;margin-bottom:1rem}
-        .footer-links h4{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1rem;color:#fff}
-        .footer-links a{display:block;color:#a0a0a0;text-decoration:none;margin-bottom:0.5rem;transition:color 0.3s}
-        .footer-links a:hover{color:#d4af37}
-        .footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.08);color:#666}
-        
-        @media(max-width:768px){
-            .nav-links{display:none}
-            .nav-links.active{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#111;padding:1rem;z-index:999}
-            .mobile-menu-btn{display:flex}
-            .about-grid{grid-template-columns:1fr}
-            .about-title{font-size:2rem}
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #b8960f; --gold-light: #d4af37; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; }
+        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.7; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo-wrapper { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.88rem; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--gold); }
+        .nav-btn { background: var(--gold); color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.88rem; }
+        .about-page { padding: 7rem 2rem 3rem; max-width: 1000px; margin: 0 auto; }
+        .about-title { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 800; text-align: center; margin-bottom: 0.5rem; }
+        .about-title span { color: var(--gold); }
+        .about-subtitle { text-align: center; color: var(--gray); margin-bottom: 3rem; font-size: 1.1rem; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; align-items: center; }
+        .about-text h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; }
+        .about-text p { color: var(--gray); line-height: 1.8; margin-bottom: 1rem; }
+        .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .stat-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center; }
+        .stat-card .number { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--gold); }
+        .stat-card .label { color: var(--gray); font-size: 0.9rem; }
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .value-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center; transition: all 0.3s; }
+        .value-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+        .value-card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .value-card h3 { font-family: 'Space Grotesk', sans-serif; margin-bottom: 0.3rem; }
+        .value-card p { color: var(--gray); font-size: 0.9rem; }
+        .footer { background: #1a1a1a; padding: 4rem 2rem 2rem; color: #aaa; margin-top: 3rem; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+        .footer-logo { width: 44px; margin-bottom: 1rem; border-radius: 8px; }
+        .footer h4 { color: #fff; margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
+        .footer a { display: block; color: #888; text-decoration: none; margin-bottom: 0.5rem; font-size: 0.82rem; }
+        .footer a:hover { color: var(--gold-light); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #333; color: #666; font-size: 0.78rem; }
+        .footer-bottom a { color: var(--gold-light); text-decoration: none; }
+        @media (max-width: 768px) { .nav-links { display: none; } .about-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo-wrapper">
-                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="logo-img">
-                <span class="logo-text">OGSUN</span>
-            </a>
-            <div class="nav-links" id="navLinks">
-                <a href="index.html" class="nav-link">🏠 Akèy</a>
-                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
-                <a href="cart.html" class="nav-link">🛒 Panye</a>
-                <a href="product.html" class="nav-link">📦 Pwodwi</a>
-                <a href="account.html" class="nav-link">👤 Kont</a>
-                <a href="orders.html" class="nav-link">📋 Kòmand</a>
-                <a href="about.html" class="nav-link active">ℹ️ Sou Nou</a>
-                <a href="contact.html" class="nav-link">📞 Kontakte</a>
-                <a href="faq.html" class="nav-link">❓ FAQ</a>
-                <a href="admin.html" class="nav-link">👑 Admin</a>
-            </div>
-            <div class="nav-actions">
-                <button class="icon-btn" onclick="window.location.href='shop.html'">🔍</button>
-                <button class="icon-btn" id="themeToggle">🌓</button>
-                <button class="icon-btn" onclick="window.location.href='cart.html'">🛒</button>
-                <a href="account.html" class="primary-btn">Konekte</a>
-            </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+            <a href="index.html" class="logo-wrapper"><img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
+alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
+            <div class="nav-links"><a href="index.html" class="nav-link">Akèy</a><a href="shop.html" class="nav-link">Boutik</a><a href="cart.html" class="nav-link">Panye</a><a href="account.html" class="nav-link">Kont</a><a href="about.html" class="nav-link active">Sou Nou</a></div>
+            <a href="index.html" class="nav-btn">Akèy</a>
         </div>
     </nav>
 
-    <!-- ABOUT MAIN -->
     <main class="about-page">
-        
-        <!-- Hero -->
-        <div class="about-hero">
-            <span class="about-badge">🇭🇹 Fièrement Haïtien</span>
-            <h1 class="about-title">Istwa OGSUN</h1>
-            <p class="about-subtitle">Nou se yon platfòm ki konekte atizan ayisyen ak moun ki renmen bèl bagay otantik toupatou nan mond lan.</p>
-        </div>
-
-        <!-- Mission -->
+        <h1 class="about-title">Sou <span>OGSUN</span></h1>
+        <p class="about-subtitle">Nou se yon platfòm ki konekte atizan ayisyen ak moun ki renmen bèl bagay otantik.</p>
         <div class="about-grid">
             <div class="about-text">
-                <h2>Misyon <span>Nou</span></h2>
+                <h2>Misyon <span style="color:var(--gold);">Nou</span></h2>
                 <p>Nan OGSUN, nou kwè chak pwodwi atizanal gen yon nanm. Misyon nou se bay atizan ayisyen yo yon platfòm pou yo montre talan yo bay mond lan, pandan nap prezève kilti ak tradisyon nou yo.</p>
-                <p>Chak acha ou fè ap sipòte dirèkteman yon fanmi atizan ak kominote yo. Nou fyè dèske nou ka fè pati de chèn valè ki bay atizan yo jistis ak rekonesans yo merite.</p>
+                <p>Chak acha ou fè ap sipòte dirèkteman yon fanmi atizan ak kominote yo.</p>
             </div>
             <div class="about-stats">
-                <span class="big-number">5,000+</span>
-                <p>Kliyan satisfè toupatou</p>
-                <span class="big-number">100+</span>
-                <p>Atizan lokal</p>
-                <span class="big-number">1,500+</span>
-                <p>Pwodwi otantik</p>
+                <div class="stat-card"><div class="number">5000+</div><div class="label">Kliyan Satisfè</div></div>
+                <div class="stat-card"><div class="number">100+</div><div class="label">Atizan Lokal</div></div>
+                <div class="stat-card"><div class="number">1500+</div><div class="label">Pwodwi Otantik</div></div>
+                <div class="stat-card"><div class="number">24/7</div><div class="label">Sipò Kliyan</div></div>
             </div>
         </div>
-
-        <!-- Values -->
-        <div style="margin-bottom:4rem;">
-            <h2 style="font-family:'Space Grotesk',Arial,sans-serif;font-size:2rem;text-align:center;margin-bottom:2rem;">Valè <span style="color:#d4af37;">Nou</span></h2>
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-icon">🌍</div>
-                    <h3>Otantisite</h3>
-                    <p>Chak pwodwi se 100% otantik, fèt ak men pa atizan lokal.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">🤝</div>
-                    <h3>Jistis</h3>
-                    <p>Atizan yo resevwa yon pri jis pou travay yo, san entèmedyè.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">💚</div>
-                    <h3>Dirab</h3>
-                    <p>Nou ankouraje pratik ekolojik ak dirab nan tout chèn pwodiksyon.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">🏆</div>
-                    <h3>Kalite</h3>
-                    <p>Nou seleksyone sèlman pi bon pwodwi yo pou kliyan nou yo.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Team -->
-        <div>
-            <h2 style="font-family:'Space Grotesk',Arial,sans-serif;font-size:2rem;text-align:center;margin-bottom:2rem;">Ekip <span style="color:#d4af37;">OGSUN</span></h2>
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="team-avatar">👨‍💼</div>
-                    <h3>Fondatè</h3>
-                    <p>Metellus carlinsky &OGPLUG</p>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar">👩‍🎨</div>
-                    <h3>Direktris Kreyatif</h3>
-                    <p>Design & Branding</p>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar">👨‍💻</div>
-                    <h3>Devlopè</h3>
-                    <p>Teknoloji & Inovasyon</p>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar">👩‍💼</div>
-                    <h3>Relasyon Atizan</h3>
-                    <p>Kominote & Patenarya</p>
-                </div>
-            </div>
+        <h2 style="font-family:'Space Grotesk',sans-serif;text-align:center;font-size:1.8rem;margin-bottom:1.5rem;">Valè <span style="color:var(--gold);">Nou</span></h2>
+        <div class="values-grid">
+            <div class="value-card"><div class="icon">🌍</div><h3>Otantisite</h3><p>Chak pwodwi se 100% otantik, fèt ak men pa atizan lokal.</p></div>
+            <div class="value-card"><div class="icon">🤝</div><h3>Jistis</h3><p>Atizan yo resevwa yon pri jis pou travay yo.</p></div>
+            <div class="value-card"><div class="icon">💚</div><h3>Dirab</h3><p>Nou ankouraje pratik ekolojik ak dirab.</p></div>
+            <div class="value-card"><div class="icon">🏆</div><h3>Kalite</h3><p>Nou seleksyone sèlman pi bon pwodwi yo.</p></div>
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div>
-                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="footer-logo">
-                <p style="color:#a0a0a0;">Pi bon platfòm e-commerce lokal an Ayiti.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Navigate</h4>
-                <a href="index.html">🏠 Akèy</a>
-                <a href="shop.html">🛍️ Boutik</a>
-                <a href="cart.html">🛒 Panye</a>
-                <a href="account.html">👤 Kont</a>
-                
-            </div>
-            <div class="footer-links">
-                <h4>Enfòmasyon</h4>
-                <a href="about.html">ℹ️ Sou Nou</a>
-                <a href="contact.html">📞 Kontakte</a>
-                <a href="faq.html">❓ FAQ</a>
-            </div>
-            <div class="footer-links">
-                <h4>Sipò</h4>
-                <a href="faq.html">Livrezon</a>
-                <a href="faq.html">Retounen</a>
-                <a href="contact.html">Èd</a>
-            </div>
+    <footer class="footer">
+        <div class="footer-grid">
+            <div><img src="logo.png" alt="OGSUN" class="footer-logo"><p style="color:#888;font-size:0.85rem;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
+            <div><h4>Navigate</h4><a href="index.html">Akèy</a><a href="shop.html">Boutik</a><a href="cart.html">Panye</a></div>
+            <div><h4>Enfòmasyon</h4><a href="about.html">Sou Nou</a><a href="contact.html">Kontakte</a><a href="faq.html">FAQ</a></div>
+            <div><h4>Sipò</h4><a href="faq.html">Livrezon</a><a href="faq.html">Retounen</a><a href="contact.html">Èd</a></div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 OGSUN. Tout dwa rezève. | <a href="index.html" style="color:#d4af37;">Akèy</a></p>
-        </div>
+        <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève.</p></div>
     </footer>
 
-    <script>
-    console.log('🔥 OGSUN About Page Loaded!');
-    
-    // Mobile menu
-    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-        document.getElementById('navLinks').classList.toggle('active');
-    });
-    
-    // Theme toggle
-    document.getElementById('themeToggle').addEventListener('click', function() {
-        var html = document.documentElement;
-        var current = html.getAttribute('data-theme');
-        var newTheme = current === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        localStorage.setItem('ogsun-theme', newTheme);
-        console.log('🌓 Theme: ' + newTheme);
-    });
-    
-    // Load saved theme
-    var savedTheme = localStorage.getItem('ogsun-theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    
-    console.log('✅ About page ready!');
-    
-// Admin sekrè - tape kòd pou ale nan admin
-var secretCode = '';
-document.addEventListener('keydown', function(e) {
-    secretCode += e.key.toLowerCase();
-    
-    // Kòd sekrè: "ogsunadmin2024"
-    if (secretCode.includes('ogsunadmin2024')) {
-        secretCode = '';
-        var pw = prompt('🔐 Antre kòd admin:');
-        if (pw === 'OGPLUG45') {
-            window.location.href = 'admin-login.html';
-        } else if (pw) {
-            alert('❌ Kòd pa bon!');
-        }
-    }
-    
-    // Netwaye chak 5 segonn
-    setTimeout(function() { secretCode = ''; }, 5000);
-});
-</script>
 </body>
 </html>

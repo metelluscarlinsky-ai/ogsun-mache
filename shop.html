@@ -1,358 +1,116 @@
 <!DOCTYPE html>
-<html lang="ht" data-theme="dark">
+<html lang="ht">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Boutik</title>
+    <title>OGSUN | Boutik 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
-        
-        /* Navbar */
-        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
-        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
-        .logo-img{width:50px;height:50px;object-fit:contain}
-        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
-        .nav-links{display:flex;gap:1.5rem;align-items:center}
-        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem}
-        .nav-link:hover,.nav-link.active{color:#d4af37}
-        .nav-actions{display:flex;align-items:center;gap:0.75rem}
-        .icon-btn{background:none;border:none;color:#a0a0a0;cursor:pointer;padding:0.5rem;font-size:1.25rem}
-        .icon-btn:hover{color:#d4af37}
-        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none}
-        .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.5rem}
-        .mobile-menu-btn span{width:25px;height:2px;background:#fff}
-        
-        /* Shop */
-        .shop-page{padding:8rem 2rem 4rem;max-width:1400px;margin:0 auto}
-        .shop-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem}
-        .shop-title{font-family:'Space Grotesk',Arial,sans-serif;font-size:2.5rem}
-        .shop-controls{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
-        .search-box{display:flex;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:50px;overflow:hidden}
-        .search-box input{flex:1;padding:0.875rem 1.5rem;background:transparent;border:none;color:#fff;font-family:'Outfit',Arial,sans-serif}
-        .search-box input:focus{outline:none}
-        .search-box button{background:linear-gradient(135deg,#d4af37,#f4d03f);border:none;padding:0.875rem 1.5rem;cursor:pointer;font-weight:bold}
-        .sort-select{padding:0.875rem 1.5rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:50px;color:#fff;font-family:'Outfit',Arial,sans-serif;cursor:pointer}
-        .sort-select option{background:#1a1a1a;color:#fff}
-        
-        /* Layout */
-        .shop-layout{display:grid;grid-template-columns:280px 1fr;gap:2rem}
-        .filters-sidebar{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:1.5rem;height:fit-content;position:sticky;top:6rem}
-        .filter-section{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.05)}
-        .filter-section:last-of-type{border-bottom:none;margin-bottom:1rem;padding-bottom:0}
-        .filter-section h3{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1rem;color:#d4af37;font-size:1rem}
-        .filter-section label{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;color:#a0a0a0;cursor:pointer;font-size:0.9rem}
-        .filter-section input[type="checkbox"],.filter-section input[type="radio"]{accent-color:#d4af37;width:18px;height:18px}
-        .price-range{width:100%;margin:1rem 0;accent-color:#d4af37}
-        .price-inputs{display:flex;gap:0.5rem;align-items:center}
-        .price-inputs input{width:100%;padding:0.5rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#fff;text-align:center}
-        .apply-filters-btn{width:100%;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.875rem;border-radius:25px;font-weight:bold;cursor:pointer;margin-bottom:0.5rem}
-        .reset-filters-btn{width:100%;background:transparent;color:#a0a0a0;border:1px solid rgba(255,255,255,0.2);padding:0.875rem;border-radius:25px;cursor:pointer}
-        
-        /* Products */
-        .products-grid.expanded{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.5rem}
-        .product-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;overflow:hidden;transition:all 0.4s;cursor:pointer;text-decoration:none;color:inherit;display:block}
-        .product-card:hover{transform:translateY(-10px);box-shadow:0 30px 60px rgba(0,0,0,0.3);border-color:rgba(212,175,55,0.3)}
-        .product-image-wrapper{aspect-ratio:1;overflow:hidden}
-        .product-image{width:100%;height:100%;object-fit:cover;transition:transform 0.6s}
-        .product-card:hover .product-image{transform:scale(1.1)}
-        .product-info{padding:1.5rem}
-        .product-name{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.25rem;margin-bottom:0.5rem}
-        .product-price{margin:1rem 0}
-        .current-price{color:#d4af37;font-weight:700;font-size:1.5rem}
-        .old-price{text-decoration:line-through;color:#666;margin-left:0.5rem}
-        .add-to-cart-btn{width:100%;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.875rem;border-radius:25px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
-        
-        /* Pagination */
-        .pagination{display:flex;justify-content:center;gap:0.5rem;margin-top:3rem}
-        .page-btn{width:45px;height:45px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#a0a0a0;cursor:pointer;font-weight:500;transition:all 0.3s;display:flex;align-items:center;justify-content:center}
-        .page-btn:hover,.page-btn.active{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border-color:transparent}
-        
-        /* Footer */
-        .site-footer{background:#111;padding:4rem 2rem 2rem;border-top:1px solid rgba(255,255,255,0.08);margin-top:4rem}
-        .footer-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-bottom:2rem}
-        .footer-logo{width:60px;margin-bottom:1rem}
-        .footer-links h4{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1rem;color:#fff}
-        .footer-links a{display:block;color:#a0a0a0;text-decoration:none;margin-bottom:0.5rem}
-        .footer-links a:hover{color:#d4af37}
-        .footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.08);color:#666}
-        
-        @media(max-width:1024px){.shop-layout{grid-template-columns:1fr}.filters-sidebar{position:static}}
-        @media(max-width:768px){
-            .nav-links{display:none}.nav-links.active{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:#111;padding:1rem}
-            .mobile-menu-btn{display:flex}.shop-header{flex-direction:column;align-items:flex-start}
-            .products-grid.expanded{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #b8960f; --gold-light: #d4af37; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; }
+        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo-wrapper { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.88rem; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--gold); }
+        .nav-btn { background: var(--gold); color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.88rem; }
+        .nav-btn:hover { background: var(--gold-light); }
+        .shop-page { padding: 7rem 2rem 3rem; max-width: 1300px; margin: 0 auto; }
+        .shop-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+        .shop-title { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 800; }
+        .shop-title span { color: var(--gold); }
+        .search-box { display: flex; background: #fff; border: 1px solid var(--border); border-radius: 50px; overflow: hidden; }
+        .search-box input { padding: 0.7rem 1.2rem; border: none; outline: none; font-family: 'Outfit', sans-serif; font-size: 0.9rem; min-width: 220px; background: transparent; }
+        .search-box button { background: var(--gold); color: #fff; border: none; padding: 0.7rem 1.3rem; cursor: pointer; font-weight: 600; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.2rem; }
+        .product-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.08); border-color: var(--gold); }
+        .product-img-wrap { aspect-ratio: 1; overflow: hidden; background: #f5f0e8; position: relative; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .product-card:hover .product-img { transform: scale(1.04); }
+        .product-badge { position: absolute; top: 0.6rem; left: 0.6rem; background: var(--gold); color: #fff; padding: 0.2rem 0.7rem; border-radius: 50px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; z-index: 2; }
+        .product-info { padding: 1rem 1.1rem; }
+        .product-cat { color: var(--gold); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+        .product-name { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; margin: 0.3rem 0; font-weight: 600; }
+        .product-price { display: flex; align-items: center; gap: 0.5rem; margin: 0.4rem 0; }
+        .current-price { font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+        .old-price { text-decoration: line-through; color: #aaa; font-size: 0.8rem; }
+        .cart-btn { display: flex; align-items: center; justify-content: center; gap: 0.4rem; width: 100%; background: var(--gold); color: #fff; padding: 0.65rem; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.82rem; transition: all 0.3s; }
+        .cart-btn:hover { background: var(--gold-light); }
+        .footer { background: #1a1a1a; padding: 4rem 2rem 2rem; color: #aaa; margin-top: 3rem; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+        .footer-logo { width: 44px; margin-bottom: 1rem; border-radius: 8px; }
+        .footer h4 { color: #fff; margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
+        .footer a { display: block; color: #888; text-decoration: none; margin-bottom: 0.5rem; font-size: 0.82rem; transition: color 0.3s; }
+        .footer a:hover { color: var(--gold-light); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #333; color: #666; font-size: 0.78rem; }
+        .footer-bottom a { color: var(--gold-light); text-decoration: none; }
+        .toast { position: fixed; top: 18px; right: 18px; z-index: 9999; padding: 13px 20px; border-radius: 10px; font-weight: 600; font-size: 0.88rem; box-shadow: 0 8px 25px rgba(0,0,0,0.12); animation: slideIn 0.35s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .toast-success { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .toast-error { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: translateX(0); } }
+        @media (max-width: 768px) { .nav-links { display: none; } .products-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; } .footer-grid { grid-template-columns: 1fr 1fr; } .shop-header { flex-direction: column; } }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo-wrapper">
-                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="logo-img">
-                <span class="logo-text">OGSUN</span>
-            </a>
+            <a href="index.html" class="logo-wrapper"><img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
+  alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
             <div class="nav-links">
-                <a href="index.html" class="nav-link">🏠 Akèy</a>
-                <a href="shop.html" class="nav-link active">🛍️ Boutik</a>
-                <a href="cart.html" class="nav-link">🛒 Panye</a>
-                <a href="product.html" class="nav-link">📦 Pwodwi</a>
-                <a href="account.html" class="nav-link">👤 Kont</a>
-                <a href="orders.html" class="nav-link">📋 Kòmand</a>
-                <a href="about.html" class="nav-link">ℹ️ Sou Nou</a>
-                <a href="contact.html" class="nav-link">📞 Kontakte</a>
-                <a href="faq.html" class="nav-link">❓ FAQ</a>
-                <a href="admin.html" class="nav-link">👑 Admin</a>
+                <a href="index.html" class="nav-link">Akèy</a>
+                <a href="shop.html" class="nav-link active">Boutik</a>
+                <a href="cart.html" class="nav-link">Panye</a>
+                <a href="account.html" class="nav-link">Kont</a>
+                <a href="contact.html" class="nav-link">Kontakte</a>
             </div>
-            <div class="nav-actions">
-                <button class="icon-btn" onclick="window.location.href='shop.html'">🔍</button>
-                <button class="icon-btn" onclick="document.documentElement.setAttribute('data-theme',document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark')">🌓</button>
-                <button class="icon-btn" onclick="window.location.href='cart.html'">🛒</button>
-                <a href="account.html" class="primary-btn">Konekte</a>
+            <div style="display:flex;align-items:center;gap:1rem;">
+                <a href="cart.html" style="color:var(--text);text-decoration:none;font-size:1.2rem;">🛒</a>
+                <a href="account.html" class="nav-btn">Konekte</a>
             </div>
-            <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('active')"><span></span><span></span><span></span></button>
         </div>
     </nav>
 
-    <!-- SHOP MAIN -->
     <main class="shop-page">
         <div class="shop-header">
-            <h1 class="shop-title">Boutik <span style="color:#d4af37;">OGSUN</span></h1>
-            <div class="shop-controls">
-                <div class="search-box">
-                    <input type="text" placeholder="Rechèche pwodwi..." id="searchInput">
-                    <button onclick="searchProducts()">🔍</button>
-                </div>
-                <select class="sort-select" id="sortSelect" onchange="sortProducts()">
-                    <option value="">Pi popilè</option>
-                    <option value="price_asc">Pri: Ba a wo</option>
-                    <option value="price_desc">Pri: Wo a ba</option>
-                    <option value="newest">Pi nouvo</option>
-                </select>
+            <h1 class="shop-title">Boutik <span>OGSUN</span></h1>
+            <div class="search-box">
+                <input type="text" id="shopSearch" placeholder="Rechèche pwodwi...">
+                <button onclick="searchProducts()">🔍</button>
             </div>
         </div>
-
-        <div class="shop-layout">
-            <!-- FILTERS -->
-            <aside class="filters-sidebar">
-                <div class="filter-section">
-                    <h3>Kategori</h3>
-                    <label><input type="checkbox" class="filter-checkbox" data-filter="category" value="Atizana"> Atizana</label>
-                    <label><input type="checkbox" class="filter-checkbox" data-filter="category" value="Rad"> Rad</label>
-                    <label><input type="checkbox" class="filter-checkbox" data-filter="category" value="Dekorasyon"> Dekorasyon</label>
-                    <label><input type="checkbox" class="filter-checkbox" data-filter="category" value="Manje"> Manje</label>
-                    <label><input type="checkbox" class="filter-checkbox" data-filter="category" value="Pwodwi Natirèl"> Pwodwi Natirèl</label>
-                </div>
-                <div class="filter-section">
-                    <h3>Pri</h3>
-                    <input type="range" min="0" max="500" value="500" class="price-range" id="priceRange" oninput="document.getElementById('priceValue').textContent='$'+this.value">
-                    <p style="color:#a0a0a0;">Maks: <span id="priceValue">$500</span></p>
-                </div>
-                <button class="apply-filters-btn" onclick="applyFilters()">🔍 Aplike Filtè</button>
-                <button class="reset-filters-btn" onclick="resetFilters()">🔄 Reyajiste</button>
-            </aside>
-
-            <!-- PRODUCTS -->
-            <div>
-                <div class="products-grid expanded" id="productsGrid"></div>
-                <div class="pagination" id="pagination"></div>
-            </div>
-        </div>
+        <div class="products-grid" id="shopProducts"><p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem;">Chajman pwodwi...</p></div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div>
-                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="footer-logo">
-                <p style="color:#a0a0a0;">Pi bon platfòm e-commerce lokal an Ayiti.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Navigate</h4>
-                <a href="index.html">🏠 Akèy</a>
-                <a href="shop.html">🛍️ Boutik</a>
-                <a href="cart.html">🛒 Panye</a>
-                <a href="account.html">👤 Kont</a>
-            
-            </div>
-            <div class="footer-links">
-                <h4>Enfòmasyon</h4>
-                <a href="about.html">ℹ️ Sou Nou</a>
-                <a href="contact.html">📞 Kontakte</a>
-                <a href="faq.html">❓ FAQ</a>
-            </div>
+    <footer class="footer">
+        <div class="footer-grid">
+            <div><img src="logo.png" alt="OGSUN" class="footer-logo"><p style="color:#888;font-size:0.85rem;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
+            <div><h4>Navigate</h4><a href="index.html">Akèy</a><a href="shop.html">Boutik</a><a href="cart.html">Panye</a></div>
+            <div><h4>Enfòmasyon</h4><a href="about.html">Sou Nou</a><a href="contact.html">Kontakte</a><a href="faq.html">FAQ</a></div>
+            <div><h4>Sipò</h4><a href="faq.html">Livrezon</a><a href="faq.html">Retounen</a><a href="contact.html">Èd</a></div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 OGSUN. Tout dwa rezève.</p>
-        </div>
+        <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève.</p></div>
     </footer>
 
     <script>
-    // ===================================
-    // OGSUN SHOP - JS DIRÈK
-    // ===================================
+    var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
+    function showToast(msg,type){type=type||'success';var t=document.createElement('div');t.className='toast toast-'+type;t.innerHTML='<span>'+(type==='success'?'✓':'✕')+'</span> '+msg;document.body.appendChild(t);setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(80px)';t.style.transition='all 0.3s';setTimeout(function(){t.remove();},300);},2500);}
+    function addToCart(n,p){var c=JSON.parse(localStorage.getItem('ogsun-cart')||'[]');var e=c.find(function(i){return i.name===n;});if(e){e.quantity+=1;}else{c.push({name:n,quantity:1,price:p});}localStorage.setItem('ogsun-cart',JSON.stringify(c));showToast(n+' ajoute nan panye!','success');}
+    function searchProducts(){var q=document.getElementById('shopSearch').value.toLowerCase();var cards=document.querySelectorAll('.product-card');cards.forEach(function(c){var n=c.querySelector('.product-name')?.textContent.toLowerCase()||'';c.style.display=n.includes(q)||q===''?'':'none';});}
     
-    // Done pwodwi
-    var allProducts = [
-        {id:1,name:'Sak Pay Deluxe',category:'Atizana',price:45,oldPrice:65,image:'logo.png',rating:'⭐⭐⭐⭐⭐',reviews:128,badge:'Nouvo'},
-        {id:2,name:'Chemiz Brode',category:'Rad',price:35,oldPrice:50,image:'logo.png',rating:'⭐⭐⭐⭐⭐',reviews:95,badge:'Popilè'},
-        {id:3,name:'Tablo Dekoratif',category:'Dekorasyon',price:75,oldPrice:95,image:'logo.png',rating:'⭐⭐⭐⭐⭐',reviews:72,badge:''},
-        {id:4,name:'Siwo Myèl Natirèl',category:'Manje',price:15,oldPrice:null,image:'logo.png',rating:'⭐⭐⭐⭐⭐',reviews:200,badge:''},
-        {id:5,name:'Boutèy Plastik Resikle',category:'Pwodwi Natirèl',price:25,oldPrice:35,image:'logo.png',rating:'⭐⭐⭐⭐',reviews:45,badge:'Eko'},
-        {id:6,name:'Panyen Atizanal',category:'Atizana',price:55,oldPrice:70,image:'logo.png',rating:'⭐⭐⭐⭐⭐',reviews:88,badge:''},
-        {id:7,name:'Mayo Koton',category:'Rad',price:20,oldPrice:null,image:'logo.png',rating:'⭐⭐⭐⭐',reviews:150,badge:''},
-        {id:8,name:'Kad Foto Dekore',category:'Dekorasyon',price:30,oldPrice:40,image:'logo.png',rating:'⭐⭐⭐⭐⭐',reviews:33,badge:'Nouvo'}
-    ];
-    
-    var currentPage = 1;
-    var productsPerPage = 6;
-    var filteredProducts = allProducts.slice();
-    
-    // Montre pwodwi
-    function renderProducts() {
-        var grid = document.getElementById('productsGrid');
-        var start = (currentPage - 1) * productsPerPage;
-        var end = start + productsPerPage;
-        var pageProducts = filteredProducts.slice(start, end);
-        
-        grid.innerHTML = pageProducts.map(function(p) {
-            return `
-                <a href="product.html" class="product-card">
-                    <div class="product-image-wrapper">
-                        <img src="${p.image}" alt="${p.name}" class="product-image">
-                        ${p.badge ? '<span style="position:absolute;top:1rem;left:1rem;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;padding:0.25rem 1rem;border-radius:20px;font-size:0.75rem;font-weight:bold;">'+p.badge+'</span>' : ''}
-                    </div>
-                    <div class="product-info">
-                        <span style="color:#d4af37;font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;">${p.category}</span>
-                        <h3 class="product-name">${p.name}</h3>
-                        <div style="color:#f4d03f;font-size:0.875rem;">${p.rating} (${p.reviews})</div>
-                        <div class="product-price">
-                            <span class="current-price">$${p.price.toFixed(2)}</span>
-                            ${p.oldPrice ? '<span class="old-price">$'+p.oldPrice.toFixed(2)+'</span>' : ''}
-                        </div>
-                        <span class="add-to-cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart('${p.name}')">🛒 Ajoute nan panye</span>
-                    </div>
-                </a>
-            `;
+    fetch(API+'/products').then(function(r){return r.json();}).then(function(p){
+        var g=document.getElementById('shopProducts');
+        if(!p||p.length===0){g.innerHTML='<p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem;">Pa gen pwodwi disponib.</p>';return;}
+        g.innerHTML=p.map(function(pr){var img=pr.image||pr.image_url||'logo.png';
+            return '<a href="product.html?id='+pr.id+'" class="product-card"><div class="product-img-wrap"><img src="'+img+'" alt="'+pr.name+'" class="product-img" onerror="this.src=\'logo.png\'">'+(pr.badge?'<span class="product-badge">'+pr.badge+'</span>':'')+'</div><div class="product-info"><span class="product-cat">'+(pr.category||'')+'</span><h3 class="product-name">'+pr.name+'</h3><div class="product-price"><span class="current-price">$'+(pr.price||0).toFixed(2)+'</span>'+(pr.old_price?'<span class="old-price">$'+pr.old_price.toFixed(2)+'</span>':'')+'</div><button class="cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(\''+pr.name+'\','+pr.price+')">Ajoute nan panye</button></div></a>';
         }).join('');
-        
-        renderPagination();
-    }
-    
-    // Pagination
-    function renderPagination() {
-        var totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-        var pagination = document.getElementById('pagination');
-        var html = '';
-        
-        for (var i = 1; i <= totalPages; i++) {
-            html += '<button class="page-btn' + (i === currentPage ? ' active' : '') + '" onclick="goToPage(' + i + ')">' + i + '</button>';
-        }
-        
-        pagination.innerHTML = html;
-    }
-    
-    function goToPage(page) {
-        currentPage = page;
-        renderProducts();
-        window.scrollTo({top:400,behavior:'smooth'});
-    }
-    
-    // Filtè
-    function applyFilters() {
-        var checkboxes = document.querySelectorAll('.filter-checkbox:checked');
-        var selectedCategories = Array.from(checkboxes).map(function(cb) { return cb.value; });
-        var maxPrice = parseInt(document.getElementById('priceRange').value);
-        
-        filteredProducts = allProducts.filter(function(p) {
-            var matchCategory = selectedCategories.length === 0 || selectedCategories.includes(p.category);
-            var matchPrice = p.price <= maxPrice;
-            return matchCategory && matchPrice;
-        });
-        
-        currentPage = 1;
-        renderProducts();
-        alert('🔍 ' + filteredProducts.length + ' pwodwi jwenn!');
-    }
-    
-    function resetFilters() {
-        document.querySelectorAll('.filter-checkbox').forEach(function(cb) { cb.checked = false; });
-        document.getElementById('priceRange').value = 500;
-        document.getElementById('priceValue').textContent = '$500';
-        filteredProducts = allProducts.slice();
-        currentPage = 1;
-        renderProducts();
-        alert('🔄 Filtè reyajiste!');
-    }
-    
-    // Rechèch
-    function searchProducts() {
-        var query = document.getElementById('searchInput').value.toLowerCase();
-        filteredProducts = allProducts.filter(function(p) {
-            return p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query);
-        });
-        currentPage = 1;
-        renderProducts();
-    }
-    
-    // Triye
-    function sortProducts() {
-        var sortBy = document.getElementById('sortSelect').value;
-        
-        if (sortBy === 'price_asc') {
-            filteredProducts.sort(function(a,b) { return a.price - b.price; });
-        } else if (sortBy === 'price_desc') {
-            filteredProducts.sort(function(a,b) { return b.price - a.price; });
-        } else {
-            filteredProducts = allProducts.slice();
-        }
-        
-        currentPage = 1;
-        renderProducts();
-    }
-    
-    // Ajoute nan panye
-    function addToCart(name) {
-        var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
-        var existing = cart.find(function(item) { return item.name === name; });
-        
-        if (existing) {
-            existing.quantity += 1;
-        } else {
-            cart.push({name:name,quantity:1,price:45});
-        }
-        
-        localStorage.setItem('ogsun-cart',JSON.stringify(cart));
-        alert('✅ ' + name + ' ajoute nan panye! 🛒');
-    }
-    
-    // Inisyalize
-    renderProducts();
-    console.log('✅ OGSUN Shop chaje!');
-    
-// Admin sekrè - tape kòd pou ale nan admin
-var secretCode = '';
-document.addEventListener('keydown', function(e) {
-    secretCode += e.key.toLowerCase();
-    
-    // Kòd sekrè: "ogsunadmin2024"
-    if (secretCode.includes('ogsunadmin2024')) {
-        secretCode = '';
-        var pw = prompt('🔐 Antre kòd admin:');
-        if (pw === 'OGPLUG45') {
-            window.location.href = 'admin-login.html';
-        } else if (pw) {
-            alert('❌ Kòd pa bon!');
-        }
-    }
-    
-    // Netwaye chak 5 segonn
-    setTimeout(function() { secretCode = ''; }, 5000);
-});
-</script>
+    }).catch(function(){document.getElementById('shopProducts').innerHTML='<p style="text-align:center;color:#c62828;grid-column:1/-1;padding:2rem;">Pa ka chaje pwodwi.</p>';});
+    </script>
+
 </body>
 </html>

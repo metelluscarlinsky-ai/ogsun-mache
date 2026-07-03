@@ -1,850 +1,110 @@
 <!DOCTYPE html>
-<html lang="ht" data-theme="dark">
+<html lang="ht">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Kontakte</title>
+    <title>OGSUN | Kontakte 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ============================================
-           OGSUN CONTACT CSS - DIRÈK
-           ============================================ */
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Outfit', Arial, sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
-            line-height: 1.6;
-        }
-        
-        /* ===== NAVBAR ===== */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1rem 2rem;
-            background: rgba(10, 10, 10, 0.95);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-        }
-        
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .logo-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-        }
-        
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
-            transition: transform 0.5s;
-        }
-        
-        .logo-wrapper:hover .logo-img {
-            transform: rotate(-10deg) scale(1.1);
-        }
-        
-        .logo-text {
-            font-family: 'Space Grotesk', Arial, sans-serif;
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #d4af37;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        
-        .nav-link {
-            color: #a0a0a0;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-        
-        .nav-link:hover,
-        .nav-link.active {
-            color: #d4af37;
-        }
-        
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        .icon-btn {
-            background: none;
-            border: none;
-            color: #a0a0a0;
-            cursor: pointer;
-            padding: 0.5rem;
-            font-size: 1.25rem;
-            transition: color 0.3s;
-        }
-        
-        .icon-btn:hover {
-            color: #d4af37;
-        }
-        
-        .primary-btn {
-            background: linear-gradient(135deg, #d4af37, #f4d03f);
-            color: #0a0a0a;
-            border: none;
-            padding: 0.75rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .primary-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-        
-        .mobile-menu-btn span {
-            width: 25px;
-            height: 2px;
-            background: #ffffff;
-            transition: all 0.3s;
-        }
-        
-        /* ===== CONTACT PAGE ===== */
-        .contact-page {
-            padding: 8rem 2rem 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .contact-hero {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-        
-        .contact-badge {
-            display: inline-block;
-            background: rgba(212, 175, 55, 0.1);
-            color: #d4af37;
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-        
-        .contact-title {
-            font-family: 'Space Grotesk', Arial, sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin: 1rem 0;
-            background: linear-gradient(135deg, #ffffff, #d4af37);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .contact-subtitle {
-            color: #a0a0a0;
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-        
-        /* ===== CONTACT FORM ===== */
-        .contact-form-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 2.5rem;
-        }
-        
-        .contact-form-card h2 {
-            font-family: 'Space Grotesk', Arial, sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: #d4af37;
-        }
-        
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-        
-        .form-group label {
-            display: block;
-            color: #a0a0a0;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: #ffffff;
-            font-family: 'Outfit', Arial, sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #d4af37;
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
-        }
-        
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #666666;
-        }
-        
-        .form-group select {
-            cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23d4af37' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-        }
-        
-        .form-group select option {
-            background: #1a1a1a;
-            color: #ffffff;
-        }
-        
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
-        }
-        
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #d4af37, #f4d03f);
-            color: #0a0a0a;
-            border: none;
-            padding: 1rem;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 0.5rem;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
-        }
-        
-        .submit-btn:active {
-            transform: translateY(-1px);
-        }
-        
-        /* ===== CONTACT INFO CARDS ===== */
-        .contact-info-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .info-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s;
-            cursor: default;
-        }
-        
-        .info-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(212, 175, 55, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        
-        .info-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .info-card h3 {
-            font-family: 'Space Grotesk', Arial, sans-serif;
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .info-card p {
-            color: #a0a0a0;
-            font-size: 0.95rem;
-        }
-        
-        .info-card .info-detail {
-            color: #d4af37;
-            font-weight: 500;
-            margin-top: 0.25rem;
-        }
-        
-        /* WhatsApp Card */
-        .whatsapp-card {
-            background: #25D366;
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .whatsapp-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
-        }
-        
-        .whatsapp-icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .whatsapp-card h3 {
-            font-family: 'Space Grotesk', Arial, sans-serif;
-            color: #ffffff;
-            font-size: 1.25rem;
-        }
-        
-        .whatsapp-card p {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-        }
-        
-        /* Success Message */
-        .success-message {
-            display: none;
-            background: rgba(76, 175, 80, 0.1);
-            border: 1px solid #4caf50;
-            color: #4caf50;
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-        
-        .success-message.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* ===== FOOTER ===== */
-        .site-footer {
-            background: #111111;
-            padding: 4rem 2rem 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            margin-top: 4rem;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .footer-logo {
-            width: 60px;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-desc {
-            color: #a0a0a0;
-        }
-        
-        .footer-links h4 {
-            font-family: 'Space Grotesk', Arial, sans-serif;
-            margin-bottom: 1rem;
-            color: #ffffff;
-        }
-        
-        .footer-links a {
-            display: block;
-            color: #a0a0a0;
-            text-decoration: none;
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
-        }
-        
-        .footer-links a:hover {
-            color: #d4af37;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            color: #666666;
-        }
-        
-        .footer-bottom a {
-            color: #d4af37;
-            text-decoration: none;
-        }
-        
-        .footer-bottom a:hover {
-            text-decoration: underline;
-        }
-        
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .nav-links.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: #111111;
-                padding: 1.5rem;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-                z-index: 999;
-            }
-            
-            .mobile-menu-btn {
-                display: flex;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .contact-title {
-                font-size: 2rem;
-            }
-            
-            .contact-page {
-                padding: 6rem 1rem 2rem;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #b8960f; --gold-light: #d4af37; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; --red: #c62828; --green: #2e7d32; }
+        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.7; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo-wrapper { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.88rem; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--gold); }
+        .nav-btn { background: var(--gold); color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.88rem; }
+        .contact-page { padding: 7rem 2rem 3rem; max-width: 800px; margin: 0 auto; }
+        .contact-title { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 800; text-align: center; margin-bottom: 0.5rem; }
+        .contact-title span { color: var(--gold); }
+        .contact-subtitle { text-align: center; color: var(--gray); margin-bottom: 2rem; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .form-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; }
+        .form-card h2 { font-family: 'Space Grotesk', sans-serif; margin-bottom: 1.2rem; font-size: 1.2rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; color: var(--gray); margin-bottom: 0.3rem; font-size: 0.85rem; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; background: #fafaf9; border: 1px solid var(--border); border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; color: var(--text); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--gold); }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .submit-btn { width: 100%; background: var(--gold); color: #fff; border: none; padding: 0.9rem; border-radius: 50px; font-weight: 600; cursor: pointer; font-size: 1rem; }
+        .submit-btn:hover { background: var(--gold-light); }
+        .info-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; text-align: center; transition: all 0.3s; }
+        .info-card:hover { border-color: var(--gold); }
+        .info-card .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .info-card h3 { font-family: 'Space Grotesk', sans-serif; margin-bottom: 0.3rem; }
+        .info-card p { color: var(--gray); font-size: 0.9rem; }
+        .whatsapp-card { background: #25D366; color: #fff; border-radius: var(--radius); padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .whatsapp-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(37,211,102,0.3); }
+        .whatsapp-card .icon { font-size: 2.5rem; margin-bottom: 0.3rem; }
+        .whatsapp-card h3 { font-family: 'Space Grotesk', sans-serif; }
+        .msg { padding: 0.8rem; border-radius: 10px; margin-bottom: 1rem; display: none; text-align: center; font-weight: 500; }
+        .msg.success { display: block; background: #e8f5e9; color: var(--green); border: 1px solid #c8e6c9; }
+        .footer { background: #1a1a1a; padding: 4rem 2rem 2rem; color: #aaa; margin-top: 3rem; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+        .footer-logo { width: 44px; margin-bottom: 1rem; border-radius: 8px; }
+        .footer h4 { color: #fff; margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
+        .footer a { display: block; color: #888; text-decoration: none; margin-bottom: 0.5rem; font-size: 0.82rem; }
+        .footer a:hover { color: var(--gold-light); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #333; color: #666; font-size: 0.78rem; }
+        .footer-bottom a { color: var(--gold-light); text-decoration: none; }
+        @media (max-width: 768px) { .nav-links { display: none; } .contact-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
-    <!-- ======================================== -->
-    <!-- NAVBAR -->
-    <!-- ======================================== -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo-wrapper">
-                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="logo-img">
-                <span class="logo-text">OGSUN</span>
-            </a>
-            
-            <div class="nav-links" id="navLinks">
-                <a href="index.html" class="nav-link">🏠 Akèy</a>
-                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
-                <a href="cart.html" class="nav-link">🛒 Panye</a>
-                <a href="product.html" class="nav-link">📦 Pwodwi</a>
-                <a href="account.html" class="nav-link">👤 Kont</a>
-                <a href="orders.html" class="nav-link">📋 Kòmand</a>
-                <a href="about.html" class="nav-link">ℹ️ Sou Nou</a>
-                <a href="contact.html" class="nav-link active">📞 Kontakte</a>
-                <a href="faq.html" class="nav-link">❓ FAQ</a>
-                
-            </div>
-            
-            <div class="nav-actions">
-                <button class="icon-btn" onclick="window.location.href='shop.html'" title="Rechèch">🔍</button>
-                <button class="icon-btn" id="themeToggle" title="Chanje Tèm">🌓</button>
-                <button class="icon-btn" onclick="window.location.href='cart.html'" title="Panye">🛒</button>
-                <a href="account.html" class="primary-btn">Konekte</a>
-            </div>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <a href="index.html" class="logo-wrapper"><<img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
+alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
+            <div class="nav-links"><a href="index.html" class="nav-link">Akèy</a><a href="shop.html" class="nav-link">Boutik</a><a href="cart.html" class="nav-link">Panye</a><a href="account.html" class="nav-link">Kont</a><a href="contact.html" class="nav-link active">Kontakte</a></div>
+            <a href="index.html" class="nav-btn">Akèy</a>
         </div>
     </nav>
 
-    <!-- ======================================== -->
-    <!-- CONTACT MAIN -->
-    <!-- ======================================== -->
     <main class="contact-page">
-        
-        <!-- Hero -->
-        <div class="contact-hero">
-            <span class="contact-badge">📞 Sipò OGSUN</span>
-            <h1 class="contact-title">Kontakte Nou</h1>
-            <p class="contact-subtitle">Nou la pou ede w! Voye yon mesaj oswa kontakte nou dirèkteman. Nou reponn an mwens ke 24 èdtan.</p>
-        </div>
-
-        <!-- Contact Grid -->
+        <h1 class="contact-title">Kontakte <span>Nou</span></h1>
+        <p class="contact-subtitle">Nou la pou ede w! Voye yon mesaj oswa kontakte nou dirèkteman.</p>
         <div class="contact-grid">
-            
-            <!-- FORM -->
-            <div class="contact-form-card">
+            <div class="form-card">
                 <h2>📧 Voye yon Mesaj</h2>
-                
-                <div class="success-message" id="successMessage">
-                    ✅ Mesaj voye avèk siksè! Nou pral reponn ou byento!
-                </div>
-                
-                <form id="contactForm" onsubmit="handleSubmit(event)">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Non *</label>
-                            <input type="text" id="firstName" placeholder="Antre non w" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Siyati *</label>
-                            <input type="text" id="lastName" placeholder="Antre siyati w" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Imèl *</label>
-                        <input type="email" id="email" placeholder="exemple@gmail.com" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Telefòn</label>
-                        <input type="tel" id="phone" placeholder="+509 00000000">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Sijè *</label>
-                        <select id="subject" required>
-                            <option value="">Chwazi yon sijè...</option>
-                            <option value="support">Sipò Kliyan</option>
-                            <option value="order">Kesyon sou Kòmand</option>
-                            <option value="product">Enfòmasyon sou Pwodwi</option>
-                            <option value="partnership">Patnarya</option>
-                            <option value="complaint">Plent</option>
-                            <option value="other">Lòt</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Mesaj *</label>
-                        <textarea id="message" placeholder="Ekri mesaj ou a isit..." required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">📤 Voye Mesaj</button>
+                <div class="msg" id="contactMsg"></div>
+                <form id="contactForm" onsubmit="sendMessage(event)">
+                    <div class="form-group"><label>Non *</label><input type="text" id="contactName" placeholder="Antre non w" required></div>
+                    <div class="form-group"><label>Imèl *</label><input type="email" id="contactEmail" placeholder="Antre imèl ou" required></div>
+                    <div class="form-group"><label>Telefòn</label><input type="tel" id="contactPhone" placeholder="+509 0000 0000"></div>
+                    <div class="form-group"><label>Mesaj *</label><textarea id="contactMessage" placeholder="Ekri mesaj ou a..." required></textarea></div>
+                    <button type="submit" class="submit-btn">Voye Mesaj</button>
                 </form>
             </div>
-
-            <!-- INFO CARDS -->
-            <div class="contact-info-grid">
-                
-                <!-- Phone -->
-                <div class="info-card">
-                    <div class="info-icon">📞</div>
-                    <h3>Telefòn</h3>
-                    <p class="info-detail">+509 32924776</p>
-                    <p>Lendi - Vandredi: 8AM - 6PM</p>
-                    <p>Samdi: 9AM - 1PM</p>
+            <div>
+                <div class="info-card"><div class="icon">📞</div><h3>Telefòn</h3><p>+509 32924776</p><p style="font-size:0.8rem;">Lendi - Vandredi: 8AM - 6PM</p></div>
+                <div class="info-card"><div class="icon">📧</div><h3>Imèl</h3><p>metelluscarlinsky@gmail.com</p><p style="font-size:0.8rem;">Nou reponn an mwens ke 24 èdtan</p></div>
+                <div class="info-card"><div class="icon">📍</div><h3>Adrès</h3><p>Gonayiv, Ayiti</p></div>
+                <div class="whatsapp-card" onclick="window.open('https://wa.me/50932924776','_blank')">
+                    <div class="icon">☎️</div><h3>Chat sou WhatsApp</h3><p style="opacity:0.9;">32924776</p>
                 </div>
-                
-                <!-- Email -->
-                <div class="info-card">
-                    <div class="info-icon">📧</div>
-                    <h3>Imèl</h3>
-                    <p class="info-detail">info@ogsun.com</p>
-                    <p class="info-detail">metelluscarlinsky@gmail.com</p>
-                    <p>Nou reponn an mwens ke 24 èdtan</p>
-                </div>
-                
-                <!-- Address -->
-                <div class="info-card">
-                    <div class="info-icon">📍</div>
-                    <h3>Adrès</h3>
-                    <p class="info-detail">Bretagne 4</p>
-                    <p>Gonayiv,Atibonite</p>
-                    <p>Ayiti (HT 4110)</p>
-                </div>
-                
-                <!-- WhatsApp -->
-               <div class="whatsapp-card" onclick="openWhatsApp()">
-                    <div class="whatsapp-icon">💬</div>
-                    <h3>Chat sou WhatsApp</h3>
-                    <p>Repons rapid garantie</p>
-                    <p style="margin-top:0.5rem; font-weight:bold;">Klike pou kòmanse →</p>
-                </div>
-                
             </div>
         </div>
     </main>
 
-    <!-- ======================================== -->
-    <!-- FOOTER -->
-    <!-- ======================================== -->
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div>
-                 <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="footer-logo">
-                <p class="footer-desc">Pi bon platfòm e-commerce lokal an Ayiti.</p>
-            </div>
-            <div class="footer-links">
-                <h4>Navigate</h4>
-                <a href="index.html">🏠 Akèy</a>
-                <a href="shop.html">🛍️ Boutik</a>
-                <a href="cart.html">🛒 Panye</a>
-                <a href="account.html">👤 Kont</a>
-                <a href="admin.html">👑 Admin</a>
-            </div>
-            <div class="footer-links">
-                <h4>Enfòmasyon</h4>
-                <a href="about.html">ℹ️ Sou Nou</a>
-                <a href="contact.html">📞 Kontakte</a>
-                <a href="faq.html">❓ FAQ</a>
-            </div>
-            <div class="footer-links">
-                <h4>Sipò</h4>
-                <a href="faq.html">Livrezon</a>
-                <a href="faq.html">Retounen</a>
-                <a href="contact.html">Èd</a>
-            </div>
+    <footer class="footer">
+        <div class="footer-grid">
+            <div><img src="logo.png" alt="OGSUN" class="footer-logo"><p style="color:#888;font-size:0.85rem;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
+            <div><h4>Navigate</h4><a href="index.html">Akèy</a><a href="shop.html">Boutik</a><a href="cart.html">Panye</a></div>
+            <div><h4>Enfòmasyon</h4><a href="about.html">Sou Nou</a><a href="contact.html">Kontakte</a><a href="faq.html">FAQ</a></div>
+            <div><h4>Sipò</h4><a href="faq.html">Livrezon</a><a href="faq.html">Retounen</a><a href="contact.html">Èd</a></div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 OGSUN. Tout dwa rezève. | <a href="index.html">Akèy</a> | <a href="contact.html">Kontakte</a></p>
-        </div>
+        <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève.</p></div>
     </footer>
 
-    <!-- ======================================== -->
-    <!-- SCRIPTS -->
-    <!-- ======================================== -->
     <script>
-    console.log('🔥 OGSUN Contact Page Loaded!');
-    
-    // ===================================
-    // MOBILE MENU
-    // ===================================
-    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-        var nav = document.getElementById('navLinks');
-        nav.classList.toggle('active');
-        
-        // Animate hamburger
-        var spans = this.querySelectorAll('span');
-        if (nav.classList.contains('active')) {
-            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-        } else {
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        }
-    });
-    
-    // ===================================
-    // THEME TOGGLE
-    // ===================================
-    document.getElementById('themeToggle').addEventListener('click', function() {
-        var html = document.documentElement;
-        var current = html.getAttribute('data-theme');
-        var newTheme = current === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        localStorage.setItem('ogsun-theme', newTheme);
-        console.log('🌓 Theme changed to: ' + newTheme);
-    });
-    
-    // Load saved theme
-    (function() {
-        var savedTheme = localStorage.getItem('ogsun-theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-    })();
-    
-    // ===================================
-    // FORM SUBMISSION
-    // ===================================
-    function handleSubmit(event) {
-        event.preventDefault();
-        
-        // Get form values
-        var firstName = document.getElementById('firstName').value.trim();
-        var lastName = document.getElementById('lastName').value.trim();
-        var email = document.getElementById('email').value.trim();
-        var phone = document.getElementById('phone').value.trim();
-        var subject = document.getElementById('subject').value;
-        var message = document.getElementById('message').value.trim();
-        
-        // Validate
-        if (!firstName || !lastName || !email || !subject || !message) {
-            alert('❌ Tanpri ranpli tout chan obligatwa yo!');
-            return false;
-        }
-        
-        if (!isValidEmail(email)) {
-            alert('❌ Tanpri antre yon imèl valab!');
-            document.getElementById('email').style.border = '2px solid #ff4444';
-            return false;
-        }
-        
-        // Reset borders
-        document.querySelectorAll('#contactForm input, #contactForm select, #contactForm textarea').forEach(function(el) {
-            el.style.border = '1px solid rgba(255, 255, 255, 0.1)';
-        });
-        
-        // Show success
-        var successMsg = document.getElementById('successMessage');
-        successMsg.classList.add('show');
-        
-        // Log submission (in real app, send to server)
-        console.log('📧 Form submitted:');
-        console.log('  Name: ' + firstName + ' ' + lastName);
-        console.log('  Email: ' + email);
-        console.log('  Phone: ' + phone);
-        console.log('  Subject: ' + subject);
-        console.log('  Message: ' + message);
-        
-        // Save to localStorage (temporary)
-        var contacts = JSON.parse(localStorage.getItem('ogsun-contacts') || '[]');
-        contacts.push({
-            name: firstName + ' ' + lastName,
-            email: email,
-            phone: phone,
-            subject: subject,
-            message: message,
-            date: new Date().toISOString()
-        });
-        localStorage.setItem('ogsun-contacts', JSON.stringify(contacts));
-        
-        // Reset form
-        document.getElementById('contactForm').reset();
-        
-        // Hide success after 5 seconds
-        setTimeout(function() {
-            successMsg.classList.remove('show');
-        }, 5000);
-        
-        return false;
-    }
-    
-    // ===================================
-    // EMAIL VALIDATION
-    // ===================================
-    function isValidEmail(email) {
-        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return regex.test(email);
-    }
-    
-    // ===================================
-    // WHATSAPP
-    // ===================================
-    function openWhatsApp() {
-        var phone = '50932924776'; // Chanje pou nimewo reyèl ou
-        var message = 'Bonjou OGSUN! Mwen bezwen enfòmasyon sou pwodwi yo.';
-        var url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
-        
-        if (confirm('💬 Ouvri WhatsApp pou chat ak OGSUN?')) {
-            window.open(url, '_blank');
-        }
-    }
-    
-    // ===================================
-    // REAL-TIME VALIDATION
-    // ===================================
-    document.getElementById('email').addEventListener('input', function() {
-        if (this.value && !isValidEmail(this.value)) {
-            this.style.border = '2px solid #ff4444';
-        } else {
-            this.style.border = '1px solid rgba(255, 255, 255, 0.1)';
-        }
-    });
-    
-    console.log('✅ Contact page ready!');
-    console.log('📋 Features: Form validation, WhatsApp, Theme toggle, Mobile menu');
-    
-// Admin sekrè - tape kòd pou ale nan admin
-var secretCode = '';
-document.addEventListener('keydown', function(e) {
-    secretCode += e.key.toLowerCase();
-    
-    // Kòd sekrè: "ogsunadmin2024"
-    if (secretCode.includes('ogsunadmin2024')) {
-        secretCode = '';
-        var pw = prompt('🔐 Antre kòd admin:');
-        if (pw === 'OGPLUG45') {
-            window.location.href = 'admin-login.html';
-        } else if (pw) {
-            alert('❌ Kòd pa bon!');
-        }
-    }
-    
-    // Netwaye chak 5 segonn
-    setTimeout(function() { secretCode = ''; }, 5000);
-});
-</script>
+    var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
+    function sendMessage(e){e.preventDefault();var n=document.getElementById('contactName').value.trim();var em=document.getElementById('contactEmail').value.trim();var p=document.getElementById('contactPhone').value.trim();var m=document.getElementById('contactMessage').value.trim();var msg=document.getElementById('contactMsg');if(!n||!em||!m){msg.className='msg error';msg.textContent='❌ Ranpli chan obligatwa yo!';return;}fetch(API+'/contacts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:n,email:em,phone:p,message:m})}).then(function(r){return r.json();}).then(function(){msg.className='msg success';msg.textContent='✅ Mesaj voye avèk siksè! Nou pral reponn ou byento.';document.getElementById('contactForm').reset();setTimeout(function(){msg.className='msg';},4000);}).catch(function(){msg.className='msg error';msg.textContent='❌ Pa ka voye mesaj la.';});return false;}
+    </script>
 
 </body>
 </html>

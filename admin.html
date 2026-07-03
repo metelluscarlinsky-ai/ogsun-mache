@@ -254,6 +254,9 @@ function deleteUser(id) {
         });
     }
 }
+fetchAPI(API + '/orders').then(function(orders) {
+    // Afiche nan admin
+});
     // ===== DASHBOARD =====
     function loadDashboard() {
         fetchAPI(API + '/admin/stats').then(function(stats) {

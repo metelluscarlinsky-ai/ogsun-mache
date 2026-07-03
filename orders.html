@@ -1,117 +1,274 @@
 <!DOCTYPE html>
-<html lang="ht" data-theme="dark">
+<html lang="ht">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Swivi Kòmand</title>
+    <title>OGSUN | Swivi Kòmand 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
-        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
-        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
-        .logo-img{width:50px;height:50px;object-fit:contain}
-        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
-        .nav-links{display:flex;gap:1.5rem;align-items:center}
-        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem}
-        .nav-link:hover{color:#d4af37}
-        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none}
-        .orders-page{padding:8rem 2rem 4rem;max-width:700px;margin:0 auto}
-        .back-link{color:#d4af37;text-decoration:none;display:inline-block;margin-bottom:1rem}
-        .order-title{font-family:'Space Grotesk',Arial,sans-serif;font-size:2rem;margin-bottom:0.5rem}
-        .timeline{position:relative;padding-left:3rem;margin:2rem 0}
-        .timeline::before{content:'';position:absolute;left:1.35rem;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#d4af37,rgba(255,255,255,0.1))}
-        .timeline-item{position:relative;margin-bottom:2rem}
-        .timeline-dot{position:absolute;left:-2.5rem;top:0;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-        .timeline-dot.done{background:#d4af37;color:#0a0a0a}
-        .timeline-dot.active{background:rgba(255,255,255,0.1);border:2px solid #ffc107;color:#ffc107}
-        .timeline-content h3{color:#d4af37}
-        .timeline-content .active-title{color:#ffc107}
-        .timeline-content p{color:#a0a0a0;font-size:0.9rem}
-        .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:15px;padding:1.5rem;margin-bottom:1rem}
-        .btn{background:#d4af37;color:#0a0a0a;border:none;padding:0.75rem 1.5rem;border-radius:25px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;margin-right:0.5rem}
-        .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.2);color:#fff}
-        .btn-danger{background:transparent;border:1px solid #ff4444;color:#ff4444}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #b8960f; --gold-light: #d4af37; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; --green: #2e7d32; --red: #c62828; --orange: #e65100; --blue: #1565c0; }
+        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.7; min-height: 100vh; }
+        
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo-wrapper { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.88rem; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--gold); }
+        .nav-btn { background: var(--gold); color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.88rem; }
+        
+        .orders-page { padding: 7rem 2rem 3rem; max-width: 800px; margin: 0 auto; }
+        .page-title { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .page-title span { color: var(--gold); }
+        .page-subtitle { color: var(--gray); margin-bottom: 2rem; }
+        
+        .tracking-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem; }
+        .tracking-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--text); }
+        
+        .timeline { position: relative; padding-left: 2.5rem; }
+        .timeline::before { content: ''; position: absolute; left: 0.85rem; top: 0; bottom: 0; width: 2px; background: var(--border); }
+        .timeline-item { position: relative; margin-bottom: 1.8rem; }
+        .timeline-dot { position: absolute; left: -2.05rem; top: 0; width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--border); background: #fff; z-index: 1; }
+        .timeline-dot.done { background: var(--green); border-color: var(--green); }
+        .timeline-dot.active { background: var(--gold); border-color: var(--gold); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(184,150,15,0.4); } 50% { box-shadow: 0 0 0 8px rgba(184,150,15,0); } }
+        .timeline-dot.pending { background: #fff; border-color: var(--gray); }
+        .timeline-content h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
+        .timeline-content p { color: var(--gray); font-size: 0.85rem; }
+        .timeline-content .date { font-size: 0.78rem; color: #aaa; }
+        
+        .order-info-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .order-info-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; margin-bottom: 0.8rem; color: var(--text); }
+        .order-info-card p { color: var(--gray); font-size: 0.9rem; margin-bottom: 0.3rem; }
+        .order-info-card strong { color: var(--text); }
+        
+        .livrezon-summary { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center; }
+        .livrezon-summary h3 { font-family: 'Space Grotesk', sans-serif; margin-bottom: 1rem; }
+        .livrezon-badge { display: inline-block; padding: 0.5rem 1.5rem; border-radius: 50px; font-weight: 700; font-size: 1rem; }
+        .livrezon-badge.free { background: #e8f5e9; color: var(--green); }
+        .livrezon-badge.paid { background: #fff3e0; color: var(--orange); }
+        .livrezon-detail { color: var(--gray); font-size: 0.9rem; margin-top: 0.5rem; }
+        
+        .action-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.5rem; }
+        .btn { padding: 0.8rem 1.8rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.9rem; transition: all 0.3s; text-align: center; }
+        .btn-gold { background: var(--gold); color: #fff; border: none; }
+        .btn-gold:hover { background: var(--gold-light); }
+        .btn-outline { background: #fff; color: var(--gold); border: 2px solid var(--gold); }
+        .btn-outline:hover { background: var(--gold); color: #fff; }
+        .btn-whatsapp { background: #25D366; color: #fff; border: none; display: flex; align-items: center; gap: 0.5rem; justify-content: center; }
+        .btn-whatsapp:hover { background: #1fa855; }
+        .btn-whatsapp img { width: 20px; height: 20px; }
+        
+        .footer { background: #1a1a1a; padding: 4rem 2rem 2rem; color: #aaa; margin-top: 3rem; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+        .footer-logo { width: 44px; margin-bottom: 1rem; border-radius: 8px; }
+        .footer h4 { color: #fff; margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
+        .footer a { display: block; color: #888; text-decoration: none; margin-bottom: 0.5rem; font-size: 0.82rem; transition: color 0.3s; }
+        .footer a:hover { color: var(--gold-light); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #333; color: #666; font-size: 0.78rem; }
+        .footer-bottom a { color: var(--gold-light); text-decoration: none; }
+        
+        .toast { position: fixed; top: 18px; right: 18px; z-index: 9999; padding: 13px 20px; border-radius: 10px; font-weight: 600; font-size: 0.88rem; box-shadow: 0 8px 25px rgba(0,0,0,0.12); animation: slideIn 0.35s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .toast-success { background: #e8f5e9; color: var(--green); border: 1px solid #c8e6c9; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: translateX(0); } }
+        @media (max-width: 768px) { .nav-links { display: none; } .order-info-card { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo-wrapper">
-                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="logo-img">
-                <span class="logo-text">OGSUN</span>
-            </a>
+            <a href="index.html" class="logo-wrapper"><img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
+ alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
             <div class="nav-links">
-                <a href="index.html" class="nav-link">🏠 Akèy</a>
-                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
-                <a href="account.html" class="nav-link">👤 Kont</a>
+                <a href="index.html" class="nav-link">Akèy</a>
+                <a href="shop.html" class="nav-link">Boutik</a>
+                <a href="cart.html" class="nav-link">Panye</a>
+                <a href="orders.html" class="nav-link active">Kòmand</a>
+                <a href="account.html" class="nav-link">Kont</a>
             </div>
-            <a href="account.html" class="primary-btn">Kont Mwen</a>
+            <a href="index.html" class="nav-btn">Akèy</a>
         </div>
     </nav>
 
     <main class="orders-page">
-        <a href="account.html" class="back-link">← Retounen nan Kont</a>
-        <h1 class="order-title">Kòmand #OGS-7845</h1>
-        <p style="color:#a0a0a0;">Kòmand pase 15 Janvye 2024</p>
-
-        <div class="card">
-            <h3 style="font-family:'Space Grotesk',Arial,sans-serif;">📍 Swivi Livrezon</h3>
-            <div class="timeline">
+        <h1 class="page-title">Swivi <span>Kòmand</span></h1>
+        <p class="page-subtitle">Kòmand #<strong id="orderNumber">---</strong> - <span id="orderDate">---</span></p>
+        
+        <!-- Swivi Livrezon -->
+        <div class="tracking-card">
+            <h2>Swivi Livrezon</h2>
+            <div class="timeline" id="trackingTimeline">
                 <div class="timeline-item">
-                    <div class="timeline-dot done">✅</div>
-                    <div class="timeline-content"><h3>Kòmand Konfime</h3><p>15 Jan 2024 - 10:30 AM</p></div>
+                    <div class="timeline-dot done"></div>
+                    <div class="timeline-content"><h3>Kòmand Konfime</h3><p>Kòmand ou a te konfime epi n ap prepare l.</p><span class="date" id="trackDate1">---</span></div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot done">✅</div>
-                    <div class="timeline-content"><h3>An Preparasyon</h3><p>16 Jan 2024 - 2:00 PM</p></div>
+                    <div class="timeline-dot done"></div>
+                    <div class="timeline-content"><h3>An Preparasyon</h3><p>Atizan an ap prepare pwodwi ou a ak anpil swen.</p><span class="date" id="trackDate2">---</span></div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot done">✅</div>
-                    <div class="timeline-content"><h3>Ekspedisyon</h3><p>17 Jan 2024 - 9:00 AM</p></div>
+                    <div class="timeline-dot active"></div>
+                    <div class="timeline-content"><h3>An Transpò</h3><p>Pake a nan wout. Estimasyon livrezon: <strong id="deliveryEstimate">---</strong></p><span class="date" id="trackDate3">---</span></div>
                 </div>
                 <div class="timeline-item">
-                    <div class="timeline-dot active">⏳</div>
-                    <div class="timeline-content"><h3 class="active-title">An Transpò</h3><p>18 Jan 2024 - Kounya</p></div>
+                    <div class="timeline-dot pending"></div>
+                    <div class="timeline-content"><h3>Livre</h3><p>Pake a pral livre byento.</p><span class="date" id="trackDate4">---</span></div>
                 </div>
             </div>
         </div>
-
-        <div class="card">
-            <h3 style="font-family:'Space Grotesk',Arial,sans-serif;">📦 Pwodwi</h3>
-            <p><strong>Sak Pay Deluxe</strong> x2 - <span style="color:#d4af37;">$90.00</span></p>
+        
+        <!-- Detay Kòmand -->
+        <div class="order-info-card">
+            <div>
+                <h3>Pwodwi Kòmande</h3>
+                <div id="orderItems"><p style="color:var(--gray);">Chajman...</p></div>
+            </div>
+            <div>
+                <h3>Adrès Livrezon</h3>
+                <div id="shippingInfo"><p style="color:var(--gray);">Chajman...</p></div>
+            </div>
         </div>
-
-        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-            <button class="btn" onclick="alert('📄 Fakti telechaje!')">📄 Fakti</button>
-            <button class="btn btn-outline" onclick="window.location.href='contact.html'">💬 Sipò</button>
-            <button class="btn btn-danger" onclick="if(confirm('Anile kòmand?'))alert('❌ Kòmand anile!')">Anile</button>
+        
+        <!-- Rezime Livrezon -->
+        <div class="livrezon-summary">
+            <h3>Rezime Livrezon</h3>
+            <div id="livrezonBadge"></div>
+            <div class="livrezon-detail" id="livrezonDetail"></div>
+        </div>
+        
+        <!-- Bouton Aksyon -->
+        <div class="action-btns">
+            <a href="contact.html" class="btn btn-outline">Kontakte Sipò</a>
+            <button class="btn btn-whatsapp" onclick="contactWhatsApp()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> Kontakte sou WhatsApp
+            </button>
         </div>
     </main>
 
-    <script>console.log('✅ Orders page chaje!');
+    <footer class="footer">
+        <div class="footer-grid">
+            <div><img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
+ alt="OGSUN" class="footer-logo"><p style="color:#888;font-size:0.85rem;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
+            <div><h4>Navigate</h4><a href="index.html">Akèy</a><a href="shop.html">Boutik</a><a href="cart.html">Panye</a></div>
+            <div><h4>Enfòmasyon</h4><a href="about.html">Sou Nou</a><a href="contact.html">Kontakte</a><a href="faq.html">FAQ</a></div>
+            <div><h4>Sipò</h4><a href="faq.html">Livrezon</a><a href="faq.html">Retounen</a><a href="contact.html">Sipò</a></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève.</p></div>
+    </footer>
+
+    <script>
+    var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
+    var WHATSAPP = '50932924776';
+    var LIVREZON_GRATIS = 5000;
+    var FRAIS_LIVREZON = 500;
     
-// Admin sekrè - tape kòd pou ale nan admin
-var secretCode = '';
-document.addEventListener('keydown', function(e) {
-    secretCode += e.key.toLowerCase();
+    function showToast(msg) {
+        var t = document.createElement('div');
+        t.className = 'toast toast-success';
+        t.innerHTML = '<span>&check;</span> ' + msg;
+        document.body.appendChild(t);
+        setTimeout(function() { t.style.opacity = '0'; t.style.transform = 'translateX(80px)'; t.style.transition = 'all 0.3s'; setTimeout(function() { t.remove(); }, 300); }, 2500);
+    }
     
-    // Kòd sekrè: "ogsunadmin2024"
-    if (secretCode.includes('ogsunadmin2024')) {
-        secretCode = '';
-        var pw = prompt('🔐 Antre kòd admin:');
-        if (pw === 'OGPLUG45') {
-            window.location.href = 'admin-login.html';
-        } else if (pw) {
-            alert('❌ Kòd pa bon!');
+    // Chaje detay kòmand (sipozeman depi localStorage oswa API)
+    function loadOrder() {
+        var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
+        var lastOrder = JSON.parse(localStorage.getItem('ogsun-last-order') || 'null');
+        function loadOrderFromAPI(orderNumber) {
+    fetch(API + '/orders')
+        .then(function(r) { return r.json(); })
+        .then(function(orders) {
+            // Jwenn kòmand itilizatè a
+            // Afiche l
+        });
+}
+        // Si gen yon dènye kòmand
+        if (lastOrder) {
+            document.getElementById('orderNumber').textContent = lastOrder.orderNumber || 'OGS-2026';
+            document.getElementById('orderDate').textContent = lastOrder.date || new Date().toLocaleDateString('ht');
+            
+            // Montre pwodwi
+            var items = lastOrder.items || cart;
+            var itemsHTML = '';
+            var total = 0;
+            items.forEach(function(item) {
+                var itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                itemsHTML += '<p><strong>' + item.name + '</strong> x' + item.quantity + ' - $' + itemTotal.toFixed(2) + '</p>';
+            });
+            document.getElementById('orderItems').innerHTML = itemsHTML;
+            
+            // Adrès
+            var shippingHTML = '<p><strong>' + (lastOrder.customerName || 'Kliyan') + '</strong></p>';
+            shippingHTML += '<p>' + (lastOrder.address || 'Adrès pa disponib') + '</p>';
+            shippingHTML += '<p>Tel: ' + (lastOrder.phone || '---') + '</p>';
+            document.getElementById('shippingInfo').innerHTML = shippingHTML;
+            
+            // Livrezon
+            var livrezonBadge = document.getElementById('livrezonBadge');
+            var livrezonDetail = document.getElementById('livrezonDetail');
+            
+            if (total >= LIVREZON_GRATIS) {
+                livrezonBadge.innerHTML = '<span class="livrezon-badge free">Livrezon GRATIS</span>';
+                livrezonDetail.textContent = 'Kòmand ou depase $' + LIVREZON_GRATIS.toLocaleString() + ' - ou benefisye livrezon gratis!';
+            } else {
+                livrezonBadge.innerHTML = '<span class="livrezon-badge paid">Livrezon: $' + FRAIS_LIVREZON.toFixed(2) + '</span>';
+                var manke = LIVREZON_GRATIS - total;
+                livrezonDetail.textContent = 'Ajoute $' + manke.toFixed(2) + ' plis pou benefisye livrezon gratis (a partir de $' + LIVREZON_GRATIS.toLocaleString() + ').';
+            }
+            
+            // Dat estimasyon
+            var today = new Date();
+            var delivery = new Date(today);
+            delivery.setDate(today.getDate() + 4);
+            document.getElementById('deliveryEstimate').textContent = delivery.toLocaleDateString('ht');
+            document.getElementById('trackDate3').textContent = today.toLocaleDateString('ht');
+            document.getElementById('trackDate2').textContent = new Date(today.setDate(today.getDate() - 1)).toLocaleDateString('ht');
+            document.getElementById('trackDate1').textContent = new Date(today.setDate(today.getDate() - 1)).toLocaleDateString('ht');
+            document.getElementById('trackDate4').textContent = '---';
+        } else if (cart.length > 0) {
+            // Soti nan panye
+            document.getElementById('orderNumber').textContent = 'Nouvo Kòmand';
+            document.getElementById('orderDate').textContent = new Date().toLocaleDateString('ht');
+            
+            var itemsHTML = '';
+            var total = 0;
+            cart.forEach(function(item) {
+                var itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                itemsHTML += '<p><strong>' + item.name + '</strong> x' + item.quantity + ' - $' + itemTotal.toFixed(2) + '</p>';
+            });
+            document.getElementById('orderItems').innerHTML = itemsHTML;
+            document.getElementById('shippingInfo').innerHTML = '<p>Ranpli fòm peman an pou konfime adrès ou.</p>';
+            
+            var livrezonBadge = document.getElementById('livrezonBadge');
+            var livrezonDetail = document.getElementById('livrezonDetail');
+            
+            if (total >= LIVREZON_GRATIS) {
+                livrezonBadge.innerHTML = '<span class="livrezon-badge free">Livrezon GRATIS</span>';
+                livrezonDetail.textContent = 'Kòmand ou depase $' + LIVREZON_GRATIS.toLocaleString() + ' - ou benefisye livrezon gratis!';
+            } else {
+                livrezonBadge.innerHTML = '<span class="livrezon-badge paid">Livrezon: $' + FRAIS_LIVREZON.toFixed(2) + '</span>';
+                var manke = LIVREZON_GRATIS - total;
+                livrezonDetail.textContent = 'Ajoute $' + manke.toFixed(2) + ' plis pou benefisye livrezon gratis (a partir de $' + LIVREZON_GRATIS.toLocaleString() + ').';
+            }
+        } else {
+            document.getElementById('orderItems').innerHTML = '<p style="color:var(--gray);">Pa gen kòmand ankò. <a href="shop.html" style="color:var(--gold);">Ale nan boutik</a></p>';
+            document.getElementById('shippingInfo').innerHTML = '<p style="color:var(--gray);">---</p>';
         }
     }
     
-    // Netwaye chak 5 segonn
-    setTimeout(function() { secretCode = ''; }, 5000);
-});
-</script>
+    function contactWhatsApp() {
+        var msg = encodeURIComponent('Bonjou OGSUN, mwen bezwen enfòmasyon sou kòmand mwen an.');
+        window.open('https://wa.me/' + WHATSAPP + '?text=' + msg, '_blank');
+    }
+    
+    loadOrder();
+    </script>
+
 </body>
 </html>

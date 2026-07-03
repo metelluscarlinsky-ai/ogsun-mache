@@ -1,327 +1,301 @@
 <!DOCTYPE html>
-<html lang="ht" data-theme="dark">
+<html lang="ht">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Peman</title>
+    <title>OGSUN | Peman 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Outfit',Arial,sans-serif;background:#0a0a0a;color:#fff;line-height:1.6}
-        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;background:rgba(10,10,10,0.95);border-bottom:1px solid rgba(255,255,255,0.08)}
-        .nav-container{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-        .logo-wrapper{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
-        .logo-img{width:50px;height:50px;object-fit:contain}
-        .logo-text{font-family:'Space Grotesk',Arial,sans-serif;font-size:1.75rem;font-weight:700;color:#d4af37;letter-spacing:3px;text-transform:uppercase}
-        .nav-links{display:flex;gap:1.5rem;align-items:center}
-        .nav-link{color:#a0a0a0;text-decoration:none;font-weight:500;font-size:0.9rem}
-        .nav-link:hover{color:#d4af37}
-        .primary-btn{background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:0.75rem 2rem;border-radius:50px;font-weight:600;cursor:pointer;text-decoration:none}
-        
-        .checkout-page{padding:8rem 2rem 4rem;max-width:800px;margin:0 auto}
-        .checkout-title{font-family:'Space Grotesk',Arial,sans-serif;font-size:2.5rem;margin-bottom:2rem;text-align:center}
-        .checkout-title span{color:#d4af37}
-        
-        .form-section{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;margin-bottom:1.5rem}
-        .form-section h2{font-family:'Space Grotesk',Arial,sans-serif;margin-bottom:1.5rem;font-size:1.3rem}
-        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
-        .form-group{margin-bottom:1rem}
-        .form-group label{display:block;color:#a0a0a0;margin-bottom:0.5rem;font-size:0.9rem}
-        .form-group input,.form-group select,.form-group textarea{width:100%;padding:1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-family:'Outfit',Arial,sans-serif;font-size:1rem}
-        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#d4af37}
-        .form-group textarea{resize:vertical;min-height:80px}
-        
-        .payment-options{display:flex;flex-direction:column;gap:0.75rem}
-        .payment-btn{width:100%;padding:1.25rem;border-radius:15px;border:2px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:#fff;font-weight:bold;font-size:1.1rem;cursor:pointer;text-align:left;display:flex;align-items:center;gap:1rem;transition:all 0.3s}
-        .payment-btn:hover{border-color:#d4af37;transform:translateY(-2px)}
-        .payment-btn.selected{border-color:#d4af37;background:rgba(212,175,55,0.1)}
-        .payment-icon{font-size:2rem}
-        
-        .order-summary{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:2rem;margin-top:2rem}
-        .summary-row{display:flex;justify-content:space-between;margin-bottom:0.75rem;color:#a0a0a0}
-        .summary-total{display:flex;justify-content:space-between;font-size:1.5rem;font-weight:bold;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.08)}
-        .summary-total span:last-child{color:#d4af37}
-        
-        .place-order-btn{width:100%;background:linear-gradient(135deg,#d4af37,#f4d03f);color:#0a0a0a;border:none;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.2rem;cursor:pointer;margin-top:1.5rem;transition:all 0.3s}
-        .place-order-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(212,175,55,0.4)}
-        
-        .whatsapp-btn{width:100%;background:#25D366;color:#fff;border:none;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.1rem;cursor:pointer;margin-top:0.75rem;transition:all 0.3s}
-        .whatsapp-btn:hover{transform:translateY(-2px)}
-        
-        .natcash-btn{width:100%;background:#E91E63;color:#fff;border:none;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.1rem;cursor:pointer;margin-top:0.75rem;transition:all 0.3s}
-        .natcash-btn:hover{transform:translateY(-2px)}
-        
-        .email-btn{width:100%;background:transparent;color:#d4af37;border:2px solid #d4af37;padding:1.25rem;border-radius:30px;font-weight:bold;font-size:1.1rem;cursor:pointer;margin-top:0.75rem;transition:all 0.3s}
-        .email-btn:hover{background:rgba(212,175,55,0.1)}
-        
-        @media(max-width:768px){.form-row{grid-template-columns:1fr}.checkout-title{font-size:2rem}}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #b8960f; --gold-light: #d4af37; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; --red: #c62828; --green: #2e7d32; }
+
+        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.7; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .logo-wrapper { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+        .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.88rem; }
+        .nav-link:hover { color: var(--gold); }
+        .nav-btn { background: var(--gold); color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.88rem; }
+        .checkout-page { padding: 7rem 2rem 3rem; max-width: 800px; margin: 0 auto; }
+        .checkout-title { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 2rem; }
+        .checkout-title span { color: var(--gold); }
+        .form-section { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; margin-bottom: 1.2rem; }
+        .form-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; margin-bottom: 1rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; color: var(--gray); margin-bottom: 0.3rem; font-size: 0.85rem; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; background: #fafaf9; border: 1px solid var(--border); border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; color: var(--text); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--gold); }
+        .form-group textarea { resize: vertical; min-height: 70px; }
+        .payment-options { display: flex; flex-direction: column; gap: 0.7rem; }
+        .payment-btn { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem; border: 2px solid var(--border); border-radius: var(--radius); background: #fff; cursor: pointer; transition: all 0.3s; }
+        .payment-btn:hover { border-color: var(--gold); }
+        .payment-btn.selected { border-color: var(--gold); background: rgba(184,150,15,0.04); }
+        .payment-btn img { width: 32px; height: 32px; object-fit: contain; }
+        .payment-btn strong { display: block; font-size: 0.95rem; }
+        .payment-btn small { color: var(--gray); font-size: 0.8rem; }
+        .order-summary { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.6rem; color: var(--gray); font-size: 0.9rem; }
+        .summary-total { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .summary-total span:last-child { color: var(--gold); }
+        .livrezon-bar { background: #fafaf9; border-radius: 10px; padding: 1rem; margin: 1rem 0; text-align: center; border: 1px solid var(--border); }
+        .progress-bar { background: #e8e0d0; border-radius: 8px; height: 6px; margin-top: 8px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, var(--gold), var(--gold-light)); height: 100%; border-radius: 8px; transition: width 0.5s ease; }
+        .btn { display: block; width: 100%; padding: 1rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; text-align: center; text-decoration: none; margin-top: 0.7rem; transition: all 0.3s; border: none; }
+        .btn-gold { background: var(--gold); color: #fff; }
+        .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(184,150,15,0.25); }
+        .btn-whatsapp { background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .btn-whatsapp:hover { background: #1fa855; }
+        .btn-whatsapp img { width: 22px; height: 22px; }
+        .btn-natcash { background: #E91E63; color: #fff; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .btn-natcash:hover { background: #c2185b; }
+        .btn-natcash img { width: 22px; height: 22px; border-radius: 4px; }
+        .toast { position: fixed; top: 18px; right: 18px; z-index: 9999; padding: 13px 20px; border-radius: 10px; font-weight: 600; font-size: 0.88rem; box-shadow: 0 8px 25px rgba(0,0,0,0.12); animation: slideIn 0.35s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .toast-success { background: #e8f5e9; color: var(--green); border: 1px solid #c8e6c9; }
+        .toast-error { background: #ffebee; color: var(--red); border: 1px solid #ffcdd2; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: translateX(0); } }
+        .footer { background: #1a1a1a; padding: 4rem 2rem 2rem; color: #aaa; margin-top: 3rem; }
+        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
+        .footer-logo { width: 44px; margin-bottom: 1rem; border-radius: 8px; }
+        .footer h4 { color: #fff; margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
+        .footer a { display: block; color: #888; text-decoration: none; margin-bottom: 0.5rem; font-size: 0.82rem; }
+        .footer a:hover { color: var(--gold-light); }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #333; color: #666; font-size: 0.78rem; }
+        .footer-bottom a { color: var(--gold-light); text-decoration: none; }
+        @media (max-width: 768px) { .nav-links { display: none; } .form-row { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
+        <!-- Modal Peman NatCash -->
+<div id="natcashModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:20px;padding:30px;max-width:450px;width:90%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.3);">
+        <div style="font-size:2.5rem;margin-bottom:10px;color:#E91E63;">NatCash</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;color:#1a1a1a;margin-bottom:10px;">Enstriksyon Peman NatCash</h3>
+        <p style="color:#666;margin-bottom:20px;font-size:0.9rem;">Swiv etap sa yo pou finalize kòmand ou:</p>
+        
+        <div style="text-align:left;background:#fafaf9;border-radius:12px;padding:15px;margin-bottom:20px;">
+            <p style="margin-bottom:8px;"><strong>1.</strong> Ouvri app NatCash sou telefòn ou</p>
+            <p style="margin-bottom:8px;"><strong>2.</strong> Chwazi "Voye Lajan"</p>
+            <p style="margin-bottom:8px;"><strong>3.</strong> Antre nimewo: <strong style="color:#E91E63;">32924776</strong></p>
+            <p style="margin-bottom:8px;"><strong>4.</strong> Antre montan: <strong style="color:#E91E63;" id="modalNatcashAmount">$0.00</strong></p>
+            <p style="margin-bottom:8px;"><strong>5.</strong> Konfime peman an</p>
+            <p style="margin-bottom:0;"><strong>6.</strong> Voye kopi tranzaksyon sou WhatsApp</p>
+        </div>
+        
+        <button onclick="sendToWhatsApp()" style="width:100%;background:#25D366;color:#fff;border:none;padding:14px;border-radius:50px;font-weight:700;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width:22px;height:22px;"> Voye Kopi Tranzaksyon sou WhatsApp
+        </button>
+        
+        <button onclick="closeNatcashModal()" style="width:100%;background:transparent;color:#666;border:1px solid #ddd;padding:12px;border-radius:50px;margin-top:10px;cursor:pointer;font-weight:600;">Fèmen</button>
+    </div>
+</div>
+<!-- Modal WhatsApp -->
+<div id="whatsappModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:20px;padding:30px;max-width:450px;width:90%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.3);">
+        <div style="font-size:2.5rem;margin-bottom:10px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width:60px;height:60px;">
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;color:#1a1a1a;margin-bottom:10px;">Kòmande sou WhatsApp</h3>
+        <p style="color:#666;margin-bottom:20px;font-size:0.9rem;">N ap ouvri WhatsApp ak tout detay kòmand ou an. Ou ka finalize kòmand lan dirèkteman.</p>
+        <button onclick="sendWhatsAppOrder()" style="width:100%;background:#25D366;color:#fff;border:none;padding:14px;border-radius:50px;font-weight:700;font-size:1rem;cursor:pointer;">Kontinye sou WhatsApp</button>
+        <button onclick="closeWhatsappModal()" style="width:100%;background:transparent;color:#666;border:1px solid #ddd;padding:12px;border-radius:50px;margin-top:10px;cursor:pointer;font-weight:600;">Fèmen</button>
+    </div>
+</div>
 <body>
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo-wrapper">
-                 <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png" alt="OGSUN" class="logo-img">
-                <span class="logo-text">OGSUN</span>
-            </a>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">🏠 Akèy</a>
-                <a href="shop.html" class="nav-link">🛍️ Boutik</a>
-                <a href="cart.html" class="nav-link">🛒 Panye</a>
-            </div>
-            <a href="index.html" class="primary-btn">Akèy</a>
+            <a href="index.html" class="logo-wrapper"><img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
+ alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
+            <div class="nav-links"><a href="index.html" class="nav-link">Akèy</a><a href="shop.html" class="nav-link">Boutik</a><a href="cart.html" class="nav-link">Panye</a><a href="account.html" class="nav-link">Kont</a></div>
+            <a href="index.html" class="nav-btn">Akèy</a>
         </div>
     </nav>
 
     <main class="checkout-page">
-        <h1 class="checkout-title">💳 Finalize <span>Kòmand</span></h1>
+        <h1 class="checkout-title">Finalize <span>Kòmand</span></h1>
         
-        <!-- Fòm Livrezon -->
         <div class="form-section">
-            <h2>📍 Enfòmasyon Livrezon</h2>
-            <form id="checkoutForm" onsubmit="return false;">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Non *</label>
-                        <input type="text" id="firstName" placeholder="Antre non w" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Siyati *</label>
-                        <input type="text" id="lastName" placeholder="Antre siyati w" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Imèl</label>
-                    <input type="email" id="email" placeholder="imel@example.com">
-                </div>
-                <div class="form-group">
-                    <label>Telefòn *</label>
-                    <input type="tel" id="phone" placeholder="+509 0000 0000" required>
-                </div>
-                <div class="form-group">
-                    <label>Adrès Livrezon *</label>
-                    <textarea id="address" placeholder="Antre adrès konplè ou..." required></textarea>
-                </div>
-            </form>
+            <h2>Enfòmasyon Livrezon</h2>
+            <div class="form-row">
+                <div class="form-group"><label>Non *</label><input type="text" id="firstName" placeholder="Antre non w" required></div>
+                <div class="form-group"><label>Siyati *</label><input type="text" id="lastName" placeholder="Antre siyati w" required></div>
+            </div>
+            <div class="form-group"><label>Telefòn *</label><input type="tel" id="phone" placeholder="+509 32924776" required></div>
+            <div class="form-group"><label>Adrès Livrezon *</label><textarea id="address" placeholder="Antre adrès konplè ou..." required></textarea></div>
         </div>
 
-        <!-- Metòd Peman -->
         <div class="form-section">
-            <h2>💳 Chwazi Metòd Peman</h2>
+            <h2>Metòd Peman</h2>
             <div class="payment-options">
-                <button class="payment-btn natcash-btn" onclick="selectPayment('natcash')" id="btnNatcash">
-                    <span class="payment-icon">📱</span>
-                    <div>
-                        <strong>NatCash</strong>
-                        <p style="font-size:0.85rem;opacity:0.8;">Peye ak NatCash - Nimewo: 32924776</p>
-                    </div>
-                </button>
-                <button class="payment-btn whatsapp-btn" onclick="selectPayment('whatsapp')" id="btnWhatsapp">
-                    <span class="payment-icon">💬</span>
-                    <div>
-                        <strong>WhatsApp</strong>
-                        <p style="font-size:0.85rem;opacity:0.8;">Kòmande dirèk sou WhatsApp</p>
-                    </div>
-                </button>
-                <button class="payment-btn email-btn" onclick="selectPayment('email')" id="btnEmail">
-                    <span class="payment-icon">📧</span>
-                    <div>
-                        <strong>Imèl</strong>
-                        <p style="font-size:0.85rem;opacity:0.8;">Voye kòmand pa imèl</p>
-                    </div>
-                </button>
+                <div class="payment-btn selected" onclick="selectPayment('natcash')" id="btnNatcash">
+                    <span style="font-size:1.8rem;width:32px;text-align:center;">N</span>
+                    <div><strong>NatCash</strong><small>Peye ak NatCash </small></div>
+                </div>
+                <div class="payment-btn" onclick="selectPayment('whatsapp')" id="btnWhatsapp">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                    <div><strong>WhatsApp</strong><small>Kòmande dirèk sou WhatsApp - </small></div>
+                </div>
             </div>
         </div>
 
-        <!-- Rezime Kòmand -->
         <div class="order-summary">
-            <h2 style="font-family:'Space Grotesk',Arial,sans-serif;">📋 Rezime Kòmand</h2>
-            <div id="checkoutSummary"><p style="color:#a0a0a0;">⏳ Chajman...</p></div>
-            
-            <button class="place-order-btn" onclick="placeOrder()">🚀 Konfime Kòmand</button>
-            <button class="natcash-btn" onclick="payWithNatCash()">📱 Peye ak NatCash </button>
-            <button class="whatsapp-btn" onclick="orderViaWhatsApp()">💬 Kòmande sou WhatsApp</button>
-            <button class="email-btn" onclick="orderViaEmail()">📧 Voye Kòmand pa Imèl</button>
+            <h2 style="font-family:'Space Grotesk',sans-serif;font-size:1.1rem;margin-bottom:1rem;">Rezime Kòmand</h2>
+            <div id="checkoutSummary"><p style="color:var(--gray);">Chajman...</p></div>
+            <div class="livrezon-bar" id="livrezonInfo"></div>
+            <button class="btn btn-gold" onclick="placeOrder()">Konfime Kòmand</button>
+            <button class="btn btn-natcash" onclick="payWithNatCash()">Peye ak NatCash </button>
+            <button class="btn btn-whatsapp" onclick="orderViaWhatsApp()">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> Kòmande sou WhatsApp 
+            </button>
         </div>
     </main>
 
+    <footer class="footer">
+        <div class="footer-grid">
+            <div><img src="logo.png" alt="OGSUN" class="footer-logo"><p style="color:#888;font-size:0.85rem;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
+            <div><h4>Navigate</h4><a href="index.html">Akèy</a><a href="shop.html">Boutik</a><a href="cart.html">Panye</a></div>
+            <div><h4>Enfòmasyon</h4><a href="about.html">Sou Nou</a><a href="contact.html">Kontakte</a><a href="faq.html">FAQ</a></div>
+            <div><h4>Sipò</h4><a href="faq.html">Livrezon</a><a href="faq.html">Retounen</a><a href="contact.html">Sipò</a></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève.</p></div>
+    </footer>
+
     <script>
-    // ===== KONFIGIRASYON =====
-    var NATCASH_NUMBER = '50932924776';
-    var WHATSAPP_NUMBER = '50932924776';
-    var EMAIL_ADDRESS = 'metelluscarlinsky@gmail.com';
-    var selectedPayment = 'natcash';
-    
-    // ===== CHAJE PANYE =====
+    var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
+    var NATCASH = '50932924776', WHATSAPP = '50932924776', selectedPayment = 'natcash';
     var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
-    var total = cart.reduce(function(sum, item) { return sum + (item.price * item.quantity); }, 0);
+    var total = cart.reduce(function(s,i){return s+(i.price*i.quantity);},0);
+    var LIVREZON_GRATIS = 5000, FRAIS_LIVREZON = total < LIVREZON_GRATIS ? 500 : 0, totalAvec = total + FRAIS_LIVREZON;
     
-    // Montre rezime
-    var summaryHTML = cart.map(function(item) {
-        return '<div class="summary-row"><span>' + item.name + ' x' + item.quantity + '</span><span>$' + (item.price * item.quantity).toFixed(2) + '</span></div>';
-    }).join('');
-    
-    summaryHTML += '<div class="summary-row"><span>Livrezon</span><span style="color:#4caf50;">Gratis 🎉</span></div>';
-    summaryHTML += '<div class="summary-total"><span>Total</span><span>$' + total.toFixed(2) + '</span></div>';
-    
-    document.getElementById('checkoutSummary').innerHTML = summaryHTML;
-    
-    // ===== SELEKSYON PEMAN =====
-    function selectPayment(method) {
-        selectedPayment = method;
-        document.querySelectorAll('.payment-btn').forEach(function(btn) {
-            btn.classList.remove('selected');
-        });
-        document.getElementById('btn' + method.charAt(0).toUpperCase() + method.slice(1))?.classList.add('selected');
+    function showToast(msg, type) {
+        type = type || 'success';
+        var t = document.createElement('div'); t.className = 'toast toast-' + type;
+        t.innerHTML = '<span>' + (type==='success' ? '&check;' : '&times;') + '</span> ' + msg;
+        document.body.appendChild(t);
+        setTimeout(function() { t.style.opacity='0'; t.style.transform='translateX(80px)'; t.style.transition='all 0.3s'; setTimeout(function(){t.remove();},300); },3000);
     }
     
-    // ===== KONFIME KÒMAND (SIMILASYON) =====
+    // Rezime
+    var s = ''; cart.forEach(function(i){ s += '<div class="summary-row"><span>'+i.name+' x'+i.quantity+'</span><span>$'+(i.price*i.quantity).toFixed(2)+'</span></div>'; });
+    s += '<div class="summary-row"><span>Livrezon</span><span style="color:'+(FRAIS_LIVREZON===0?'var(--green)':'var(--red)')+';">'+(FRAIS_LIVREZON===0?'GRATIS':'$'+FRAIS_LIVREZON.toFixed(2))+'</span></div>';
+    s += '<div class="summary-total"><span>Total</span><span>$'+totalAvec.toFixed(2)+'</span></div>';
+    document.getElementById('checkoutSummary').innerHTML = s;
+    
+    var li = document.getElementById('livrezonInfo');
+    if (FRAIS_LIVREZON === 0) {
+        li.innerHTML = '<strong style="color:var(--green);">Livrezon Gratis!</strong><br><small style="color:var(--gray);">Kòmand ou depase $'+LIVREZON_GRATIS.toLocaleString()+'</small>';
+    } else {
+        var manke = LIVREZON_GRATIS - total, pous = Math.round((total/LIVREZON_GRATIS)*100);
+        li.innerHTML = '<strong>Livrezon: $'+FRAIS_LIVREZON.toFixed(2)+'</strong><br><small style="color:#e65100;">Ajoute $'+manke.toFixed(2)+' plis pou livrezon GRATIS!</small><div class="progress-bar"><div class="progress-fill" style="width:'+pous+'%;"></div></div><small style="color:var(--gray);">'+pous+'% rive</small>';
+    }
+    
+    function selectPayment(m) { selectedPayment = m; document.querySelectorAll('.payment-btn').forEach(function(b){b.classList.remove('selected');}); document.getElementById('btn'+m.charAt(0).toUpperCase()+m.slice(1)).classList.add('selected'); }
+    
+    function getInfo() {
+        var n = (document.getElementById('firstName')?.value||'') + ' ' + (document.getElementById('lastName')?.value||'');
+        var p = document.getElementById('phone')?.value||'', a = document.getElementById('address')?.value||'';
+        if (!n.trim() || !p || !a) { showToast('Ranpli tout chan obligatwa yo!','error'); return null; }
+        return { name: n.trim(), phone: p, address: a };
+    }
+    
     function placeOrder() {
-        var name = document.getElementById('firstName').value.trim();
-        var lastName = document.getElementById('lastName').value.trim();
-        var phone = document.getElementById('phone').value.trim();
-        var address = document.getElementById('address').value.trim();
+        var info = getInfo(); if (!info) return;
+        if (cart.length === 0) { showToast('Panye w vid!','error'); return; }
         
-        if (!name || !phone || !address) {
-            alert('❌ Ranpli Non, Telefòn, ak Adrès!');
-            return;
-        }
+        // Voye kòmand nan backend API (REYÈL!)
+        var orderData = {
+            customer_name: info.name,
+            customer_email: '',
+            customer_phone: info.phone,
+            shipping_address: info.address,
+            payment_method: selectedPayment,
+            items: cart,
+            total: totalAvec
+        };
         
-        if (cart.length === 0) {
-            alert('❌ Panye w vid!');
-            return;
-        }
-        
-        // Chwazi bon metòd
-        if (selectedPayment === 'natcash') {
-            payWithNatCash();
-        } else if (selectedPayment === 'whatsapp') {
-            orderViaWhatsApp();
-        } else if (selectedPayment === 'email') {
-            orderViaEmail();
-        } else {
-            alert('✅ Kòmand anrejistre! Nou pral kontakte w. Mèsi! 🙏');
-        }
+        fetch(API + '/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(orderData)
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            // Sove kòmand nan localStorage pou orders.html
+            localStorage.setItem('ogsun-last-order', JSON.stringify({
+                orderNumber: data.order_number,
+                date: new Date().toLocaleDateString('ht'),
+                items: cart,
+                customerName: info.name,
+                address: info.address,
+                phone: info.phone,
+                total: totalAvec
+            }));
+            
+            // Vide panye a
+            localStorage.removeItem('ogsun-cart');
+            
+            showToast('Kòmand #'+data.order_number+' kreye ak siksè!','success');
+            
+            // Ale nan paj swivi kòmand
+            setTimeout(function() {
+                window.location.href = 'orders.html';
+            }, 1500);
+        })
+        .catch(function() {
+            // Si API pa mache, voye sou WhatsApp kanmenm
+            if (selectedPayment === 'natcash') payWithNatCash();
+            else orderViaWhatsApp();
+        });
     }
     
-    // ===== PEMAN NATCASH =====
     function payWithNatCash() {
-        var name = (document.getElementById('firstName')?.value || '') + ' ' + (document.getElementById('lastName')?.value || '');
-        var phone = document.getElementById('phone')?.value || '';
-        var address = document.getElementById('address')?.value || '';
-        
-        if (!name.trim() || !phone || !address) {
-            alert('❌ Ranpli enfòmasyon livrezon anvan!');
-            return;
-        }
-        
-        if (cart.length === 0) {
-            alert('❌ Panye w vid!');
-            return;
-        }
-        
-        var productList = '';
-        cart.forEach(function(item, i) {
-            productList += (i+1) + '. ' + item.name + ' x' + item.quantity + ' = $' + (item.price * item.quantity).toFixed(2) + '%0A';
-        });
-        
-        var message = '🛒 *NOUVO KÒMAND OGSUN*%0A%0A';
-        message += '*Non:* ' + name + '%0A';
-        message += '*Telefòn:* ' + phone + '%0A';
-        message += '*Adrès:* ' + address + '%0A%0A';
-        message += '*Pwodwi:*%0A' + productList + '%0A';
-        message += '*Total: $' + total.toFixed(2) + '*%0A%0A';
-        message += '💳 *PEMAN NATCASH*%0A';
-        message += '📱 *Nimewo:* 32924776%0A';
-        message += '💰 *Montan:* $' + total.toFixed(2) + '%0A%0A';
-        message += '⬆️ _Voye kopi tranzaksyon NatCash la isit la_';
-        
-        var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + message;
-        
-        alert('💳 *Enstriksyon Peman NatCash:*\n\n' +
-              '1️⃣ Ouvri app NatCash\n' +
-              '2️⃣ Chwazi "Voye Lajan"\n' +
-              '3️⃣ Nimewo: 32924776\n' +
-              '4️⃣ Montan: $' + total.toFixed(2) + '\n' +
-              '5️⃣ Konfime peman an\n' +
-              '6️⃣ Voye kopi tranzaksyon sou WhatsApp');
-        
-        window.open(url, '_blank');
-    }
+    var info = getInfo(); if (!info) return;
+    if (cart.length === 0) { showToast('Panye w vid!', 'error'); return; }
     
-    // ===== WHATSAPP =====
+    // Afiche popup ak enstriksyon NatCash
+    showPaymentModal('natcash', info);
+}
     function orderViaWhatsApp() {
-        var name = (document.getElementById('firstName')?.value || '') + ' ' + (document.getElementById('lastName')?.value || '');
-        var phone = document.getElementById('phone')?.value || '';
-        var address = document.getElementById('address')?.value || '';
-        
-        if (!name.trim() || !phone || !address) {
-            alert('❌ Ranpli enfòmasyon livrezon anvan!');
-            return;
-        }
-        
-        if (cart.length === 0) {
-            alert('❌ Panye w vid!');
-            return;
-        }
-        
-        var productList = '';
-        cart.forEach(function(item, i) {
-            productList += (i+1) + '. ' + item.name + ' x' + item.quantity + ' = $' + (item.price * item.quantity).toFixed(2) + '%0A';
-        });
-        
-        var message = '🛒 *NOUVO KÒMAND OGSUN*%0A%0A';
-        message += '*Non:* ' + name + '%0A';
-        message += '*Telefòn:* ' + phone + '%0A';
-        message += '*Adrès:* ' + address + '%0A%0A';
-        message += '*Pwodwi:*%0A' + productList + '%0A';
-        message += '*Total: $' + total.toFixed(2) + '*';
-        
-        var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + message;
-        window.open(url, '_blank');
-    }
+    var info = getInfo(); if (!info) return;
+    if (cart.length === 0) { showToast('Panye w vid!', 'error'); return; }
     
-    // ===== IMEÈL =====
-    function orderViaEmail() {
-        var name = (document.getElementById('firstName')?.value || '') + ' ' + (document.getElementById('lastName')?.value || '');
-        var email = document.getElementById('email')?.value || '';
-        var phone = document.getElementById('phone')?.value || '';
-        var address = document.getElementById('address')?.value || '';
-        
-        if (!name.trim() || !phone || !address) {
-            alert('❌ Ranpli enfòmasyon livrezon anvan!');
-            return;
-        }
-        
-        if (cart.length === 0) {
-            alert('❌ Panye w vid!');
-            return;
-        }
-        
-        var productList = '';
-        cart.forEach(function(item, i) {
-            productList += (i+1) + '. ' + item.name + ' x' + item.quantity + ' = $' + (item.price * item.quantity).toFixed(2) + '\n';
-        });
-        
-        var message = 'NOUVO KÒMAND OGSUN\n\n';
-        message += 'Non: ' + name + '\n';
-        message += 'Imèl: ' + email + '\n';
-        message += 'Telefòn: ' + phone + '\n';
-        message += 'Adrès: ' + address + '\n\n';
-        message += 'Pwodwi:\n' + productList + '\n';
-        message += 'Total: $' + total.toFixed(2) + '\n\n';
-        message += 'Metòd Peman: ' + selectedPayment.toUpperCase();
-        
-        var subject = 'Nouvo Kòmand OGSUN - ' + name.trim();
-        var mailto = 'mailto:' + EMAIL_ADDRESS + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(message);
-        window.location.href = mailto;
+    // Ale dirèk sou WhatsApp (pi rapid)
+    var pl = ''; cart.forEach(function(it,idx){ pl += (idx+1)+'. '+it.name+' x'+it.quantity+' = $'+(it.price*it.quantity).toFixed(2)+'%0A'; });
+    var msg = encodeURIComponent('*NOUVO KÒMAND OGSUN*%0A%0A*Non:* '+info.name+'%0A*Telefòn:* '+info.phone+'%0A*Adrès:* '+info.address+'%0A%0A*Pwodwi:*%0A'+pl+'%0A*Total: $'+totalAvec.toFixed(2)+'*');
+    window.open('https://wa.me/'+WHATSAPP+'?text='+msg,'_blank');
+}
+// Montre modal NatCash
+function showPaymentModal(type, info) {
+    if (type === 'natcash') {
+        document.getElementById('modalNatcashAmount').textContent = '$' + totalAvec.toFixed(2);
+        document.getElementById('natcashModal').style.display = 'flex';
     }
+}
+
+// Fèmen modal
+function closeNatcashModal() {
+    document.getElementById('natcashModal').style.display = 'none';
+}
+
+// Voye sou WhatsApp depi modal
+function sendToWhatsApp() {
+    var info = getInfo();
+    if (!info) return;
     
-    console.log('✅ Checkout OGSUN pare!');
-    console.log('💳 NatCash: ' + NATCASH_NUMBER);
-    console.log('💬 WhatsApp: ' + WHATSAPP_NUMBER);
-    console.log('📧 Imèl: ' + EMAIL_ADDRESS);
-    console.log('💰 Total: $' + total.toFixed(2));
+    var pl = ''; cart.forEach(function(it,idx){ pl += (idx+1)+'. '+it.name+' x'+it.quantity+' = $'+(it.price*it.quantity).toFixed(2)+'%0A'; });
+    var msg = encodeURIComponent('*NOUVO KÒMAND OGSUN*%0A%0A*Non:* '+info.name+'%0A*Telefòn:* '+info.phone+'%0A*Adrès:* '+info.address+'%0A%0A*Pwodwi:*%0A'+pl+'%0A*Total: $'+totalAvec.toFixed(2)+'*%0A%0A*PEMAN NATCASH*%0A*Nimewo:* 32924776%0A*Montan:* $'+totalAvec.toFixed(2)+'%0A%0AVoye kopi tranzaksyon an isit la.');
+    
+    closeNatcashModal();
+    window.open('https://wa.me/'+WHATSAPP+'?text='+msg,'_blank');
+}
+
+// Fèmen modal si klike andeyò
+document.getElementById('natcashModal').addEventListener('click', function(e) {
+    if (e.target === this) closeNatcashModal();
+});
     </script>
 
 </body>
