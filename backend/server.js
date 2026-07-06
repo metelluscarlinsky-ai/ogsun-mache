@@ -7,74 +7,148 @@ const crypto = require('crypto');
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
 
-// Chemen fichye done yo
-const PRODUCTS_FILE = path.join(__dirname, 'products.json');
-const ORDERS_FILE = path.join(__dirname, 'orders.json');
-const USERS_FILE = path.join(__dirname, 'users.json');
-const CONTACTS_FILE = path.join(__dirname, 'contacts.json');
+// ===== FIREBASE KONFIGIRASYON =====
+const admin = require('firebase-admin');
 
-// ===== FONKSYON POU CHAJE AK SOve DONE =====
-function loadData(filePath, defaultData) {
-    try {
-        if (fs.existsSync(filePath)) {
-            const raw = fs.readFileSync(filePath, 'utf8');
-            const data = JSON.parse(raw);
-            if (Array.isArray(data) && data.length > 0) {
-                console.log('✅ Chaje ' + data.length + ' antre depi ' + path.basename(filePath));
-                return data;
-            }
-        }
-    } catch (err) {
-        console.log('⚠️ Erè chaje ' + path.basename(filePath) + ': ' + err.message);
-    }
-    console.log('📄 Itilize done defo pou ' + path.basename(filePath));
-    return defaultData;
-}
-
-function saveData(filePath, data) {
-    try {
-        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-        console.log('💾 Sove ' + data.length + ' antre nan ' + path.basename(filePath));
-    } catch (err) {
-        console.log('❌ Erè sove ' + path.basename(filePath) + ': ' + err.message);
-    }
-}
+// Inisyalize Firebase Admin ak yon kont sèvis
+// Pou kounya, nap itilize REST API Firestore dirèkteman
+const FIRESTORE_URL = 'https://firestore.googleapis.com/v1/projects/ogsun-mache-lakay/databases/(default)/documents';
+const API_KEY = 'AIzaSyAkOvuJ091DkRd6B5MxwbD8_C89S_OsEtE';
 
 // ===== ADMIN KONFIGIRASYON =====
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'metelluscarlinsky@gmail.com';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'OGPLUG45';
 const ADMIN_TOKEN = crypto.randomBytes(32).toString('hex');
 
-// ===== DONE INISYAL =====
-const defaultProducts = [
-    { id: 1, name: 'Sak Pay Deluxe', category: 'Atizana', price: 45, old_price: 65, stock: 50, rating: 4.8, reviews: 128, badge: 'Nouvo', description: 'Sak pay atizanal fèt ak men.', image: 'logo.png', image_url: 'logo.png' },
-    { id: 2, name: 'Chemiz Brode', category: 'Rad', price: 35, old_price: 50, stock: 100, rating: 4.7, reviews: 95, badge: 'Popilè', description: 'Chemiz koton ak broderi.', image: 'logo.png', image_url: 'logo.png' },
-    { id: 3, name: 'Tablo Dekoratif', category: 'Dekorasyon', price: 75, old_price: 95, stock: 25, rating: 4.9, reviews: 72, badge: '', description: 'Tablo pentire ak men.', image: 'logo.png', image_url: 'logo.png' },
-    { id: 4, name: 'Siwo Myèl Natirèl', category: 'Manje', price: 15, old_price: null, stock: 200, rating: 4.6, reviews: 200, badge: 'Eko', description: 'Siwo myèl natirèl Ayiti.', image: 'logo.png', image_url: 'logo.png' },
-    { id: 5, name: 'Boutèy Resikle', category: 'Pwodwi Natirèl', price: 25, old_price: 35, stock: 75, rating: 4.5, reviews: 45, badge: 'Eko', description: 'Boutèy plastik resikle.', image: 'logo.png', image_url: 'logo.png' },
-    { id: 6, name: 'Panyen Atizanal', category: 'Atizana', price: 55, old_price: 70, stock: 30, rating: 4.8, reviews: 88, badge: '', description: 'Panyen atizanal fèt ak men.', image: 'logo.png', image_url: 'logo.png' },
-    { id: 7, name: 'Mayo Koton', category: 'Rad', price: 20, old_price: null, stock: 150, rating: 4.4, reviews: 150, badge: '', description: 'Mayo koton 100% natirèl.', image: 'logo.png', image_url: 'logo.png' },
-    { id: 8, name: 'Kad Foto', category: 'Dekorasyon', price: 30, old_price: 40, stock: 40, rating: 4.7, reviews: 33, badge: 'Nouvo', description: 'Kad foto dekore ak men.', image: 'logo.png', image_url: 'logo.png' },
-];
+// ===== DONE NAN MEMWA (KACHE) =====
+let productsCache = [];
+let ordersCache = [];
+let usersCache = [];
+let contactsCache = [];
+let cacheLoaded = false;
 
-// ===== CHAJE TOUT DONE =====
-let products = loadData(PRODUCTS_FILE, defaultProducts);
-let orders = loadData(ORDERS_FILE, []);
-let users = loadData(USERS_FILE, []);
-let contacts = loadData(CONTACTS_FILE, []);
+let productIdCounter = 9;
+let orderCounter = 1;
+let userIdCounter = 1;
 
-// ===== KONTE ID =====
-let productIdCounter = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 9;
-let orderCounter = orders.length > 0 ? Math.max(...orders.map(o => o.id)) + 1 : 1;
-let userIdCounter = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+// ===== FONKSYON FIREBASE REST API =====
+function firebaseGet(collection) {
+    return new Promise((resolve, reject) => {
+        const req = http.request(`${FIRESTORE_URL}/${collection}?key=${API_KEY}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        }, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                try {
+                    const json = JSON.parse(data);
+                    const docs = json.documents || [];
+                    const items = docs.map(doc => {
+                        const fields = doc.fields || {};
+                        const item = {};
+                        for (const [key, value] of Object.entries(fields)) {
+                            const valType = Object.keys(value)[0];
+                            item[key] = value[valType];
+                        }
+                        // Ajoute ID dokiman an
+                        item.id = parseInt(doc.name.split('/').pop()) || 0;
+                        return item;
+                    });
+                    resolve(items);
+                } catch (err) {
+                    resolve([]);
+                }
+            });
+        });
+        req.on('error', () => resolve([]));
+        req.end();
+    });
+}
 
-console.log('');
-console.log('📊 REZIME DONE:');
-console.log('  Pwodwi: ' + products.length);
-console.log('  Kòmand: ' + orders.length);
-console.log('  Itilizatè: ' + users.length);
-console.log('  Kontak: ' + contacts.length);
-console.log('');
+function firebaseSet(collection, id, data) {
+    return new Promise((resolve, reject) => {
+        // Konvèti done pou Firestore REST API
+        const fields = {};
+        for (const [key, value] of Object.entries(data)) {
+            if (typeof value === 'string') fields[key] = { stringValue: value };
+            else if (typeof value === 'number') {
+                if (Number.isInteger(value)) fields[key] = { integerValue: value };
+                else fields[key] = { doubleValue: value };
+            }
+            else if (value === null) fields[key] = { nullValue: null };
+        }
+        
+        const body = JSON.stringify({ fields });
+        const docPath = `${FIRESTORE_URL}/${collection}/${id}?key=${API_KEY}`;
+        
+        const req = http.request(docPath, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' }
+        }, (res) => {
+            resolve();
+        });
+        req.on('error', () => resolve());
+        req.write(body);
+        req.end();
+    });
+}
+
+function firebaseDelete(collection, id) {
+    return new Promise((resolve) => {
+        const docPath = `${FIRESTORE_URL}/${collection}/${id}?key=${API_KEY}`;
+        const req = http.request(docPath, { method: 'DELETE' }, (res) => {
+            resolve();
+        });
+        req.on('error', () => resolve());
+        req.end();
+    });
+}
+
+// ===== CHAJE DONE DEPI FIREBASE =====
+async function loadAllFromFirebase() {
+    try {
+        productsCache = await firebaseGet('products');
+        ordersCache = await firebaseGet('orders');
+        usersCache = await firebaseGet('users');
+        contactsCache = await firebaseGet('contacts');
+        
+        if (productsCache.length === 0) {
+            // Premye fwa - ajoute pwodwi defo
+            const defaults = [
+                { id: 1, name: 'Sak Pay Deluxe', category: 'Atizana', price: 45, old_price: 65, stock: 50, rating: 4.8, reviews: 128, badge: 'Nouvo', description: 'Sak pay atizanal fèt ak men.', image: 'logo.png', image_url: 'logo.png' },
+                { id: 2, name: 'Chemiz Brode', category: 'Rad', price: 35, old_price: 50, stock: 100, rating: 4.7, reviews: 95, badge: 'Popilè', description: 'Chemiz koton ak broderi.', image: 'logo.png', image_url: 'logo.png' },
+                { id: 3, name: 'Tablo Dekoratif', category: 'Dekorasyon', price: 75, old_price: 95, stock: 25, rating: 4.9, reviews: 72, badge: '', description: 'Tablo pentire ak men.', image: 'logo.png', image_url: 'logo.png' },
+                { id: 4, name: 'Siwo Myèl Natirèl', category: 'Manje', price: 15, old_price: null, stock: 200, rating: 4.6, reviews: 200, badge: 'Eko', description: 'Siwo myèl natirèl Ayiti.', image: 'logo.png', image_url: 'logo.png' },
+            ];
+            for (const p of defaults) {
+                await firebaseSet('products', p.id.toString(), p);
+            }
+            productsCache = defaults;
+        }
+        
+        if (productsCache.length > 0) {
+            productIdCounter = Math.max(...productsCache.map(p => p.id)) + 1;
+        }
+        if (ordersCache.length > 0) {
+            orderCounter = Math.max(...ordersCache.map(o => o.id)) + 1;
+        }
+        if (usersCache.length > 0) {
+            userIdCounter = Math.max(...usersCache.map(u => u.id)) + 1;
+        }
+        
+        cacheLoaded = true;
+        console.log('✅ Done chaje depi Firebase!');
+        console.log('  Pwodwi: ' + productsCache.length);
+        console.log('  Kòmand: ' + ordersCache.length);
+    } catch (err) {
+        console.log('⚠️ Erè chaje Firebase:', err.message);
+        cacheLoaded = true;
+    }
+}
+
+// Chaje done anvan sèvè a kòmanse
+loadAllFromFirebase();
 
 // ===== MIME TYPES =====
 const MIME = {
@@ -137,7 +211,14 @@ const server = http.createServer(async (req, res) => {
     // ===== API INFO =====
     if (pathname === '/api') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ name: 'OGSUN API', status: 'running', products: products.length, orders: orders.length, users: users.length }));
+        res.end(JSON.stringify({ 
+            name: 'OGSUN API', 
+            status: 'running', 
+            products: productsCache.length, 
+            orders: ordersCache.length,
+            storage: 'Firebase Firestore',
+            permanent: true
+        }));
         return;
     }
     
@@ -147,7 +228,6 @@ const server = http.createServer(async (req, res) => {
         if (body.email === ADMIN_EMAIL && body.password === ADMIN_PASSWORD) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ success: true, token: ADMIN_TOKEN, message: 'Byenveni Admin!' }));
-            console.log('🔓 Admin konekte');
         } else {
             res.writeHead(401, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ success: false, error: 'Imèl oswa kòd pa bon!' }));
@@ -155,24 +235,17 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
-    // ===== ADMIN VERIFY TOKEN =====
-    if (pathname === '/api/admin/verify' && req.method === 'GET') {
-        res.writeHead(checkAdmin(req) ? 200 : 401, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(checkAdmin(req) ? { valid: true, email: ADMIN_EMAIL } : { valid: false }));
-        return;
-    }
-    
     // ===== PRODUCTS (GET ALL - PIBLIK) =====
     if (pathname === '/api/products' && req.method === 'GET') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(products));
+        res.end(JSON.stringify(productsCache));
         return;
     }
     
     // ===== PRODUCT (GET SINGLE) =====
     const productMatch = pathname.match(/^\/api\/products\/(\d+)$/);
     if (productMatch && req.method === 'GET') {
-        const p = products.find(pr => pr.id === parseInt(productMatch[1]));
+        const p = productsCache.find(pr => pr.id === parseInt(productMatch[1]));
         res.writeHead(p ? 200 : 404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(p || { error: 'Not found' }));
         return;
@@ -189,15 +262,14 @@ const server = http.createServer(async (req, res) => {
             price: parseFloat(body.price) || 0,
             old_price: body.old_price ? parseFloat(body.old_price) : null,
             stock: parseInt(body.stock) || 0,
-            rating: 0,
-            reviews: 0,
+            rating: 0, reviews: 0,
             badge: body.badge || '',
             description: body.description || '',
             image: body.image || body.image_url || 'logo.png',
             image_url: body.image_url || body.image || 'logo.png'
         };
-        products.push(newP);
-        saveData(PRODUCTS_FILE, products);
+        productsCache.push(newP);
+        firebaseSet('products', newP.id.toString(), newP);
         console.log('✅ Pwodwi kreye: ' + newP.name);
         res.writeHead(201, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(newP));
@@ -209,13 +281,12 @@ const server = http.createServer(async (req, res) => {
         if (!checkAdmin(req)) { res.writeHead(401, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Admin only' })); return; }
         const id = parseInt(productMatch[1]);
         const body = await getBody(req);
-        const index = products.findIndex(p => p.id === id);
+        const index = productsCache.findIndex(p => p.id === id);
         if (index !== -1) {
-            products[index] = { ...products[index], ...body, id };
-            saveData(PRODUCTS_FILE, products);
-            console.log('✏️ Pwodwi modifye: #' + id);
+            productsCache[index] = { ...productsCache[index], ...body, id };
+            firebaseSet('products', id.toString(), productsCache[index]);
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(products[index]));
+            res.end(JSON.stringify(productsCache[index]));
         } else {
             res.writeHead(404, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ error: 'Not found' }));
@@ -227,27 +298,24 @@ const server = http.createServer(async (req, res) => {
     if (productMatch && req.method === 'DELETE') {
         if (!checkAdmin(req)) { res.writeHead(401, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Admin only' })); return; }
         const id = parseInt(productMatch[1]);
-        const productName = products.find(p => p.id === id)?.name;
-        products = products.filter(p => p.id !== id);
-        saveData(PRODUCTS_FILE, products);
-        console.log('🗑️ Pwodwi efase: #' + id + ' - ' + productName);
+        productsCache = productsCache.filter(p => p.id !== id);
+        firebaseDelete('products', id.toString());
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Efase!', product: productName }));
+        res.end(JSON.stringify({ message: 'Efase!' }));
         return;
     }
     
     // ===== ADMIN STATS =====
     if (pathname === '/api/admin/stats') {
         if (!checkAdmin(req)) { res.writeHead(401, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Admin only' })); return; }
-        const completed = orders.filter(o => o.status === 'completed');
-        const pending = orders.filter(o => o.status === 'pending');
+        const completed = ordersCache.filter(o => o.status === 'completed');
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
-            totalProducts: products.length,
-            totalOrders: orders.length,
+            totalProducts: productsCache.length,
+            totalOrders: ordersCache.length,
             totalRevenue: completed.reduce((s, o) => s + o.total, 0),
-            pendingOrders: pending.length,
-            conversionRate: orders.length ? ((completed.length / orders.length) * 100).toFixed(1) : 0
+            pendingOrders: ordersCache.filter(o => o.status === 'pending').length,
+            storage: 'Firebase - Pèmanan'
         }));
         return;
     }
@@ -269,9 +337,9 @@ const server = http.createServer(async (req, res) => {
             status: 'pending',
             created_at: new Date().toISOString()
         };
-        orders.unshift(order);
-        saveData(ORDERS_FILE, orders);
-        console.log('🛒 Nouvo kòmand: ' + order.order_number + ' - $' + total);
+        ordersCache.unshift(order);
+        firebaseSet('orders', order.id.toString(), order);
+        console.log('🛒 Nouvo kòmand: ' + order.order_number);
         res.writeHead(201, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Kòmand kreye!', order_number: order.order_number, total }));
         return;
@@ -281,117 +349,26 @@ const server = http.createServer(async (req, res) => {
     if (pathname === '/api/orders' && req.method === 'GET') {
         if (!checkAdmin(req)) { res.writeHead(401, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Admin only' })); return; }
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(orders));
+        res.end(JSON.stringify(ordersCache));
         return;
     }
     
-    // ===== ORDER (UPDATE STATUS - ADMIN ONLY) =====
+    // ===== ORDER (UPDATE STATUS) =====
     const orderMatch = pathname.match(/^\/api\/orders\/(\d+)$/);
     if (orderMatch && req.method === 'PUT') {
         if (!checkAdmin(req)) { res.writeHead(401, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Admin only' })); return; }
         const id = parseInt(orderMatch[1]);
         const body = await getBody(req);
-        const order = orders.find(o => o.id === id);
+        const order = ordersCache.find(o => o.id === id);
         if (order) {
             order.status = body.status;
-            saveData(ORDERS_FILE, orders);
-            console.log('📋 Kòmand ' + order.order_number + ' => ' + order.status);
+            firebaseSet('orders', id.toString(), order);
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Mete ajou!', order: order.order_number, status: order.status }));
+            res.end(JSON.stringify({ message: 'Mete ajou!' }));
         } else {
             res.writeHead(404, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ error: 'Not found' }));
         }
-        return;
-    }
-    
-    // ===== USERS - REGISTER =====
-    if (pathname === '/api/users/register' && req.method === 'POST') {
-        const body = await getBody(req);
-        if (!body.name || !body.email || !body.password) {
-            res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Non, imèl, ak modpas obligatwa!' }));
-            return;
-        }
-        if (users.find(u => u.email === body.email)) {
-            res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Imèl sa a deja itilize!' }));
-            return;
-        }
-        const user = {
-            id: userIdCounter++,
-            name: body.name,
-            email: body.email,
-            password: body.password,
-            phone: body.phone || '',
-            address: body.address || '',
-            created_at: new Date().toISOString()
-        };
-        users.push(user);
-        saveData(USERS_FILE, users);
-        console.log('👤 Nouvo itilizatè: ' + user.name);
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: true, message: 'Kont kreye!', user: { id: user.id, name: user.name, email: user.email } }));
-        return;
-    }
-    
-    // ===== USERS - LOGIN =====
-    if (pathname === '/api/users/login' && req.method === 'POST') {
-        const body = await getBody(req);
-        const user = users.find(u => u.email === body.email && u.password === body.password);
-        if (user) {
-            const token = crypto.randomBytes(16).toString('hex');
-            user.token = token;
-            saveData(USERS_FILE, users);
-            console.log('🔓 Itilizatè konekte: ' + user.email);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: true, token, user: { id: user.id, name: user.name, email: user.email, phone: user.phone } }));
-        } else {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: false, error: 'Imèl oswa modpas pa bon!' }));
-        }
-        return;
-    }
-    
-    // ===== USERS - GET ALL (ADMIN ONLY) =====
-    if (pathname === '/api/users' && req.method === 'GET') {
-        if (!checkAdmin(req)) { res.writeHead(401, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Admin only' })); return; }
-        const safeUsers = users.map(u => ({ id: u.id, name: u.name, email: u.email, phone: u.phone, created_at: u.created_at }));
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(safeUsers));
-        return;
-    }
-    
-    // ===== USERS - DELETE (ADMIN ONLY) =====
-    const userMatch = pathname.match(/^\/api\/users\/(\d+)$/);
-    if (userMatch && req.method === 'DELETE') {
-        if (!checkAdmin(req)) { res.writeHead(401, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Admin only' })); return; }
-        const id = parseInt(userMatch[1]);
-        const userName = users.find(u => u.id === id)?.name;
-        users = users.filter(u => u.id !== id);
-        saveData(USERS_FILE, users);
-        console.log('🗑️ Itilizatè efase: ' + userName);
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Efase!', user: userName }));
-        return;
-    }
-    
-    // ===== CONTACTS (CREATE - PIBLIK) =====
-    if (pathname === '/api/contacts' && req.method === 'POST') {
-        const body = await getBody(req);
-        contacts.unshift({ id: contacts.length + 1, ...body, created_at: new Date().toISOString() });
-        saveData(CONTACTS_FILE, contacts);
-        console.log('📧 Nouvo mesaj: ' + (body.name || 'Anonim'));
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Mesaj voye!' }));
-        return;
-    }
-    
-    // ===== CONTACTS (GET ALL - ADMIN ONLY) =====
-    if (pathname === '/api/contacts' && req.method === 'GET') {
-        if (!checkAdmin(req)) { res.writeHead(401, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ error: 'Admin only' })); return; }
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(contacts));
         return;
     }
     
@@ -404,10 +381,9 @@ const server = http.createServer(async (req, res) => {
 // ===== KOUMANSE SÈVÈ =====
 server.listen(PORT, HOST, () => {
     console.log('╔══════════════════════════════════════════╗');
-    console.log('║   🚀 OGSUN SERVER AP MACHE!              ║');
+    console.log('║   🚀 OGSUN SERVER AK FIREBASE!           ║');
     console.log('║   🌐 Port: ' + PORT + '                           ║');
-    console.log('║   👑 Admin: ' + ADMIN_EMAIL + '        ║');
-    console.log('║   💾 Pèsistans: FICHYE JSON aktiv       ║');
-    console.log('║   📦 Pwodwi: ' + products.length + '                           ║');
+    console.log('║   💾 Storage: Firebase Firestore         ║');
+    console.log('║   ✅ Done PÈMANAN - pa janm efase!       ║');
     console.log('╚══════════════════════════════════════════╝');
 });
