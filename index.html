@@ -131,17 +131,9 @@ alt="OGSUN" class="logo-img">
     </section>
 
     <!-- PRODUITS -->
-    <section class="section">
-        <div class="section-header">
-            <span class="section-badge">Ki pi cho</span>
-            <h2 class="section-title">Pwodwi <span style="color:var(--gold);">Popilè</span></h2>
-            <p class="section-subtitle">Sa k ap fè bri nan mache a</p>
-        </div>
-        <div class="products-grid" id="productsGrid">
-            <p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem;">Chajman pwodwi...</p>
-        </div>
-    </section>
-
+<div class="products-grid" id="productsGrid">
+    <p style="text-align:center;color:#888;grid-column:1/-1;padding:2rem;">Chajman pwodwi...</p>
+</div>
     <!-- TRUST -->
     <section class="trust">
         <div class="trust-grid">
@@ -327,7 +319,50 @@ adminSearchInput.addEventListener('keydown', function(e) {
         }
     }
 });
+// Chaje pwodwi depi API
+var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
 
+fetch(API + '/products')
+    .then(function(res) { return res.json(); })
+    .then(function(products) {
+        var grid = document.getElementById('productsGrid');
+        
+        if (!products || products.length === 0) {
+            grid.innerHTML = '<p style="text-align:center;color:#888;grid-column:1/-1;padding:2rem;">Pa gen pwodwi disponib.</p>';
+            return;
+        }
+        
+        // Separe pwodwi an vedette
+        var featured = products.filter(function(p) {
+            return p.badge === 'Popilè' || p.badge === 'Nouvo' || p.badge === 'Eko';
+        });
+        var others = products.filter(function(p) {
+            return !p.badge || (p.badge !== 'Popilè' && p.badge !== 'Nouvo' && p.badge !== 'Eko');
+        });
+        var displayProducts = featured.concat(others);
+        
+        grid.innerHTML = displayProducts.map(function(p) {
+            var img = p.image || p.image_url || 'logo.png';
+            return '<a href="product.html?id=' + p.id + '" class="product-card">' +
+                '<div class="product-img-wrap">' +
+                    '<img src="' + img + '" alt="' + p.name + '" class="product-img" onerror="this.src=\'logo.png\'">' +
+                    (p.badge ? '<span class="product-badge">' + p.badge + '</span>' : '') +
+                '</div>' +
+                '<div class="product-info">' +
+                    '<span class="product-cat">' + (p.category || '') + '</span>' +
+                    '<h3 class="product-name">' + p.name + '</h3>' +
+                    '<div class="product-price">' +
+                        '<span class="current-price">$' + (p.price || 0).toFixed(2) + '</span>' +
+                        (p.old_price ? '<span class="old-price">$' + p.old_price.toFixed(2) + '</span>' : '') +
+                    '</div>' +
+                    '<button class="cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(\'' + p.name + '\',' + (p.price || 0) + ')">Ajoute nan panye</button>' +
+                '</div>' +
+            '</a>';
+        }).join('');
+    })
+    .catch(function() {
+        document.getElementById('productsGrid').innerHTML = '<p style="text-align:center;color:#c62828;grid-column:1/-1;padding:2rem;">Pa ka chaje pwodwi.</p>';
+    });
 function verifyAdmin() {
     var pw = document.getElementById('adminPasswordInput').value;
     var error = document.getElementById('adminError');

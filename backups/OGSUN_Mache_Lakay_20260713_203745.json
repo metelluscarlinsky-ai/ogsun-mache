@@ -1,0 +1,73 @@
+[
+  {
+    "id": 1,
+    "name": "Sak Pay Deluxe",
+    "category": "Atizana",
+    "price": 45,
+    "old_price": 65,
+    "stock": 50,
+    "badge": "Nouvo",
+    "description": "Sak pay atizanal f\u00e8t ak men.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "id": 2,
+    "name": "Chemiz Brode",
+    "category": "Rad",
+    "price": 35,
+    "old_price": 50,
+    "stock": 100,
+    "badge": "Popil\u00e8",
+    "description": "Chemiz koton ak broderi.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "id": 3,
+    "name": "Tablo Dekoratif",
+    "category": "Dekorasyon",
+    "price": 75,
+    "old_price": 95,
+    "stock": 25,
+    "badge": "",
+    "description": "Tablo pentire ak men.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "id": 4,
+    "name": "Siwo My\u00e8l Natir\u00e8l",
+    "category": "Manje",
+    "price": 15,
+    "stock": 200,
+    "badge": "Eko",
+    "description": "Siwo my\u00e8l natir\u00e8l Ayiti.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "id": 5,
+    "name": "Siwo Myel Natirel",
+    "category": "Manje",
+    "price": 15,
+    "old_price": null,
+    "stock": 200,
+    "badge": "Eko",
+    "description": "Siwo myel natirel Ayiti.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "id": 6,
+    "name": "Boutey Resikle",
+    "category": "Pwodwi Natirel",
+    "price": 25,
+    "old_price": 35,
+    "stock": 75,
+    "badge": "Eko",
+    "description": "Boutey plastik resikle.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  }
+]

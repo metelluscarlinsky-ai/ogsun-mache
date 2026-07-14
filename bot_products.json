@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Siwo Myel Natirel",
+    "category": "Manje",
+    "price": 15,
+    "stock": 200,
+    "badge": "Eko",
+    "description": "Siwo myel natirel Ayiti.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "name": "Boutey Resikle",
+    "category": "Pwodwi Natirel",
+    "price": 25,
+    "old_price": 35,
+    "stock": 75,
+    "badge": "Eko",
+    "description": "Boutey plastik resikle.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  }
+]
