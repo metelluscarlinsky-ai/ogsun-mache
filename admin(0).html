@@ -55,7 +55,6 @@
         .stat-card-icon.orders { background: rgba(91,155,213,0.08); color: var(--blue); }
         .stat-card-icon.pending { background: rgba(242,153,74,0.08); color: var(--orange); }
         .stat-card-icon.products { background: var(--accent-bg); color: var(--accent); }
-        .stat-card-icon.promos { background: rgba(156,39,176,0.08); color: #9c27b0; }
         .stat-card-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; line-height: 1; }
         .stat-card-label { color: var(--text-muted); font-size: 0.75rem; margin-top: 4px; }
         
@@ -101,6 +100,7 @@
         .alert-message { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6; }
         .alert-actions { display: flex; gap: 0.6rem; justify-content: center; }
         
+        /* STORE FOUNISÈ */
         .supplier-store-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
         .supplier-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: var(--transition); }
         .supplier-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
@@ -110,11 +110,6 @@
         .supplier-card-body { padding: 1.2rem; }
         .supplier-card-body p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem; line-height: 1.5; }
         .supplier-stats { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
-        
-        /* KÒD PROMO */
-        .promo-highlight { background: linear-gradient(135deg, rgba(156,39,176,0.1), rgba(156,39,176,0.02)); border-color: rgba(156,39,176,0.3); }
-        .promo-code { font-family: 'Space Grotesk', monospace; background: rgba(156,39,176,0.1); color: #ce93d8; padding: 0.2rem 0.6rem; border-radius: 4px; font-weight: 700; letter-spacing: 1px; }
-        .commission-badge { display: inline-block; background: rgba(62,207,142,0.1); color: var(--green); padding: 0.2rem 0.6rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; }
         
         @media (max-width: 1200px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .supplier-store-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); } }
         @media (max-width: 768px) { .admin-sidebar { width: 100%; position: static; padding: 1rem; } .admin-main { margin-left: 0; padding: 1rem; } .stats-grid { grid-template-columns: 1fr 1fr; } .form-row { grid-template-columns: 1fr; } }
@@ -126,7 +121,11 @@
     
     <!-- SIDEBAR -->
     <aside class="admin-sidebar">
-        <div class="sidebar-logo"><div class="logo-icon">O</div><div class="logo-text">OGSUN</div><div class="logo-badge">Admin</div></div>
+        <div class="sidebar-logo">
+            <div class="logo-icon">O</div>
+            <div class="logo-text">OGSUN</div>
+            <div class="logo-badge">Admin</div>
+        </div>
         <nav class="sidebar-nav">
             <div class="nav-section">Prensipal</div>
             <button class="nav-item active" onclick="showTab('dashboard', this)"><span class="nav-icon">◫</span> Tablodbò</button>
@@ -136,7 +135,6 @@
             <button class="nav-item" onclick="showTab('orders', this)"><span class="nav-icon">☰</span> Kòmand <span class="nav-badge" id="orderCount">0</span></button>
             <button class="nav-item" onclick="showTab('suppliers', this)"><span class="nav-icon">🏭</span> Founisè</button>
             <button class="nav-item" onclick="showTab('store', this)"><span class="nav-icon">🏪</span> Store Founisè</button>
-            <button class="nav-item" onclick="showTab('promos', this)"><span class="nav-icon">🎫</span> Kòd Promo <span class="nav-badge" id="promoCount">10</span></button>
             <button class="nav-item" onclick="showTab('users', this)"><span class="nav-icon">⊡</span> Itilizatè</button>
             <button class="nav-item" onclick="showTab('contacts', this)"><span class="nav-icon">✉</span> Mesaj</button>
         </nav>
@@ -148,7 +146,10 @@
     
     <!-- MAIN -->
     <main class="admin-main">
-        <div class="topbar"><div class="topbar-left"><h1 id="pageTitle">Tablodbò</h1><p id="pageSubtitle">Revni ak estatistik jeneral</p></div><div class="topbar-right"><button class="btn btn-ghost" onclick="loadAll()">↻ Rafrechi</button></div></div>
+        <div class="topbar">
+            <div class="topbar-left"><h1 id="pageTitle">Tablodbò</h1><p id="pageSubtitle">Revni ak estatistik jeneral</p></div>
+            <div class="topbar-right"><button class="btn btn-ghost" onclick="loadAll()">↻ Rafrechi</button></div>
+        </div>
         
         <!-- DASHBOARD -->
         <div id="tab-dashboard">
@@ -165,38 +166,27 @@
         <div id="tab-products" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>Tout Pwodwi</h2><button class="btn btn-primary" onclick="openProductModal()">+ Ajoute</button></div><div class="content-card-body"><div class="table-wrapper"><table><thead><tr><th>ID</th><th>Imaj</th><th>Non</th><th>Kat</th><th>Pri</th><th>Stock</th><th>Badge</th><th>Sous</th><th></th></tr></thead><tbody id="allProducts"><tr><td colspan="9" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div></div>
         
         <!-- ORDERS -->
-        <div id="tab-orders" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>Tout Kòmand</h2></div><div class="content-card-body"><div class="table-wrapper"><table><thead><tr><th>N°</th><th>Kliyan</th><th>Total</th><th>Peman</th><th>Kòd Promo</th><th>Stati</th><th>Dat</th><th></th></tr></thead><tbody id="allOrders"><tr><td colspan="8" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div></div>
+        <div id="tab-orders" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>Tout Kòmand</h2></div><div class="content-card-body"><div class="table-wrapper"><table><thead><tr><th>N°</th><th>Kliyan</th><th>Total</th><th>Peman</th><th>Stati</th><th>Dat</th><th></th></tr></thead><tbody id="allOrders"><tr><td colspan="7" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div></div>
         
         <!-- SUPPLIERS -->
         <div id="tab-suppliers" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>🏭 Tout Founisè</h2><button class="btn btn-primary" onclick="openSupplierModal()">+ Ajoute</button></div><div class="content-card-body"><div class="table-wrapper"><table><thead><tr><th>ID</th><th>Non</th><th>Tip</th><th>Sit Wèb</th><th>API</th><th>Stat</th><th></th></tr></thead><tbody id="allSuppliers"><tr><td colspan="7" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div></div>
         
         <!-- STORE FOUNISÈ -->
         <div id="tab-store" style="display:none;">
-            <div class="content-card promo-highlight" style="margin-bottom:1.5rem;">
-                <div style="padding:2rem;text-align:center;"><h2 style="font-family:'Space Grotesk',sans-serif;font-size:1.5rem;color:#ce93d8;">🏪 Store Founisè OGSUN</h2><p style="color:var(--text-secondary);">Telechaje founisè pou enpòte pwodwi otomatikman</p></div>
+            <div class="content-card" style="margin-bottom:1.5rem;background:linear-gradient(135deg, rgba(201,168,76,0.1), rgba(201,168,76,0.02));border-color:rgba(201,168,76,0.2);">
+                <div style="padding:2rem;text-align:center;">
+                    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:1.5rem;color:var(--accent);">🏪 Store Founisè OGSUN</h2>
+                    <p style="color:var(--text-secondary);">Telechaje founisè pou enpòte pwodwi otomatikman</p>
+                </div>
             </div>
             <div class="supplier-store-grid" id="supplierStore"></div>
-        </div>
-        
-        <!-- KÒD PROMO -->
-        <div id="tab-promos" style="display:none;">
-            <div class="content-card promo-highlight" style="margin-bottom:1.5rem;">
-                <div style="padding:2rem;text-align:center;"><h2 style="font-family:'Space Grotesk',sans-serif;font-size:1.5rem;color:#ce93d8;">🎫 Sistèm Kòd Promo & Afilyasyon</h2><p style="color:var(--text-secondary);">Jere kòd promo, afilye, ak komisyon yo</p></div>
-            </div>
-            <div class="stats-grid" style="margin-bottom:1.5rem;">
-                <div class="stat-card"><div class="stat-card-header"><div class="stat-card-icon promos">$</div></div><div class="stat-card-value" id="promoTotalRevenue">$0</div><div class="stat-card-label">Revni Kòd Promo</div></div>
-                <div class="stat-card"><div class="stat-card-header"><div class="stat-card-icon promos">#</div></div><div class="stat-card-value" id="promoTotalOrders">0</div><div class="stat-card-label">Kòmand ak Kòd</div></div>
-                <div class="stat-card"><div class="stat-card-header"><div class="stat-card-icon promos">💰</div></div><div class="stat-card-value" id="promoTotalCommission">$0</div><div class="stat-card-label">Komisyon Total</div></div>
-                <div class="stat-card"><div class="stat-card-header"><div class="stat-card-icon promos">🎫</div></div><div class="stat-card-value" id="activePromos">10</div><div class="stat-card-label">Kòd Aktif</div></div>
-            </div>
-            <div class="content-card"><div class="content-card-header"><h2>🎫 Tout Kòd Promo</h2><button class="btn btn-primary" onclick="openPromoModal()">+ Ajoute Kòd</button></div><div class="content-card-body"><div class="table-wrapper"><table><thead><tr><th>Kòd</th><th>Afilye</th><th>Telefòn</th><th>NatCash</th><th>Komisyon Baz</th><th>%</th><th>Kòmand</th><th>Revni</th><th>Komisyon</th><th>Stat</th><th></th></tr></thead><tbody id="allPromos"><tr><td colspan="11" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div>
         </div>
         
         <!-- USERS -->
         <div id="tab-users" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>Tout Itilizatè</h2></div><div class="content-card-body"><div class="table-wrapper"><table><thead><tr><th>ID</th><th>Non</th><th>Imèl</th><th>Telefòn</th><th>Dat</th><th></th></tr></thead><tbody id="allUsers"><tr><td colspan="6" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div></div>
         
         <!-- CONTACTS -->
-        <div id="tab-contacts" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>Mesaj Kontak</h2></div><div class="content-card-body"><div class="table-wrapper"><table><thead><tr><th>Non</th><th>Imèl</th><th>Sijè</th><th>Dat</th><th></th></tr></thead><tbody id="allContacts"><tr><td colspan="5" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div></div>
+     <div id="tab-contacts" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>Mesaj Kontak</h2></div><div class="content-card-body"><div class="table-wrapper"><table><thead><tr><th>Non</th><th>Imèl</th><th>Sijè</th><th>Dat</th><th></th></tr></thead><tbody id="allContacts"><tr><td colspan="5" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div></div>
         
     </main>
 </div>
@@ -221,15 +211,6 @@
     <div class="form-group"><label>URL Logo</label><input type="text" id="supplierLogo"></div>
     <div class="form-group"><label>Deskripsyon</label><textarea id="supplierDescription" rows="2"></textarea></div>
     <div class="modal-actions"><button class="btn btn-ghost" onclick="closeSupplierModal()">Anile</button><button class="btn btn-primary" onclick="saveSupplier()">Anrejistre</button></div>
-</div></div>
-
-<!-- PROMO MODAL -->
-<div class="modal-overlay" id="promoModal"><div class="modal"><h2 id="promoModalTitle">Ajoute Kòd Promo</h2><input type="hidden" id="promoId">
-    <div class="form-row"><div class="form-group"><label>Kòd Promo *</label><input type="text" id="promoCode" placeholder="OGSUN-PRO1" required></div><div class="form-group"><label>Non Afilye *</label><input type="text" id="promoAffiliate" placeholder="Jan Pòl" required></div></div>
-    <div class="form-row"><div class="form-group"><label>Telefòn Afilye</label><input type="tel" id="promoPhone" placeholder="+509 0000 0000"></div><div class="form-group"><label>Nimewo NatCash</label><input type="tel" id="promoNatcash" placeholder="32924776"></div></div>
-    <div class="form-row"><div class="form-group"><label>Komisyon Baz (HTG)</label><input type="number" id="promoCommission" value="150" min="0"></div><div class="form-group"><label>Pousantaj Komisyon (%)</label><input type="number" id="promoPercent" value="5" min="0" max="50"></div></div>
-    <small style="color:var(--text-muted);display:block;margin-bottom:1rem;">💰 Afilye resevwa komisyon baz + % sou kòmand ki depase 5000 HTG</small>
-    <div class="modal-actions"><button class="btn btn-ghost" onclick="closePromoModal()">Anile</button><button class="btn btn-primary" onclick="savePromo()">Anrejistre</button></div>
 </div></div>
 
 <script>
@@ -273,119 +254,250 @@ function showConfirm(title, message, onConfirm, onCancel) {
     overlay.onclick = function(e) { if (e.target === overlay) { overlay.remove(); if (onCancel) onCancel(); } };
 }
 
-// ===== TOUT FONKSYON PRENSIPAL YO (DASHBOARD, PRODUCTS, SUPPLIERS, STORE, ORDERS, USERS, CONTACTS) =====
-// [Kòd fonksyon yo deja nan vèsyon avan yo - yo rete menm jan]
-
-// ===== KÒD PROMO =====
-var promos = [];
-
-function loadPromos() {
-    promos = JSON.parse(localStorage.getItem('ogsun-promos') || '[]');
-    
-    if (promos.length === 0) {
-        promos = [
-            { id: 1, code: 'OGSUN-PRO1', affiliate: 'Afilye #1', phone: '', natcash: '', baseCommission: 150, percent: 5, active: true, orders: 0, revenue: 0, totalCommission: 0 },
-            { id: 2, code: 'OGSUN-PRO2', affiliate: 'Afilye #2', phone: '', natcash: '', baseCommission: 150, percent: 5, active: true, orders: 0, revenue: 0, totalCommission: 0 },
-            { id: 3, code: 'OGSUN-PRO3', affiliate: 'Afilye #3', phone: '', natcash: '', baseCommission: 150, percent: 5, active: true, orders: 0, revenue: 0, totalCommission: 0 },
-            { id: 4, code: 'OGSUN-PRO4', affiliate: 'Afilye #4', phone: '', natcash: '', baseCommission: 150, percent: 5, active: true, orders: 0, revenue: 0, totalCommission: 0 },
-            { id: 5, code: 'OGSUN-PRO5', affiliate: 'Afilye #5', phone: '', natcash: '', baseCommission: 150, percent: 5, active: true, orders: 0, revenue: 0, totalCommission: 0 },
-            { id: 6, code: 'OGSUN-PRO6', affiliate: 'Afilye #6', phone: '', natcash: '', baseCommission: 150, percent: 5, active: true, orders: 0, revenue: 0, totalCommission: 0 },
-            { id: 7, code: 'OGSUN-PRO7', affiliate: 'Afilye #7', phone: '', natcash: '', baseCommission: 150, percent: 5, active: true, orders: 0, revenue: 0, totalCommission: 0 },
-            { id: 8, code: 'OGSUN-PRO8', affiliate: 'Afilye #8', phone: '', natcash: '', baseCommission: 150, percent: 5, active: true, orders: 0, revenue: 0, totalCommission: 0 },
-            { id: 9, code: 'OGSUN-PRO9', affiliate: 'Afilye #9', phone: '', natcash: '', baseCommission: 150, percent: 5, active: true, orders: 0, revenue: 0, totalCommission: 0 },
-            { id: 10, code: 'OGSUN-PRO10', affiliate: 'Afilye #10', phone: '', natcash: '', baseCommission: 150, percent: 5, active: true, orders: 0, revenue: 0, totalCommission: 0 }
-        ];
-        savePromos();
-    }
-    renderPromos();
+// ===== DASHBOARD =====
+function loadDashboard() {
+    fetchAPI(API + '/admin/stats').then(function(s) {
+        document.getElementById('statRevenue').textContent = '$' + (s.totalRevenue || 0).toLocaleString();
+        document.getElementById('statOrders').textContent = s.totalOrders || 0;
+        document.getElementById('statPending').textContent = s.pendingOrders || 0;
+        document.getElementById('statProducts').textContent = s.totalProducts || 0;
+    });
+    fetchAPI(API + '/orders').then(function(orders) {
+        var tbody = document.getElementById('recentOrders');
+        if (!orders.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;">Pa gen kòmand</td></tr>'; return; }
+        tbody.innerHTML = orders.slice(0, 5).map(function(o) {
+            return '<tr><td><strong>#' + o.order_number + '</strong></td><td>' + (o.customer_name || 'N/A') + '</td><td style="color:var(--accent);">$' + (o.total || 0).toFixed(2) + '</td><td><span class="status ' + o.status + '">' + o.status + '</span></td><td>' + new Date(o.created_at).toLocaleDateString() + '</td></tr>';
+        }).join('');
+    });
 }
 
-function savePromos() { localStorage.setItem('ogsun-promos', JSON.stringify(promos)); }
-
-function renderPromos() {
-    var tbody = document.getElementById('allPromos');
-    var totalRevenue = promos.reduce(function(s, p) { return s + (p.revenue || 0); }, 0);
-    var totalOrders = promos.reduce(function(s, p) { return s + (p.orders || 0); }, 0);
-    var totalCommission = promos.reduce(function(s, p) { return s + (p.totalCommission || 0); }, 0);
-    var activeCount = promos.filter(function(p) { return p.active; }).length;
-    
-    document.getElementById('promoTotalRevenue').textContent = '$' + totalRevenue.toLocaleString();
-    document.getElementById('promoTotalOrders').textContent = totalOrders;
-    document.getElementById('promoTotalCommission').textContent = '$' + totalCommission.toLocaleString();
-    document.getElementById('activePromos').textContent = activeCount;
-    document.getElementById('promoCount').textContent = activeCount;
-    
-    tbody.innerHTML = promos.map(function(p) {
-        return '<tr>' +
-            '<td><span class="promo-code">' + p.code + '</span></td>' +
-            '<td><strong>' + p.affiliate + '</strong></td>' +
-            '<td>' + (p.phone || '—') + '</td>' +
-            '<td>' + (p.natcash || '—') + '</td>' +
-            '<td>' + p.baseCommission + ' HTG</td>' +
-            '<td>' + p.percent + '%</td>' +
-            '<td>' + (p.orders || 0) + '</td>' +
-            '<td>$' + (p.revenue || 0).toLocaleString() + '</td>' +
-            '<td><span class="commission-badge">$' + (p.totalCommission || 0).toLocaleString() + '</span></td>' +
-            '<td><span style="color:' + (p.active ? 'var(--green)' : 'var(--red)') + ';">' + (p.active ? 'Aktif' : 'Inaktif') + '</span></td>' +
-            '<td><button class="btn btn-ghost" onclick="editPromo(' + p.id + ')">✎</button> <button class="btn btn-ghost" onclick="togglePromo(' + p.id + ')">' + (p.active ? '⏸' : '▶') + '</button></td>' +
-        '</tr>';
-    }).join('');
+// ===== PRODUCTS =====
+function loadProducts() {
+    fetch(API + '/products').then(function(r) { return r.json(); }).then(function(p) {
+        document.getElementById('productCount').textContent = p.length;
+        var tbody = document.getElementById('allProducts');
+        if (!p.length) { tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:2rem;">Pa gen pwodwi</td></tr>'; return; }
+        tbody.innerHTML = p.map(function(pr) {
+            return '<tr><td>#' + pr.id + '</td><td><img src="' + (pr.image || 'logo.png') + '" onerror="this.src=\'logo.png\'"></td><td><strong>' + pr.name + '</strong></td><td>' + (pr.category || '—') + '</td><td style="color:var(--accent);">$' + (pr.price || 0).toFixed(2) + '</td><td>' + (pr.stock || 0) + '</td><td>' + (pr.badge || '—') + '</td><td>' + (pr.source || 'manual') + '</td><td><button class="btn btn-ghost" onclick="editProduct(' + pr.id + ')">✎</button> <button class="btn btn-danger" onclick="deleteProduct(' + pr.id + ')">✕</button></td></tr>';
+        }).join('');
+    });
 }
 
-function openPromoModal() {
-    document.getElementById('promoId').value = '';
-    document.getElementById('promoCode').value = '';
-    document.getElementById('promoAffiliate').value = '';
-    document.getElementById('promoPhone').value = '';
-    document.getElementById('promoNatcash').value = '';
-    document.getElementById('promoCommission').value = '150';
-    document.getElementById('promoPercent').value = '5';
-    document.getElementById('promoModalTitle').textContent = 'Ajoute Kòd Promo';
-    document.getElementById('promoModal').classList.add('show');
-}
-
-function editPromo(id) {
-    var p = promos.find(function(pr) { return pr.id === id; });
-    if (!p) return;
-    document.getElementById('promoId').value = p.id;
-    document.getElementById('promoCode').value = p.code;
-    document.getElementById('promoAffiliate').value = p.affiliate;
-    document.getElementById('promoPhone').value = p.phone || '';
-    document.getElementById('promoNatcash').value = p.natcash || '';
-    document.getElementById('promoCommission').value = p.baseCommission;
-    document.getElementById('promoPercent').value = p.percent;
-    document.getElementById('promoModalTitle').textContent = 'Modifye Kòd Promo';
-    document.getElementById('promoModal').classList.add('show');
-}
-
-function savePromo() {
+function saveProduct() {
     var data = {
-        id: parseInt(document.getElementById('promoId').value) || promos.length + 1,
-        code: document.getElementById('promoCode').value.toUpperCase(),
-        affiliate: document.getElementById('promoAffiliate').value,
-        phone: document.getElementById('promoPhone').value,
-        natcash: document.getElementById('promoNatcash').value,
-        baseCommission: parseInt(document.getElementById('promoCommission').value) || 150,
-        percent: parseInt(document.getElementById('promoPercent').value) || 5,
-        active: true, orders: 0, revenue: 0, totalCommission: 0
+        name: document.getElementById('prodName').value, category: document.getElementById('prodCategory').value,
+        price: parseFloat(document.getElementById('prodPrice').value) || 0,
+        old_price: document.getElementById('prodOldPrice').value ? parseFloat(document.getElementById('prodOldPrice').value) : null,
+        stock: parseInt(document.getElementById('prodStock').value) || 0,
+        badge: document.getElementById('prodBadge').value,
+        source: document.getElementById('prodSource').value,
+        supplier_id: document.getElementById('prodSupplier').value || null,
+        cj_url: document.getElementById('prodCJUrl').value,
+        supplier_price: document.getElementById('prodSupplierPrice').value ? parseFloat(document.getElementById('prodSupplierPrice').value) : null,
+        image: document.getElementById('prodImage').value || 'logo.png', image_url: document.getElementById('prodImage').value || 'logo.png',
+        description: document.getElementById('prodDesc').value
     };
-    
-    if (!data.code || !data.affiliate) { showToast('Kòd ak non afilye obligatwa!', 'error'); return; }
-    
-    var existing = promos.find(function(p) { return p.id === data.id; });
-    if (existing) {
-        var idx = promos.indexOf(existing);
-        promos[idx] = { ...existing, ...data, orders: existing.orders, revenue: existing.revenue, totalCommission: existing.totalCommission };
-    } else {
-        promos.push(data);
-    }
-    
-    savePromos(); renderPromos(); closePromoModal();
-    showToast('Kòd promo anrejistre!', 'success');
+    if (!data.name || !data.price) { showToast('Non ak pri obligatwa!', 'error'); return; }
+    var id = document.getElementById('productId').value;
+    var url = id ? API + '/products/' + id : API + '/products';
+    fetchAPI(url, { method: id ? 'PUT' : 'POST', body: JSON.stringify(data) }).then(function() { closeProductModal(); loadProducts(); loadDashboard(); showToast('Pwodwi anrejistre!', 'success'); });
 }
 
-function togglePromo(id) { var p = promos.find(function(pr) { return pr.id === id; }); if (p) { p.active = !p.active; savePromos(); renderPromos(); } }
-function closePromoModal() { document.getElementById('promoModal').classList.remove('show'); }
+function editProduct(id) {
+    fetch(API + '/products/' + id).then(function(r) { return r.json(); }).then(function(p) {
+        document.getElementById('productId').value = p.id; document.getElementById('prodName').value = p.name;
+        document.getElementById('prodCategory').value = p.category || ''; document.getElementById('prodPrice').value = p.price;
+        document.getElementById('prodOldPrice').value = p.old_price || ''; document.getElementById('prodStock').value = p.stock;
+        document.getElementById('prodBadge').value = p.badge || ''; document.getElementById('prodSource').value = p.source || 'manual';
+        document.getElementById('prodCJUrl').value = p.cj_url || ''; document.getElementById('prodSupplierPrice').value = p.supplier_price || '';
+        document.getElementById('prodImage').value = p.image || ''; document.getElementById('prodDesc').value = p.description || '';
+        toggleCJFields(); calcProfit();
+        document.getElementById('modalTitle').textContent = 'Modifye Pwodwi';
+        document.getElementById('productModal').classList.add('show');
+    });
+}
+
+function deleteProduct(id) {
+    showConfirm('Efase Pwodwi', 'Efase pwodwi #' + id + '?', function() {
+        fetchAPI(API + '/products/' + id, { method: 'DELETE' }).then(function() { loadProducts(); loadDashboard(); showToast('Efase!', 'success'); });
+    });
+}
+
+function openProductModal() {
+    document.getElementById('productId').value = ''; document.getElementById('prodName').value = '';
+    document.getElementById('prodCategory').value = ''; document.getElementById('prodPrice').value = '';
+    document.getElementById('prodOldPrice').value = ''; document.getElementById('prodStock').value = '';
+    document.getElementById('prodBadge').value = ''; document.getElementById('prodSource').value = 'manual';
+    document.getElementById('prodCJUrl').value = ''; document.getElementById('prodSupplierPrice').value = '';
+    document.getElementById('prodImage').value = ''; document.getElementById('prodDesc').value = '';
+    document.getElementById('modalTitle').textContent = 'Ajoute Pwodwi';
+    document.getElementById('productModal').classList.add('show');
+    toggleCJFields(); loadSupplierOptions();
+}
+function closeProductModal() { document.getElementById('productModal').classList.remove('show'); }
+function toggleCJFields() { document.getElementById('cjFields').style.display = document.getElementById('prodSource').value === 'supplier' ? 'block' : 'none'; }
+function calcProfit() { var p = parseFloat(document.getElementById('prodPrice').value) || 0; var s = parseFloat(document.getElementById('prodSupplierPrice').value) || 0; document.getElementById('profitPreview').textContent = (p - s).toFixed(2); }
+
+function loadSupplierOptions() {
+    fetch(API + '/suppliers').then(function(r) { return r.json(); }).then(function(suppliers) {
+        document.getElementById('prodSupplier').innerHTML = '<option value="">Okenn</option>' + suppliers.map(function(s) { return '<option value="' + s.id + '">' + s.name + '</option>'; }).join('');
+    });
+}
+
+// ===== SUPPLIERS =====
+function loadSuppliers() {
+    fetchAPI(API + '/suppliers').then(function(suppliers) {
+        var tbody = document.getElementById('allSuppliers');
+        if (!suppliers.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;">Pa gen founisè</td></tr>'; return; }
+        tbody.innerHTML = suppliers.map(function(s) {
+            return '<tr><td>#' + s.id + '</td><td><strong>' + s.name + '</strong></td><td>' + (s.type || 'N/A') + '</td><td>' + (s.website ? '<a href="' + s.website + '" target="_blank">' + s.website.replace('https://','').slice(0,20) + '...</a>' : '—') + '</td><td>' + (s.api_key ? '✅' : '—') + '</td><td style="color:' + (s.active ? 'var(--green)' : 'var(--red)') + ';">' + (s.active ? 'Aktif' : 'Inaktif') + '</td><td><button class="btn btn-ghost" onclick="editSupplier(' + s.id + ')">✎</button> <button class="btn btn-ghost" onclick="searchSupplierProducts(' + s.id + ')">🔍</button> <button class="btn btn-danger" onclick="deleteSupplier(' + s.id + ')">✕</button></td></tr>';
+        }).join('');
+    });
+}
+
+function openSupplierModal() {
+    document.getElementById('supplierId').value = ''; document.getElementById('supplierName').value = '';
+    document.getElementById('supplierType').value = 'dropshipping'; document.getElementById('supplierWebsite').value = '';
+    document.getElementById('supplierApiKey').value = ''; document.getElementById('supplierLogo').value = '';
+    document.getElementById('supplierDescription').value = '';
+    document.getElementById('supplierModalTitle').textContent = 'Ajoute Founisè';
+    document.getElementById('supplierModal').classList.add('show');
+}
+
+function editSupplier(id) {
+    fetch(API + '/suppliers/' + id).then(function(r) { return r.json(); }).then(function(s) {
+        document.getElementById('supplierId').value = s.id; document.getElementById('supplierName').value = s.name;
+        document.getElementById('supplierType').value = s.type; document.getElementById('supplierWebsite').value = s.website || '';
+        document.getElementById('supplierApiKey').value = s.api_key || ''; document.getElementById('supplierLogo').value = s.logo || '';
+        document.getElementById('supplierDescription').value = s.description || '';
+        document.getElementById('supplierModalTitle').textContent = 'Modifye Founisè';
+        document.getElementById('supplierModal').classList.add('show');
+    });
+}
+
+function saveSupplier() {
+    var data = { name: document.getElementById('supplierName').value, type: document.getElementById('supplierType').value, website: document.getElementById('supplierWebsite').value, api_key: document.getElementById('supplierApiKey').value, logo: document.getElementById('supplierLogo').value || 'logo.png', description: document.getElementById('supplierDescription').value, active: true };
+    if (!data.name) { showToast('Non obligatwa!', 'error'); return; }
+    var id = document.getElementById('supplierId').value;
+    fetchAPI(id ? API + '/suppliers/' + id : API + '/suppliers', { method: id ? 'PUT' : 'POST', body: JSON.stringify(data) }).then(function() { closeSupplierModal(); loadSuppliers(); showToast('Founisè anrejistre!', 'success'); });
+}
+
+function deleteSupplier(id) {
+    showConfirm('Efase Founisè', 'Efase founisè #' + id + '?', function() {
+        fetchAPI(API + '/suppliers/' + id, { method: 'DELETE' }).then(function() { loadSuppliers(); showToast('Efase!', 'success'); });
+    });
+}
+
+function searchSupplierProducts(supplierId) {
+    var keyword = prompt('Chèche pwodwi:');
+    if (!keyword) return;
+    fetchAPI(API + '/suppliers/' + supplierId + '/search', { method: 'POST', body: JSON.stringify({ keyword: keyword }) }).then(function(data) {
+        if (data.products && data.products.length) {
+            var html = '<div style="max-height:400px;overflow-y:auto;">';
+            data.products.forEach(function(p) {
+                html += '<div style="background:var(--bg-card);padding:1rem;border-radius:8px;margin:0.5rem 0;display:flex;justify-content:space-between;align-items:center;"><div><strong>' + p.name + '</strong><br><span style="color:var(--accent);">$' + p.price.toFixed(2) + '</span></div><button class="btn btn-primary" onclick="importSupplierProduct(' + supplierId + ',\'' + p.name + '\',' + p.price + ',\'' + (p.image||'logo.png') + '\',' + (p.stock||999) + ')">Enpòte</button></div>';
+            });
+            html += '</div>';
+            showAlert('Pwodwi Founisè (' + data.products.length + ')', html, 'info');
+        } else { showAlert('Rezilta', 'Pa gen pwodwi.', 'warning'); }
+    });
+}
+
+function importSupplierProduct(supplierId, name, price, image, stock) {
+    fetchAPI(API + '/suppliers/' + supplierId + '/import', { method: 'POST', body: JSON.stringify({ name: name, price: price * 2, category: 'Dropshipping', badge: 'CJ', stock: stock, image: image, supplier_price: price, description: 'Pwodwi enpòte depi founisè.' }) }).then(function() { showToast(name + ' enpòte!', 'success'); loadProducts(); });
+}
+
+function closeSupplierModal() { document.getElementById('supplierModal').classList.remove('show'); }
+
+// ===== STORE FOUNISÈ =====
+var availableSuppliers = [
+    { id: 'cj', name: 'CJ Dropshipping', description: 'Founisè entènasyonal #1 ak 500,000+ pwodwi. Livrezon rapid.', logo: 'https://www.cjdropshipping.com/favicon.ico', type: 'dropshipping', website: 'https://cjdropshipping.com', rating: 4.8, products: 500000, shipping: '7-15 jou', featured: true },
+    { id: 'aliexpress', name: 'AliExpress', description: 'Platfòm Chinwa ak dè milyon pwodwi. Pri ba.', logo: 'https://aliexpress.com/favicon.ico', type: 'dropshipping', website: 'https://aliexpress.com', rating: 4.5, products: 10000000, shipping: '15-30 jou', featured: true },
+    { id: 'oberlo', name: 'Oberlo', description: 'Sistèm dropshipping fasil pou itilize.', logo: 'https://www.oberlo.com/favicon.ico', type: 'dropshipping', website: 'https://oberlo.com', rating: 4.6, products: 1000000, shipping: '10-20 jou', featured: false },
+    { id: 'spocket', name: 'Spocket', description: 'Founisè Ewopeyen/Ameriken. Livrezon rapid.', logo: 'https://spocket.co/favicon.ico', type: 'dropshipping', website: 'https://spocket.co', rating: 4.7, products: 500000, shipping: '3-7 jou', featured: true },
+    { id: 'local', name: 'Founisè Lokal Ayiti', description: 'Atizan ak founisè lokal. 100% ayisyen.', logo: 'logo.png', type: 'local', website: '', rating: 5.0, products: 100, shipping: '1-3 jou', featured: true }
+];
+
+function loadSupplierStore() {
+    var store = document.getElementById('supplierStore');
+    var display = availableSuppliers.filter(function(s) { return s.featured; }).concat(availableSuppliers.filter(function(s) { return !s.featured; }));
+    
+    // Tcheke ki founisè ki deja enstale
+    fetch(API + '/suppliers').then(function(r) { return r.json(); }).then(function(installed) {
+        var installedNames = installed.map(function(s) { return s.name.toLowerCase(); });
+        
+        store.innerHTML = display.map(function(s) {
+            var isInstalled = installedNames.some(function(n) { return n.includes(s.name.toLowerCase().split(' ')[0]); });
+            
+            return '<div class="supplier-card' + (s.featured ? ' featured' : '') + '">' +
+                '<div class="supplier-card-header">' +
+                    '<img src="' + s.logo + '" alt="' + s.name + '" onerror="this.src=\'logo.png\'">' +
+                    '<h3 style="font-family:\'Space Grotesk\',sans-serif;font-size:1.1rem;">' + s.name + '</h3>' +
+                    '<p style="color:var(--text-muted);font-size:0.8rem;">' + s.type + '</p>' +
+                    '<div style="color:var(--accent);margin-top:0.3rem;">' + '★'.repeat(Math.floor(s.rating)) + ' ' + s.rating + '</div>' +
+                '</div>' +
+                '<div class="supplier-card-body">' +
+                    '<p>' + s.description + '</p>' +
+                    '<div class="supplier-stats"><span>' + s.products.toLocaleString() + ' pwodwi</span><span>' + s.shipping + '</span></div>' +
+                    (isInstalled ? 
+                        '<button class="btn btn-ghost" style="width:100%;" onclick="showToast(\'Founisè deja enstale!\',\'success\')">✅ Enstale</button>' :
+                        '<button class="btn btn-primary" style="width:100%;" onclick="installSupplier(\'' + s.id + '\')">Telechaje & Enstale</button>'
+                    ) +
+                '</div>' +
+            '</div>';
+        }).join('');
+    });
+}
+
+function installSupplier(supplierId) {
+    var supplier = availableSuppliers.find(function(s) { return s.id === supplierId; });
+    if (!supplier) return;
+    
+    showConfirm('Telechaje ' + supplier.name + '?', 'Founisè a ap enstale. Vle kontinye?', function() {
+        fetchAPI(API + '/suppliers', {
+            method: 'POST',
+            body: JSON.stringify({ name: supplier.name, type: supplier.type, website: supplier.website, logo: supplier.logo, description: supplier.description, active: true })
+        }).then(function() {
+            showToast(supplier.name + ' enstale!', 'success');
+            loadSupplierStore();
+            loadSuppliers();
+        });
+    });
+}
+
+// ===== ORDERS =====
+function loadOrders() {
+    fetchAPI(API + '/orders').then(function(orders) {
+        document.getElementById('orderCount').textContent = orders.length;
+        var tbody = document.getElementById('allOrders');
+        if (!orders.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;">Pa gen kòmand</td></tr>'; return; }
+        tbody.innerHTML = orders.map(function(o) {
+            return '<tr><td><strong>#' + o.order_number + '</strong></td><td>' + (o.customer_name || 'N/A') + '</td><td style="color:var(--accent);">$' + (o.total || 0).toFixed(2) + '</td><td>' + (o.payment_method || '—') + '</td><td><span class="status ' + o.status + '">' + o.status + '</span></td><td>' + new Date(o.created_at).toLocaleDateString() + '</td><td><button class="btn btn-ghost" onclick="updateOrderStatus(' + o.id + ',\'completed\')">✓</button> <button class="btn btn-ghost" onclick="updateOrderStatus(' + o.id + ',\'cancelled\')">✕</button></td></tr>';
+        }).join('');
+    });
+}
+function updateOrderStatus(id, status) {
+    fetchAPI(API + '/orders/' + id, { method: 'PUT', body: JSON.stringify({ status: status }) }).then(function() { loadOrders(); loadDashboard(); showToast('Kòmand mete ajou!', 'success'); });
+}
+
+// ===== USERS =====
+function loadUsers() {
+    fetchAPI(API + '/users').then(function(users) {
+        var tbody = document.getElementById('allUsers');
+        if (!users.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;">Pa gen itilizatè</td></tr>'; return; }
+        tbody.innerHTML = users.map(function(u) { return '<tr><td>#' + u.id + '</td><td><strong>' + u.name + '</strong></td><td>' + u.email + '</td><td>' + (u.phone || '—') + '</td><td>' + new Date(u.created_at).toLocaleDateString() + '</td><td><button class="btn btn-danger" onclick="deleteUser(' + u.id + ')">✕</button></td></tr>'; }).join('');
+    });
+}
+function deleteUser(id) { showConfirm('Efase Itilizatè', 'Efase #' + id + '?', function() { fetchAPI(API + '/users/' + id, { method: 'DELETE' }).then(function() { loadUsers(); showToast('Efase!', 'success'); }); }); }
+
+// ===== CONTACTS =====
+function loadContacts() {
+    fetchAPI(API + '/contacts').then(function(contacts) {
+        var tbody = document.getElementById('allContacts');
+        if (!contacts.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;">Pa gen mesaj</td></tr>'; return; }
+        tbody.innerHTML = contacts.map(function(c) { return '<tr><td><strong>' + (c.name || 'Anonim') + '</strong></td><td>' + (c.email || '—') + '</td><td>' + (c.subject || '—') + '</td><td>' + new Date(c.created_at).toLocaleDateString() + '</td><td><button class="btn btn-ghost" onclick="showAlert(\'Mesaj\',\'' + (c.message || '').replace(/'/g,"\\'") + '\',\'info\')">👁</button></td></tr>'; }).join('');
+    });
+}
 
 // ===== TABS =====
 function showTab(tab, btn) {
@@ -394,26 +506,24 @@ function showTab(tab, btn) {
     btn.classList.add('active');
     document.querySelectorAll('[id^="tab-"]').forEach(function(t) { t.style.display = 'none'; });
     document.getElementById('tab-' + tab).style.display = 'block';
-    document.getElementById('pageTitle').textContent = tab === 'dashboard' ? 'Tablodbò' : tab === 'products' ? 'Pwodwi' : tab === 'orders' ? 'Kòmand' : tab === 'suppliers' ? 'Founisè' : tab === 'store' ? 'Store Founisè' : tab === 'promos' ? 'Kòd Promo' : tab === 'users' ? 'Itilizatè' : 'Mesaj';
+    document.getElementById('pageTitle').textContent = tab === 'dashboard' ? 'Tablodbò' : tab === 'products' ? 'Pwodwi' : tab === 'orders' ? 'Kòmand' : tab === 'suppliers' ? 'Founisè' : tab === 'store' ? 'Store Founisè' : tab === 'users' ? 'Itilizatè' : 'Mesaj';
     if (tab === 'dashboard') loadDashboard();
     if (tab === 'products') loadProducts();
     if (tab === 'orders') loadOrders();
     if (tab === 'suppliers') loadSuppliers();
     if (tab === 'store') loadSupplierStore();
-    if (tab === 'promos') loadPromos();
     if (tab === 'users') loadUsers();
     if (tab === 'contacts') loadContacts();
 }
 
-function loadAll() { if (currentTab === 'dashboard') loadDashboard(); if (currentTab === 'products') loadProducts(); if (currentTab === 'orders') loadOrders(); if (currentTab === 'suppliers') loadSuppliers(); if (currentTab === 'store') loadSupplierStore(); if (currentTab === 'promos') loadPromos(); if (currentTab === 'users') loadUsers(); if (currentTab === 'contacts') loadContacts(); }
+function loadAll() { if (currentTab === 'dashboard') loadDashboard(); if (currentTab === 'products') loadProducts(); if (currentTab === 'orders') loadOrders(); if (currentTab === 'suppliers') loadSuppliers(); if (currentTab === 'store') loadSupplierStore(); if (currentTab === 'users') loadUsers(); if (currentTab === 'contacts') loadContacts(); }
 function logout() { localStorage.clear(); window.location.href = 'index.html'; }
 
-// Init
+document.getElementById('productModal').addEventListener('click', function(e) { if (e.target === this) closeProductModal(); });
+document.getElementById('supplierModal').addEventListener('click', function(e) { if (e.target === this) closeSupplierModal(); });
+
 loadDashboard();
 </script>
 
 </body>
-</html>	
-
-
-
+</html>

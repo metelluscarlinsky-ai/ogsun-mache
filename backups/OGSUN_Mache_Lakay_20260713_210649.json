@@ -1,0 +1,61 @@
+[
+  {
+    "id": 3,
+    "name": "Tablo Dekoratif",
+    "category": "Dekorasyon",
+    "price": 75,
+    "old_price": 95,
+    "stock": 25,
+    "badge": "",
+    "description": "Tablo pentire ak men.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "id": 4,
+    "name": "Siwo My\u00e8l Natir\u00e8l",
+    "category": "Manje",
+    "price": 15,
+    "stock": 200,
+    "badge": "Eko",
+    "description": "Siwo my\u00e8l natir\u00e8l Ayiti.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "id": 5,
+    "name": "Boutey Resikle",
+    "category": "Pwodwi Natirel",
+    "price": 25,
+    "old_price": 35,
+    "stock": 75,
+    "badge": "Eko",
+    "description": "Boutey plastik resikle.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "id": 6,
+    "name": "lumi\u00e8re chambre",
+    "category": "Dekorasyon",
+    "price": 600,
+    "old_price": 800,
+    "stock": 10,
+    "badge": "Popile",
+    "description": "b\u00e8l limy\u00e8 pou f\u00e8 chanm ou b\u00e8l 12cm",
+    "image": "https://i.postimg.cc/N0TDdfSx/1003007465.jpg",
+    "image_url": "https://i.postimg.cc/N0TDdfSx/1003007465.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Siwo Myel Natirel",
+    "category": "Manje",
+    "price": 15,
+    "old_price": null,
+    "stock": 200,
+    "badge": "Eko",
+    "description": "Siwo myel natirel Ayiti.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  }
+]

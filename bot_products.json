@@ -1,5 +1,38 @@
 [
   {
+    "name": "Sak Pay Deluxe",
+    "category": "Atizana",
+    "price": 45,
+    "old_price": 65,
+    "stock": 50,
+    "badge": "Nouvo",
+    "description": "Sak pay atizanal fet ak men.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "name": "Chemiz Brode",
+    "category": "Rad",
+    "price": 35,
+    "old_price": 50,
+    "stock": 100,
+    "badge": "Popile",
+    "description": "Chemiz koton ak broderi.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "name": "Tablo Dekoratif",
+    "category": "Dekorasyon",
+    "price": 75,
+    "old_price": 95,
+    "stock": 25,
+    "badge": "",
+    "description": "Tablo pentire ak men.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
     "name": "Siwo Myel Natirel",
     "category": "Manje",
     "price": 15,
@@ -19,5 +52,103 @@
     "description": "Boutey plastik resikle.",
     "image": "logo.png",
     "image_url": "logo.png"
+  },
+  {
+    "name": "Panyen Atizanal",
+    "category": "Atizana",
+    "price": 55,
+    "old_price": 70,
+    "stock": 30,
+    "badge": "",
+    "description": "Panyen atizanal fet ak men.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "name": "Mayo Koton",
+    "category": "Rad",
+    "price": 20,
+    "stock": 150,
+    "badge": "",
+    "description": "Mayo koton 100% natirel.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "name": "Kad Foto Dekore",
+    "category": "Dekorasyon",
+    "price": 30,
+    "old_price": 40,
+    "stock": 40,
+    "badge": "Nouvo",
+    "description": "Kad foto dekore ak men.",
+    "image": "logo.png",
+    "image_url": "logo.png"
+  },
+  {
+    "name": "manmi ney sirop",
+    "category": "Manje",
+    "price": 400.0,
+    "old_price": 600.0,
+    "stock": 12,
+    "badge": "Popile",
+    "description": "sirop pou grosi",
+    "image": "https://i.postimg.cc/Wz9N5XtH/IMG-20260526-WA0086.jpg",
+    "image_url": "https://i.postimg.cc/Wz9N5XtH/IMG-20260526-WA0086.jpg"
+  },
+  {
+    "name": "AIR FORCE CUSTUME DICK",
+    "category": "Rad",
+    "price": 800.0,
+    "old_price": 1000.0,
+    "stock": 2,
+    "badge": "Popile",
+    "description": "AIR FORCE CUSTUM DICK",
+    "image": "https://i.postimg.cc/bYFfFGmj/IMG-20260703-WA0055.jpg",
+    "image_url": "https://i.postimg.cc/bYFfFGmj/IMG-20260703-WA0055.jpg"
+  },
+  {
+    "name": "AIR FORCE CUSTUM HALLOWEN",
+    "category": "Rad",
+    "price": 800.0,
+    "old_price": 1000.0,
+    "stock": 2,
+    "badge": "Nouvo",
+    "description": "AIR FORCE ONE HALLOWENN CUSTUM",
+    "image": "https://i.postimg.cc/4xkMrpVd/IMG-20260703-WA0054.jpg",
+    "image_url": "https://i.postimg.cc/4xkMrpVd/IMG-20260703-WA0054.jpg"
+  },
+  {
+    "name": "AIR FORCE CUSTUM",
+    "category": "Rad",
+    "price": 800.0,
+    "old_price": 1000.0,
+    "stock": 2,
+    "badge": "Nouvo",
+    "description": "AIR FORCE NIKE CUSTUM",
+    "image": "https://i.postimg.cc/DzjKk87P/1002995223.jpg",
+    "image_url": "https://i.postimg.cc/DzjKk87P/1002995223.jpg"
+  },
+  {
+    "name": "mirroir de chambre",
+    "category": "Dekorasyon",
+    "price": 600.0,
+    "old_price": 900.0,
+    "stock": 0,
+    "badge": "Nouvo",
+    "description": "mirroir dekasyon",
+    "image": "https://i.postimg.cc/15P7ByQg/1003007468.jpg",
+    "image_url": "https://i.postimg.cc/15P7ByQg/1003007468.jpg"
+  },
+  {
+    "name": "lumiere de chambre",
+    "category": "Dekorasyon",
+    "price": 700.0,
+    "old_price": 900.0,
+    "stock": 12,
+    "badge": "Popile",
+    "description": "lumière dekorasyon chambre",
+    "image": "https://i.postimg.cc/kXXFDGCg/1003007465.jpg",
+    "image_url": "https://i.postimg.cc/kXXFDGCg/1003007465.jpg"
   }
 ]
