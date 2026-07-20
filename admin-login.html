@@ -28,22 +28,23 @@
 <body>
     <div class="login-card">
         <h1>Admin OGSUN</h1>
-        <p>Zòn sekirize - Antre imèl ak kòd ou</p>
+        <p>Zòn sekirize</p>
         <div class="msg" id="msg"></div>
-        <form onsubmit="loginAdmin(event)">
+        <form id="loginForm">
             <div class="form-group"><label>Imèl</label><input type="email" id="email" placeholder="metelluscarlinsky@gmail.com" required></div>
             <div class="form-group"><label>Kòd</label><input type="password" id="password" placeholder="Antre kòd ou" required></div>
             <button type="submit" class="btn-login">Konekte</button>
         </form>
-        <a href="index.html" class="back-link">← Retounen sou sit la</a>
+        <a href="index.html" class="back-link">Retounen sou sit la</a>
     </div>
     <script>
-    var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api'\;
-    function loginAdmin(e) {
+    var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
         var email = document.getElementById('email').value.trim();
         var password = document.getElementById('password').value;
         var msg = document.getElementById('msg');
+        msg.className = 'msg';
         if (!email || !password) { msg.className = 'msg error'; msg.textContent = 'Ranpli tout chan yo!'; return; }
         msg.className = 'msg success'; msg.textContent = 'Koneksyon...';
         fetch(API + '/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: email, password: password }) })
@@ -51,14 +52,17 @@
         .then(function(d) {
             if (d.success) {
                 localStorage.setItem('ogsun-admin-token', d.token);
-                window.location.href = 'admin.html';
+                msg.textContent = 'Byenveni!';
+                setTimeout(function() { window.location.href = 'admin.html'; }, 800);
             } else {
                 msg.className = 'msg error'; msg.textContent = d.error || 'Imèl oswa kòd pa bon!';
             }
         })
         .catch(function() { msg.className = 'msg error'; msg.textContent = 'Pa ka konekte!'; });
-        return false;
-    }
+    });
+    var token = localStorage.getItem('ogsun-admin-token');
+    if (token) { fetch(API + '/admin/verify', { headers: { 'Authorization': 'Bearer ' + token } }).then(function(r) { return r.json(); }).then(function(d) { if (d.valid) window.location.href = 'admin.html'; }).catch(function() {}); }
     </script>
 </body>
 </html>
+

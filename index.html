@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Mache Lakay - Luxury Shopping 2026</title>
+    <title>OGSUN | Mache Lakay 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --gold: #b8960f; --gold-light: #d4af37; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; }
-        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-        
-        /* NAVBAR */
-        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
+        :root { --gold: #c9a84c; --gold-light: #e2c86e; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; --green: #2e7d32; --red: #c62828; }
+        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
         .nav-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
         .logo-wrapper { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
         .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
@@ -19,13 +17,10 @@
         .nav-links { display: flex; gap: 1.5rem; align-items: center; }
         .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.88rem; transition: color 0.3s; }
         .nav-link:hover { color: var(--gold); }
-        .nav-btn { background: var(--gold); color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.88rem; transition: all 0.3s; }
+        .nav-btn { background: var(--gold); color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.88rem; }
         .nav-btn:hover { background: var(--gold-light); }
-        .mobile-btn { display: none; background: none; border: none; cursor: pointer; font-size: 1.5rem; color: var(--text); }
-        
-        /* HERO */
-        .hero { min-height: 85vh; display: flex; align-items: center; padding: 7rem 2rem 3rem; background: linear-gradient(135deg, #fefefe 0%, #faf6ed 50%, #f5edd8 100%); position: relative; overflow: hidden; }
-        .hero-content { max-width: 580px; z-index: 1; }
+        .hero { min-height: 85vh; display: flex; align-items: center; padding: 7rem 2rem 3rem; background: linear-gradient(135deg, #fefefe 0%, #faf6ed 50%, #f5edd8 100%); }
+        .hero-content { max-width: 580px; }
         .hero-badge { display: inline-block; background: rgba(184,150,15,0.08); color: var(--gold); padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.78rem; font-weight: 600; margin-bottom: 1.5rem; border: 1px solid rgba(184,150,15,0.2); }
         .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
         .hero-title span { color: var(--gold); }
@@ -35,10 +30,7 @@
         .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(184,150,15,0.25); }
         .btn-outline { background: transparent; color: var(--gold); border: 2px solid var(--gold); padding: 0.9rem 2.2rem; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s; font-size: 0.95rem; }
         .btn-outline:hover { background: var(--gold); color: #fff; }
-        
-        /* PRODUCTS */
         .section { padding: 4rem 2rem; background: var(--white); }
-        .section:nth-child(even) { background: #fafaf9; }
         .section-header { text-align: center; margin-bottom: 3rem; }
         .section-badge { display: inline-block; background: rgba(184,150,15,0.06); color: var(--gold); padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border: 1px solid rgba(184,150,15,0.15); margin-bottom: 0.8rem; }
         .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 0.3rem; }
@@ -58,14 +50,9 @@
         .old-price { text-decoration: line-through; color: #aaa; font-size: 0.8rem; }
         .cart-btn { display: flex; align-items: center; justify-content: center; gap: 0.4rem; width: 100%; background: var(--gold); color: #fff; padding: 0.65rem; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.82rem; transition: all 0.3s; }
         .cart-btn:hover { background: var(--gold-light); }
-        
-        /* TRUST */
         .trust { padding: 2.5rem 2rem; background: #fafaf9; border-top: 1px solid var(--border); }
         .trust-grid { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; max-width: 800px; margin: 0 auto; }
         .trust-item { display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-weight: 500; font-size: 0.9rem; }
-        .trust-icon { width: 24px; height: 24px; object-fit: contain; }
-        
-        /* FOOTER */
         .footer { background: #1a1a1a; padding: 4rem 2rem 2rem; color: #aaa; }
         .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
         .footer-logo { width: 44px; margin-bottom: 1rem; border-radius: 8px; }
@@ -74,52 +61,33 @@
         .footer a:hover { color: var(--gold-light); }
         .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #333; color: #666; font-size: 0.78rem; }
         .footer-bottom a { color: var(--gold-light); text-decoration: none; }
-        
-        /* TOAST */
         .toast { position: fixed; top: 18px; right: 18px; z-index: 9999; padding: 13px 20px; border-radius: 10px; font-weight: 600; font-size: 0.88rem; box-shadow: 0 8px 25px rgba(0,0,0,0.12); animation: slideIn 0.35s ease; display: flex; align-items: center; gap: 0.5rem; }
-        .toast-success { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
-        .toast-error { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+        .toast-success { background: #e8f5e9; color: var(--green); border: 1px solid #c8e6c9; }
+        .toast-error { background: #ffebee; color: var(--red); border: 1px solid #ffcdd2; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: translateX(0); } }
-        
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .mobile-btn { display: block; }
-            .hero { flex-direction: column; text-align: center; padding-top: 6rem; }
-            .hero-desc { margin: 0 auto 1.5rem; }
-            .hero-btns { justify-content: center; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            .products-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-        }
+        @media (max-width: 768px) { .nav-links { display: none; } .hero { flex-direction: column; text-align: center; padding-top: 6rem; } .hero-desc { margin: 0 auto 1.5rem; } .hero-btns { justify-content: center; } .footer-grid { grid-template-columns: 1fr 1fr; } .products-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; } }
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo-wrapper">
-                <img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
-alt="OGSUN" class="logo-img">
-                <span class="logo-text">OGSUN</span>
-            </a>
+            <a href="index.html" class="logo-wrapper"><img src="logo.png" alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
             <div class="nav-links" id="navLinks">
-                <a href="index.html" class="nav-link">Akèy</a>
+                <a href="index.html" class="nav-link active">Akèy</a>
                 <a href="shop.html" class="nav-link">Boutik</a>
                 <a href="cart.html" class="nav-link">Panye</a>
                 <a href="account.html" class="nav-link">Kont</a>
-               
-<a href="affiliate-login.html" class="nav-link">🎫 Espas Afilye</a>
- <a href="contact.html" class="nav-link">Kontakte</a>
+                <a href="affiliate-login.html" class="nav-link">Afilye</a>
+                <a href="contact.html" class="nav-link">Kontakte</a>
             </div>
             <div style="display:flex;align-items:center;gap:1rem;">
-                <a href="cart.html" style="color:var(--text);text-decoration:none;font-size:1.2rem;">🛒</a>
+                <a href="cart.html" style="color:var(--text);text-decoration:none;font-weight:600;">Panye</a>
                 <a href="account.html" class="nav-btn">Konekte</a>
-                <button class="mobile-btn" onclick="document.getElementById('navLinks').classList.toggle('active')">☰</button>
             </div>
         </div>
     </nav>
 
-    <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
             <div class="hero-badge">Nouvo Koleksyon 2026</div>
@@ -132,87 +100,62 @@ alt="OGSUN" class="logo-img">
         </div>
     </section>
 
-    <!-- PRODUITS -->
-<div class="products-grid" id="productsGrid">
-    <p style="text-align:center;color:#888;grid-column:1/-1;padding:2rem;">Chajman pwodwi...</p>
-</div>
-    <!-- TRUST -->
-    <section class="trust">
-        <div class="trust-grid">
-            <div class="trust-item"><span style="font-size:1.3rem;">🔒</span> Peman Sekirize</div>
-            <div class="trust-item"><span style="font-size:1.3rem;">🚚</span> Livrezon Rapid</div>
-            <div class="trust-item"><span style="font-size:1.3rem;">✅</span> Garanti Kalite</div>
-            <div class="trust-item"><span style="font-size:1.3rem;">📞</span> Sipò Kliyan</div>
+    <section class="section">
+        <div class="section-header">
+            <span class="section-badge">Ki pi cho</span>
+            <h2 class="section-title">Pwodwi <span style="color:var(--gold);">Popilè</span></h2>
+            <p class="section-subtitle">Sa k ap fè bri nan mache a</p>
+        </div>
+        <div class="products-grid" id="productsGrid">
+            <p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem;">Chajman pwodwi...</p>
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <section class="trust">
+        <div class="trust-grid">
+            <div class="trust-item"><span style="font-weight:700;color:var(--gold);">&#9679;</span> Peman Sekirize</div>
+            <div class="trust-item"><span style="font-weight:700;color:var(--gold);">&#9679;</span> Livrezon Rapid</div>
+            <div class="trust-item"><span style="font-weight:700;color:var(--gold);">&#9679;</span> Garanti Kalite</div>
+            <div class="trust-item"><span style="font-weight:700;color:var(--gold);">&#9679;</span> Sipò Kliyan</div>
+        </div>
+    </section>
+
     <footer class="footer">
         <div class="footer-grid">
-            <div><img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
-alt="OGSUN" class="footer-logo"><p style="color:#888;font-size:0.85rem;">Pi bon platfòm e-commerce lokal an Ayiti. Nou konekte atizan ayisyen ak moun ki renmen bèl bagay otantik.</p></div>
-            <div><h4>Navigate</h4><a href="index.html">Akèy</a><a href="shop.html">Boutik</a><a href="cart.html">Panye</a><a href="account.html">Kont</a></div>
+            <div><img src="logo.png" alt="OGSUN" class="footer-logo"><p style="color:#888;font-size:0.85rem;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
+            <div><h4>Navigate</h4><a href="index.html">Akèy</a><a href="shop.html">Boutik</a><a href="cart.html">Panye</a><a href="affiliate-login.html">Afilye</a></div>
             <div><h4>Enfòmasyon</h4><a href="about.html">Sou Nou</a><a href="contact.html">Kontakte</a><a href="faq.html">FAQ</a></div>
             <div><h4>Sipò</h4><a href="faq.html">Livrezon</a><a href="faq.html">Retounen</a><a href="contact.html">Èd</a></div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève. Fèt ak pasyon nan Ayiti.</p></div>
+        <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève.</p></div>
     </footer>
+
+    <!-- Admin sekrè -->
+    <div style="position:fixed;bottom:15px;right:15px;z-index:9998;">
+        <input type="text" id="secretAdminSearch" placeholder="..."
+               style="width:35px;height:35px;border-radius:17px;border:1px solid #ddd;background:rgba(255,255,255,0.8);padding:0 6px;font-size:12px;color:#333;outline:none;transition:all 0.3s;"
+               onfocus="this.style.width='160px';this.placeholder='Kòd admin...';"
+               onblur="this.style.width='35px';this.placeholder='...';this.value='';">
+    </div>
+    <div id="adminPopup" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
+        <div style="background:#fff;border-radius:16px;padding:30px;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.3);">
+            <h3 style="font-family:'Space Grotesk',sans-serif;color:#1a1a1a;margin-bottom:10px;">Admin OGSUN</h3>
+            <p style="color:#666;margin-bottom:20px;font-size:0.9rem;">Antre kòd sekrè</p>
+            <input type="password" id="adminPasswordInput" placeholder="Kòd sekrè" style="width:100%;padding:12px;border:2px solid #e8e0d0;border-radius:10px;font-size:1rem;text-align:center;margin-bottom:15px;outline:none;">
+            <div style="display:flex;gap:10px;">
+                <button onclick="closeAdminPopup()" style="flex:1;padding:12px;border:2px solid #e8e0d0;background:#fff;color:#666;border-radius:10px;font-weight:600;cursor:pointer;">Anile</button>
+                <button onclick="verifyAdmin()" style="flex:1;padding:12px;background:#b8960f;color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer;">Konekte</button>
+            </div>
+            <p id="adminError" style="color:#c62828;font-size:0.85rem;margin-top:10px;display:none;"></p>
+        </div>
+    </div>
 
     <script>
     var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
-    fetch(API + '/products')
-    .then(function(res) { return res.json(); })
-    .then(function(products) {
-        console.log('Pwodwi chaje:', products.length);
-        var grid = document.getElementById('productsGrid');
-        
-        if (!products || products.length === 0) {
-            grid.innerHTML = '<p style="text-align:center;padding:40px;color:#888;">Pa gen pwodwi disponib.</p>';
-            return;
-        }
-        
-        // Separe pwodwi an vedette (ak badge) ak lòt yo
-        var featured = products.filter(function(p) {
-            return p.badge === 'Popilè' || p.badge === 'Nouvo' || p.badge === 'Eko';
-        });
-        
-        var others = products.filter(function(p) {
-            return !p.badge || (p.badge !== 'Popilè' && p.badge !== 'Nouvo' && p.badge !== 'Eko');
-        });
-        
-        // Konbine: an vedette an premye
-        var displayProducts = featured.concat(others);
-        
-        grid.innerHTML = displayProducts.map(function(p) {
-            var img = p.image || p.image_url || 'logo.png';
-            var badgeHTML = p.badge ? '<span class="product-badge">' + p.badge + '</span>' : '';
-            
-            return '<a href="product.html?id=' + p.id + '" class="product-card">' +
-                '<div class="product-img-wrap">' +
-                    '<img src="' + img + '" alt="' + p.name + '" class="product-img" onerror="this.src=\'logo.png\'">' +
-                    badgeHTML +
-                '</div>' +
-                '<div class="product-info">' +
-                    '<span class="product-cat">' + (p.category || '') + '</span>' +
-                    '<h3 class="product-name">' + p.name + '</h3>' +
-                    '<div class="product-price">' +
-                        '<span class="current-price">$' + (p.price || 0).toFixed(2) + '</span>' +
-                        (p.old_price ? '<span class="old-price">$' + p.old_price.toFixed(2) + '</span>' : '') +
-                    '</div>' +
-                    '<button class="cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(\'' + p.name + '\',' + (p.price || 0) + ')">Ajoute nan panye</button>' +
-                '</div>' +
-            '</a>';
-        }).join('');
-    })
-    .catch(function(err) {
-        console.log('Erè chaje pwodwi:', err);
-        document.getElementById('productsGrid').innerHTML = '<p style="text-align:center;padding:40px;color:#c62828;">Pa ka chaje pwodwi.</p>';
-    });
+    
     function showToast(msg, type) {
-        type = type || 'success';
-        var t = document.createElement('div');
-        t.className = 'toast toast-' + type;
-        t.innerHTML = '<span>' + (type === 'success' ? '✓' : '✕') + '</span> ' + msg;
+        type = type || 'success'; var t = document.createElement('div');
+        t.className = 'toast toast-' + type; t.innerHTML = '<span>' + (type === 'success' ? '&check;' : '&times;') + '</span> ' + msg;
         document.body.appendChild(t);
         setTimeout(function() { t.style.opacity = '0'; t.style.transform = 'translateX(80px)'; t.style.transition = 'all 0.3s'; setTimeout(function() { t.remove(); }, 300); }, 3000);
     }
@@ -226,170 +169,43 @@ alt="OGSUN" class="footer-logo"><p style="color:#888;font-size:0.85rem;">Pi bon 
         showToast(name + ' ajoute nan panye!', 'success');
     }
     
-    // Chaje pwodwi depi API
-    fetch(API + '/products')
-        .then(function(res) { return res.json(); })
-        .then(function(products) {
-            var grid = document.getElementById('productsGrid');
-            if (!products || products.length === 0) {
-                grid.innerHTML = '<p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem;">Pa gen pwodwi disponib pou kounya.</p>';
-                return;
-            }
-            grid.innerHTML = products.map(function(p) {
-                var img = p.image || p.image_url || 'logo.png';
-                return '<a href="product.html?id=' + p.id + '" class="product-card">' +
-                    '<div class="product-img-wrap">' +
-                        '<img src="' + img + '" alt="' + p.name + '" class="product-img" onerror="this.src=\'logo.png\'">' +
-                        (p.badge ? '<span class="product-badge">' + p.badge + '</span>' : '') +
-                    '</div>' +
-                    '<div class="product-info">' +
-                        '<span class="product-cat">' + (p.category || '') + '</span>' +
-                        '<h3 class="product-name">' + p.name + '</h3>' +
-                        '<div class="product-price">' +
-                            '<span class="current-price">$' + (p.price || 0).toFixed(2) + '</span>' +
-                            (p.old_price ? '<span class="old-price">$' + p.old_price.toFixed(2) + '</span>' : '') +
-                        '</div>' +
-                        '<button class="cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(\'' + p.name + '\',' + p.price + ')">Ajoute nan panye</button>' +
-                    '</div>' +
-                '</a>';
-            }).join('');
-        })
-        .catch(function() {
-            document.getElementById('productsGrid').innerHTML = '<p style="text-align:center;color:#c62828;grid-column:1/-1;padding:2rem;">Pa ka chaje pwodwi. Tcheke koneksyon ou.</p>';
-        });
+    fetch(API + '/products').then(function(res) { return res.json(); }).then(function(products) {
+        var grid = document.getElementById('productsGrid');
+        if (!products || products.length === 0) { grid.innerHTML = '<p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem;">Pa gen pwodwi disponib.</p>'; return; }
+        var featured = products.filter(function(p) { return p.badge === 'Popilè' || p.badge === 'Nouvo' || p.badge === 'Eko'; });
+        var others = products.filter(function(p) { return !p.badge || (p.badge !== 'Popilè' && p.badge !== 'Nouvo' && p.badge !== 'Eko'); });
+        var display = featured.concat(others);
+        grid.innerHTML = display.map(function(p) {
+            var img = p.image || p.image_url || 'logo.png';
+            return '<a href="product.html?id=' + p.id + '" class="product-card"><div class="product-img-wrap"><img src="' + img + '" alt="' + p.name + '" class="product-img" onerror="this.src=\'logo.png\'">' + (p.badge ? '<span class="product-badge">' + p.badge + '</span>' : '') + '</div><div class="product-info"><span class="product-cat">' + (p.category || '') + '</span><h3 class="product-name">' + p.name + '</h3><div class="product-price"><span class="current-price">$' + (p.price || 0).toFixed(2) + '</span>' + (p.old_price ? '<span class="old-price">$' + p.old_price.toFixed(2) + '</span>' : '') + '</div><button class="cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(\'' + p.name + '\',' + (p.price || 0) + ')">Ajoute nan panye</button></div></a>';
+        }).join('');
+    }).catch(function() { document.getElementById('productsGrid').innerHTML = '<p style="text-align:center;color:var(--red);grid-column:1/-1;padding:2rem;">Pa ka chaje pwodwi.</p>'; });
     
-// Admin sekrè nan ba rechèch
-var searchBox = document.createElement('div');
-searchBox.style.cssText = 'position:fixed;bottom:15px;right:15px;z-index:9998;';
-searchBox.innerHTML = '<input type="text" id="secretSearch" placeholder="..." style="width:40px;height:40px;border-radius:20px;border:1px solid #ddd;background:rgba(255,255,255,0.8);padding:0 10px;font-size:14px;color:#333;outline:none;transition:all 0.3s;cursor:default;" onfocus="this.style.width=\'200px\';this.style.cursor=\'text\';" onblur="this.style.width=\'40px\';this.style.cursor=\'default\';if(this.value===\'\'){}">';
-document.body.appendChild(searchBox);
-
-document.getElementById('secretSearch').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' && this.value.trim().toLowerCase() === 'adminogsun') {
-        this.value = '';
-        this.style.width = '40px';
-        
-        if (pw === 'OGPLUG45') {
-            window.location.href = 'admin-login.html';
-        } else if (pw) {
-            showToast('Kòd pa bon!', 'error');
-        }
-    }
-});
-        setTimeout(function() { secretCode = ''; }, 5000);
-    });
-    
-    console.log('OGSUN 2026 - Pare!');
-    </script>
-<!-- Ba rechèch kache pou admin -->
-<div style="position:fixed;bottom:20px;right:20px;z-index:9998;">
-    <input type="text" id="secretAdminSearch" placeholder="🔍" 
-           style="width:42px;height:42px;border-radius:21px;border:1px solid #ddd;background:rgba(255,255,255,0.9);padding:0 8px;font-size:14px;color:#333;outline:none;transition:all 0.3s ease;box-shadow:0 2px 10px rgba(0,0,0,0.08);" 
-           onfocus="this.style.width='200px';this.placeholder='Tape type rad...';" 
-           onblur="this.style.width='42px';this.placeholder='🔍';this.value='';">
-</div>
-
-<!-- Popup Admin koutim -->
-<div id="adminPopup" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
-    <div style="background:#fff;border-radius:16px;padding:30px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.3);">
-        <div style="font-size:3rem;margin-bottom:10px;">🔐</div>
-        <h3 style="font-family:'Space Grotesk',sans-serif;color:#1a1a1a;margin-bottom:5px;">Admin OGSUN</h3>
-        <p style="color:#666;font-size:0.9rem;margin-bottom:20px;">Antre kòd sekrè pou aksede</p>
-        <input type="password" id="adminPasswordInput" placeholder="Kòd sekrè" style="width:100%;padding:12px;border:2px solid #e8e0d0;border-radius:10px;font-size:1rem;text-align:center;margin-bottom:15px;outline:none;">
-        <div style="display:flex;gap:10px;">
-            <button onclick="closeAdminPopup()" style="flex:1;padding:12px;border:2px solid #e8e0d0;background:#fff;color:#666;border-radius:10px;font-weight:600;cursor:pointer;">Anile</button>
-            <button onclick="verifyAdmin()" style="flex:1;padding:12px;background:#b8960f;color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer;">Konekte</button>
-        </div>
-        <p id="adminError" style="color:#c62828;font-size:0.85rem;margin-top:10px;display:none;"></p>
-    </div>
-</div>
-
-<script>
-var adminSearchInput = document.getElementById('secretAdminSearch');
-
-adminSearchInput.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-        var val = this.value.trim().toLowerCase();
-        if (val === 'adminogsun') {
-            this.value = '';
-            this.blur();
+    // Admin sekrè
+    document.getElementById('secretAdminSearch').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && this.value.trim().toLowerCase() === 'adminogsun') {
+            this.value = ''; this.blur();
             document.getElementById('adminPopup').style.display = 'flex';
             document.getElementById('adminPasswordInput').focus();
-        } else {
-            this.value = '';
-            this.blur();
         }
-    }
-});
-// Chaje pwodwi depi API
-var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
-
-fetch(API + '/products')
-    .then(function(res) { return res.json(); })
-    .then(function(products) {
-        var grid = document.getElementById('productsGrid');
-        
-        if (!products || products.length === 0) {
-            grid.innerHTML = '<p style="text-align:center;color:#888;grid-column:1/-1;padding:2rem;">Pa gen pwodwi disponib.</p>';
-            return;
-        }
-        
-        // Separe pwodwi an vedette
-        var featured = products.filter(function(p) {
-            return p.badge === 'Popilè' || p.badge === 'Nouvo' || p.badge === 'Eko';
-        });
-        var others = products.filter(function(p) {
-            return !p.badge || (p.badge !== 'Popilè' && p.badge !== 'Nouvo' && p.badge !== 'Eko');
-        });
-        var displayProducts = featured.concat(others);
-        
-        grid.innerHTML = displayProducts.map(function(p) {
-            var img = p.image || p.image_url || 'logo.png';
-            return '<a href="product.html?id=' + p.id + '" class="product-card">' +
-                '<div class="product-img-wrap">' +
-                    '<img src="' + img + '" alt="' + p.name + '" class="product-img" onerror="this.src=\'logo.png\'">' +
-                    (p.badge ? '<span class="product-badge">' + p.badge + '</span>' : '') +
-                '</div>' +
-                '<div class="product-info">' +
-                    '<span class="product-cat">' + (p.category || '') + '</span>' +
-                    '<h3 class="product-name">' + p.name + '</h3>' +
-                    '<div class="product-price">' +
-                        '<span class="current-price">$' + (p.price || 0).toFixed(2) + '</span>' +
-                        (p.old_price ? '<span class="old-price">$' + p.old_price.toFixed(2) + '</span>' : '') +
-                    '</div>' +
-                    '<button class="cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(\'' + p.name + '\',' + (p.price || 0) + ')">Ajoute nan panye</button>' +
-                '</div>' +
-            '</a>';
-        }).join('');
-    })
-    .catch(function() {
-        document.getElementById('productsGrid').innerHTML = '<p style="text-align:center;color:#c62828;grid-column:1/-1;padding:2rem;">Pa ka chaje pwodwi.</p>';
     });
-function verifyAdmin() {
-    var pw = document.getElementById('adminPasswordInput').value;
-    var error = document.getElementById('adminError');
-    
-    if (pw === 'OGPLUG45') {
-        error.style.display = 'none';
-        document.getElementById('adminPopup').style.display = 'none';
-        window.location.href = 'admin-login.html';
-    } else {
-        error.textContent = 'Kòd pa bon! Eseye ankò.';
-        error.style.display = 'block';
-        document.getElementById('adminPasswordInput').value = '';
+    function verifyAdmin() {
+        var pw = document.getElementById('adminPasswordInput').value;
+        if (pw === 'OGPLUG45') {
+            document.getElementById('adminPopup').style.display = 'none';
+            window.location.href = 'admin-login.html';
+        } else {
+            document.getElementById('adminError').textContent = 'Kòd pa bon!';
+            document.getElementById('adminError').style.display = 'block';
+        }
     }
-}
+    function closeAdminPopup() {
+        document.getElementById('adminPopup').style.display = 'none';
+        document.getElementById('adminError').style.display = 'none';
+    }
+    </script>
 
-function closeAdminPopup() {
-    document.getElementById('adminPopup').style.display = 'none';
-    document.getElementById('adminPasswordInput').value = '';
-    document.getElementById('adminError').style.display = 'none';
-}
-
-// Touche Enter nan popup
-document.getElementById('adminPasswordInput').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') verifyAdmin();
-});
-</script>
 </body>
 </html>
+
+
