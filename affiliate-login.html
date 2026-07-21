@@ -26,130 +26,79 @@
     </style>
 </head>
 <body>
-
     <div class="login-card">
         <h1>🎫 Espas Afilye OGSUN</h1>
-        <p>Antre non w ak kòd afilye w la</p>
-
+        <p>Antre kòd afilye w la pou wè dashboard ou</p>
         <div class="msg" id="msg"></div>
-
         <form id="loginForm">
-            <div class="form-group">
-                <label>Non Afilye</label>
-                <input type="text" id="affiliateName" placeholder="Antre non w" required autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label>Kòd Afilye</label>
-                <input type="text" id="affiliateCode" placeholder="OGSUN-PRO1" required autocomplete="off">
-            </div>
+            <div class="form-group"><label>Kòd Afilye</label><input type="text" id="affiliateCode" placeholder="OGSUN-PRO1" required autocomplete="off"></div>
+            <div class="form-group"><label>Non (opsyonèl)</label><input type="text" id="affiliateName" placeholder="Antre non w si w vle" autocomplete="off"></div>
             <button type="submit" class="btn-login">Konekte</button>
         </form>
-
         <a href="index.html" class="back-link">← Retounen sou OGSUN</a>
     </div>
 
     <script>
     var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
-
+    
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
-
-        var name = document.getElementById('affiliateName').value.trim();
         var code = document.getElementById('affiliateCode').value.trim().toUpperCase();
+        var name = document.getElementById('affiliateName').value.trim();
         var msg = document.getElementById('msg');
-
-        // Kache ansyen mesaj
+        
         msg.className = 'msg';
-
-        // Verifye chan yo
-        if (!name) {
-            msg.className = 'msg error';
-            msg.textContent = '❌ Antre non afilye ou!';
-            return;
-        }
-
-        if (!code) {
-            msg.className = 'msg error';
-            msg.textContent = '❌ Antre kòd afilye ou!';
-            return;
-        }
-
-        // Montre chajman
-        msg.className = 'msg success';
-        msg.textContent = '⏳ Koneksyon...';
-
-        // Voye requèt API pou verifye afilye
+        
+        if (!code) { msg.className = 'msg error'; msg.textContent = '❌ Antre kòd afilye ou!'; return; }
+        
+        msg.className = 'msg success'; msg.textContent = '⏳ Koneksyon...';
+        
+        // Voye requèt API - verifye ak kòd sèlman
         fetch(API + '/promos/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: name, code: code })
+            body: JSON.stringify({ code: code, name: name })
         })
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
-            if (data && data.id) {
-                // Afilye jwenn!
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+            if (d && d.id) {
+                // Siksè!
                 msg.className = 'msg success';
-                msg.textContent = '✅ Byenveni ' + data.affiliate_name + '!';
-
-                // Sove done afilye nan localStorage
-                localStorage.setItem('ogsun-affiliate-code', data.code);
-                localStorage.setItem('ogsun-affiliate-name', data.affiliate_name);
-                localStorage.setItem('ogsun-affiliate-data', JSON.stringify(data));
-
-                // Ale nan dashboard
-                setTimeout(function() {
-                    window.location.href = 'affiliate-dashboard.html';
-                }, 1000);
+                msg.textContent = '✅ Byenveni ' + d.affiliate_name + '!';
+                localStorage.setItem('ogsun-affiliate-code', d.code);
+                localStorage.setItem('ogsun-affiliate-name', d.affiliate_name);
+                localStorage.setItem('ogsun-affiliate-data', JSON.stringify(d));
+                setTimeout(function() { window.location.href = 'affiliate-dashboard.html'; }, 1000);
             } else {
-                // Afilye pa jwenn
+                // Echèk
                 msg.className = 'msg error';
-                msg.textContent = '❌ Non oswa kòd pa valab! Verifye epi eseye ankò.';
+                if (d.available_codes && d.available_codes.length > 0) {
+                    msg.textContent = '❌ Kòd pa valab! Kòd ki disponib: ' + d.available_codes.slice(0, 5).join(', ');
+                } else {
+                    msg.textContent = '❌ ' + (d.error || 'Kòd pa valab!');
+                }
             }
         })
-        .catch(function(error) {
-            console.log('Erè API:', error);
-
-            // Si API pa mache, eseye localStorage kòm backup
-            var promos = JSON.parse(localStorage.getItem('ogsun-promos') || '[]');
-            var promo = promos.find(function(p) {
-                return p.code && p.code.toUpperCase() === code &&
-                       p.affiliate_name && p.affiliate_name.toLowerCase() === name.toLowerCase() &&
-                       (p.active === true || p.active === 1);
-            });
-
-            if (promo) {
-                msg.className = 'msg success';
-                msg.textContent = '✅ Byenveni ' + promo.affiliate_name + '!';
-                localStorage.setItem('ogsun-affiliate-code', promo.code);
-                localStorage.setItem('ogsun-affiliate-name', promo.affiliate_name);
-                localStorage.setItem('ogsun-affiliate-data', JSON.stringify(promo));
-                setTimeout(function() {
-                    window.location.href = 'affiliate-dashboard.html';
-                }, 1000);
-            } else {
-                msg.className = 'msg error';
-                msg.textContent = '❌ Non oswa kòd pa valab!';
-            }
+        .catch(function(err) {
+            console.log('Erè API:', err);
+            msg.className = 'msg error';
+            msg.textContent = '❌ Pa ka konekte ak sèvè a!';
         });
     });
-
+    
     // Si deja konekte, ale dirèk
     (function() {
         var savedCode = localStorage.getItem('ogsun-affiliate-code');
-        var savedName = localStorage.getItem('ogsun-affiliate-name');
-
-        if (savedCode && savedName) {
+        if (savedCode) {
             fetch(API + '/promos/verify', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: savedName, code: savedCode })
+                body: JSON.stringify({ code: savedCode })
             })
             .then(function(r) { return r.json(); })
-            .then(function(data) {
-                if (data && data.id) {
-                    localStorage.setItem('ogsun-affiliate-data', JSON.stringify(data));
+            .then(function(d) {
+                if (d && d.id) {
+                    localStorage.setItem('ogsun-affiliate-data', JSON.stringify(d));
                     window.location.href = 'affiliate-dashboard.html';
                 }
             })
@@ -157,7 +106,6 @@
         }
     })();
     </script>
-
 </body>
 </html>
 
