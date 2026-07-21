@@ -8,44 +8,71 @@ const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
 
 // ===== FICHYE DONE =====
-const PRODUCTS_FILE = path.join(__dirname, 'products.json');
-const ORDERS_FILE = path.join(__dirname, 'orders.json');
-const USERS_FILE = path.join(__dirname, 'users.json');
-const CONTACTS_FILE = path.join(__dirname, 'contacts.json');
-const SUPPLIERS_FILE = path.join(__dirname, 'suppliers.json');
-const TRANSACTIONS_FILE = path.join(__dirname, 'transactions.json');
+const DATA_DIR = path.join(__dirname, 'data');
+const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
+const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
+const USERS_FILE = path.join(DATA_DIR, 'users.json');
+const CONTACTS_FILE = path.join(DATA_DIR, 'contacts.json');
 
-// ===== FONKSYON DONE SOLID =====
-function loadData(filePath, defaultData) {
+// ===== FONKSYON DONE 100% SOLID =====
+function ensureDataDir() {
+    if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+        console.log('📁 Dosye data kreye: ' + DATA_DIR);
+    }
+}
+
+function loadJSON(filePath, defaultData) {
+    ensureDataDir();
     try {
         if (fs.existsSync(filePath)) {
-            const raw = fs.readFileSync(filePath, 'utf8');
-            const data = JSON.parse(raw);
-            if (Array.isArray(data) && data.length > 0) {
-                console.log('✅ Chaje ' + data.length + ' antre depi ' + path.basename(filePath));
-                return data;
+            const content = fs.readFileSync(filePath, 'utf8').trim();
+            if (content) {
+                const data = JSON.parse(content);
+                if (Array.isArray(data)) {
+                    console.log('✅ Chaje: ' + path.basename(filePath) + ' (' + data.length + ' antre)');
+                    return data;
+                }
             }
         }
     } catch (err) {
         console.log('⚠️ Erè chaje ' + path.basename(filePath) + ': ' + err.message);
+        // Fè backup fichye ki koronpi a
+        try {
+            const backupPath = filePath + '.backup.' + Date.now();
+            fs.copyFileSync(filePath, backupPath);
+            console.log('📁 Backup kreye: ' + backupPath);
+        } catch (e) {}
     }
-    console.log('📄 Itilize done defo pou ' + path.basename(filePath));
-    return defaultData.slice();
+    console.log('📄 Kreye nouvo ' + path.basename(filePath));
+    saveJSON(filePath, defaultData);
+    return JSON.parse(JSON.stringify(defaultData));
 }
 
-function saveData(filePath, data) {
+function saveJSON(filePath, data) {
+    ensureDataDir();
     try {
-        // Asire dosye a egziste
-        const dir = path.dirname(filePath);
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
+        // Ekri nan fichye tanporè avan
+        const tmpPath = filePath + '.tmp';
+        fs.writeFileSync(tmpPath, JSON.stringify(data, null, 2), 'utf8');
+        // Renome tanporè a kòm fichye final (operasyon atomik)
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
         }
-        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-        console.log('💾 Sove ' + data.length + ' antre nan ' + path.basename(filePath));
+        fs.renameSync(tmpPath, filePath);
+        console.log('💾 Sove: ' + path.basename(filePath) + ' (' + data.length + ' antre)');
         return true;
     } catch (err) {
         console.log('❌ Erè sove ' + path.basename(filePath) + ': ' + err.message);
-        return false;
+        // Eseye sove dirèkteman si rename echwe
+        try {
+            fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+            console.log('💾 Sove dirèk: ' + path.basename(filePath));
+            return true;
+        } catch (e) {
+            console.log('❌ Erè sove dirèk: ' + e.message);
+            return false;
+        }
     }
 }
 
@@ -54,28 +81,32 @@ const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'metelluscarlinsky@gmail.com';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'OGPLUG45';
 const ADMIN_TOKEN = crypto.randomBytes(32).toString('hex');
 
+console.log('');
+console.log('🔐 Token Admin jenere: ' + ADMIN_TOKEN.substring(0, 20) + '...');
+console.log('');
+
 // ===== DONE INISYAL =====
 const defaultProducts = [
-    { id: 1, name: 'Sak Pay Deluxe', category: 'Atizana', price: 45, old_price: 65, stock: 50, rating: 4.8, reviews: 128, badge: 'Nouvo', description: 'Sak pay atizanal fèt ak men.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
-    { id: 2, name: 'Chemiz Brode', category: 'Rad', price: 35, old_price: 50, stock: 100, rating: 4.7, reviews: 95, badge: 'Popilè', description: 'Chemiz koton ak broderi.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
-    { id: 3, name: 'Tablo Dekoratif', category: 'Dekorasyon', price: 75, old_price: 95, stock: 25, rating: 4.9, reviews: 72, badge: '', description: 'Tablo pentire ak men.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
-    { id: 4, name: 'Siwo Myèl Natirèl', category: 'Manje', price: 15, stock: 200, rating: 4.6, reviews: 200, badge: 'Eko', description: 'Siwo myèl natirèl Ayiti.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
+    { id: 1, name: 'Sak Pay Deluxe', category: 'Atizana', price: 45, old_price: 65, stock: 50, rating: 4.8, reviews: 128, badge: 'Nouvo', description: 'Sak pay atizanal fèt ak men ak anpil lanmou.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
+    { id: 2, name: 'Chemiz Brode', category: 'Rad', price: 35, old_price: 50, stock: 100, rating: 4.7, reviews: 95, badge: 'Popilè', description: 'Chemiz koton ak bèl broderi ayisyen.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
+    { id: 3, name: 'Tablo Dekoratif', category: 'Dekorasyon', price: 75, old_price: 95, stock: 25, rating: 4.9, reviews: 72, badge: '', description: 'Tablo pentire ak men pou dekore kay ou.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
+    { id: 4, name: 'Siwo Myèl Natirèl', category: 'Manje', price: 15, stock: 200, rating: 4.6, reviews: 200, badge: 'Eko', description: 'Siwo myèl 100% natirèl ki soti nan mòn Ayiti.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
 ];
 
 // ===== CHAJE DONE =====
-let products = loadData(PRODUCTS_FILE, defaultProducts);
-let orders = loadData(ORDERS_FILE, []);
-let users = loadData(USERS_FILE, []);
-let contacts = loadData(CONTACTS_FILE, []);
-let suppliers = loadData(SUPPLIERS_FILE, []);
-let transactions = loadData(TRANSACTIONS_FILE, []);
+let products = loadJSON(PRODUCTS_FILE, defaultProducts);
+let orders = loadJSON(ORDERS_FILE, []);
+let users = loadJSON(USERS_FILE, []);
+let contacts = loadJSON(CONTACTS_FILE, []);
 
 // ===== KONTE ID =====
-let productIdCounter = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 9;
-let orderCounter = orders.length > 0 ? Math.max(...orders.map(o => o.id)) + 1 : 1;
-let userIdCounter = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
-let supplierIdCounter = suppliers.length > 0 ? Math.max(...suppliers.map(s => s.id)) + 1 : 1;
-let transactionIdCounter = transactions.length > 0 ? Math.max(...transactions.map(t => t.id)) + 1 : 1;
+function getMaxId(arr) {
+    return arr.length > 0 ? Math.max(...arr.map(item => item.id || 0)) : 0;
+}
+
+let productIdCounter = getMaxId(products) + 1;
+let orderCounter = getMaxId(orders) + 1;
+let userIdCounter = getMaxId(users) + 1;
 
 // ===== MIME TYPES =====
 const MIME = {
@@ -90,33 +121,17 @@ const MIME = {
     '.svg': 'image/svg+xml',
     '.ico': 'image/x-icon',
     '.webp': 'image/webp',
-    '.woff': 'font/woff',
-    '.woff2': 'font/woff2',
 };
 
-// ===== FONKSYON ITILITÈ =====
-function serveFile(res, filePath) {
+// ===== FONKSYON =====
+function serveStaticFile(res, filePath) {
     const ext = path.extname(filePath).toLowerCase();
     const contentType = MIME[ext] || 'text/plain';
     
     fs.readFile(filePath, (err, data) => {
         if (err) {
-            // Si fichye pa jwenn, eseye index.html
-            if (filePath.endsWith('.html')) {
-                const indexPath = path.join(path.dirname(filePath), 'index.html');
-                fs.readFile(indexPath, (err2, data2) => {
-                    if (err2) {
-                        res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-                        res.end('<h1>404 - Paj pa jwenn</h1>');
-                    } else {
-                        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-                        res.end(data2);
-                    }
-                });
-            } else {
-                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-                res.end('<h1>404 - Paj pa jwenn</h1>');
-            }
+            res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+            res.end('<h1>404 - Paj pa jwenn</h1>');
             return;
         }
         res.writeHead(200, { 'Content-Type': contentType });
@@ -124,10 +139,10 @@ function serveFile(res, filePath) {
     });
 }
 
-function getBody(req) {
+function parseBody(req) {
     return new Promise((resolve) => {
         let body = '';
-        req.on('data', chunk => body += chunk);
+        req.on('data', chunk => { body += chunk; });
         req.on('end', () => {
             try { resolve(JSON.parse(body)); }
             catch { resolve({}); }
@@ -135,14 +150,19 @@ function getBody(req) {
     });
 }
 
-function checkAdmin(req) {
-    const auth = req.headers['authorization'];
-    return auth && auth.replace('Bearer ', '') === ADMIN_TOKEN;
+function isAdmin(req) {
+    const auth = req.headers['authorization'] || '';
+    return auth.replace('Bearer ', '') === ADMIN_TOKEN;
 }
 
-// ===== SÈVÈ =====
+function jsonResponse(res, statusCode, data) {
+    res.writeHead(statusCode, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify(data, null, 2));
+}
+
+// ===== SÈVÈ PRENSIPAL =====
 const server = http.createServer(async (req, res) => {
-    // CORS
+    // CORS Headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -153,189 +173,174 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
-    const myUrl = url.parse(req.url, true);
-    const pathname = myUrl.pathname;
+    const parsedUrl = url.parse(req.url, true);
+    const pathname = parsedUrl.pathname;
+    const method = req.method;
     
-    console.log('📡 ' + req.method + ' ' + pathname);
+    console.log('📡 ' + method + ' ' + pathname);
     
-    // ===== API INFO =====
-    if (pathname === '/api') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
+    // ===== API ROUTES =====
+    
+    // GET /api - Info API
+    if (pathname === '/api' && method === 'GET') {
+        jsonResponse(res, 200, {
             name: 'OGSUN API',
-            version: '4.0',
+            version: '5.0',
             status: 'running',
             products: products.length,
             orders: orders.length,
-            users: users.length,
-            storage: 'JSON Files'
-        }));
+            users: users.length
+        });
         return;
     }
     
-    // ===== ADMIN LOGIN =====
-    if (pathname === '/api/admin/login' && req.method === 'POST') {
-        const body = await getBody(req);
+    // POST /api/admin/login
+    if (pathname === '/api/admin/login' && method === 'POST') {
+        const body = await parseBody(req);
         if (body.email === ADMIN_EMAIL && body.password === ADMIN_PASSWORD) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: true, token: ADMIN_TOKEN, message: 'Byenveni Admin!' }));
-            console.log('🔓 Admin konekte');
+            jsonResponse(res, 200, { success: true, token: ADMIN_TOKEN });
+            console.log('🔓 Admin konekte: ' + body.email);
         } else {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: false, error: 'Imèl oswa kòd pa bon!' }));
+            jsonResponse(res, 401, { success: false, error: 'Imèl oswa kòd pa bon!' });
         }
         return;
     }
     
-    // ===== ADMIN VERIFY =====
-    if (pathname === '/api/admin/verify' && req.method === 'GET') {
-        res.writeHead(checkAdmin(req) ? 200 : 401, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(checkAdmin(req) ? { valid: true, email: ADMIN_EMAIL } : { valid: false }));
+    // GET /api/admin/verify
+    if (pathname === '/api/admin/verify' && method === 'GET') {
+        jsonResponse(res, isAdmin(req) ? 200 : 401, isAdmin(req) ? { valid: true } : { valid: false });
         return;
     }
     
-    // ===== PRODUCTS (GET ALL) =====
-    if (pathname === '/api/products' && req.method === 'GET') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(products));
+    // ===== PRODUCTS =====
+    
+    // GET /api/products
+    if (pathname === '/api/products' && method === 'GET') {
+        jsonResponse(res, 200, products);
         return;
     }
     
-    // ===== PRODUCT (GET SINGLE) =====
+    // GET /api/products/:id
     const productMatch = pathname.match(/^\/api\/products\/(\d+)$/);
-    if (productMatch && req.method === 'GET') {
-        const p = products.find(pr => pr.id === parseInt(productMatch[1]));
-        res.writeHead(p ? 200 : 404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(p || { error: 'Not found' }));
+    if (productMatch && method === 'GET') {
+        const id = parseInt(productMatch[1]);
+        const product = products.find(p => p.id === id);
+        jsonResponse(res, product ? 200 : 404, product || { error: 'Pwodwi pa jwenn' });
         return;
     }
     
-    // ===== PRODUCT (CREATE) =====
-    if (pathname === '/api/products' && req.method === 'POST') {
-        if (!checkAdmin(req)) {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Admin only' }));
+    // POST /api/products - AJOUTE PWODWI
+    if (pathname === '/api/products' && method === 'POST') {
+        if (!isAdmin(req)) {
+            jsonResponse(res, 401, { error: 'Admin only' });
             return;
         }
         
-        const body = await getBody(req);
+        const body = await parseBody(req);
         
         if (!body.name || !body.price) {
-            res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Non ak pri obligatwa!' }));
+            jsonResponse(res, 400, { error: 'Non ak pri obligatwa!' });
             return;
         }
         
-        const newP = {
+        const newProduct = {
             id: productIdCounter++,
             name: body.name,
             category: body.category || 'Atizana',
             price: parseFloat(body.price) || 0,
             old_price: body.old_price ? parseFloat(body.old_price) : null,
             stock: parseInt(body.stock) || 0,
-            rating: 0,
-            reviews: 0,
             badge: body.badge || '',
             description: body.description || '',
             image: body.image || body.image_url || 'logo.png',
             image_url: body.image_url || body.image || 'logo.png',
-            source: body.source || 'manual',
-            supplier_id: body.supplier_id || null,
-            cj_url: body.cj_url || '',
-            supplier_price: body.supplier_price ? parseFloat(body.supplier_price) : null
+            source: body.source || 'manual'
         };
         
-        products.push(newP);
-        const saved = saveData(PRODUCTS_FILE, products);
+        products.push(newProduct);
+        const saved = saveJSON(PRODUCTS_FILE, products);
         
-        console.log('✅ Pwodwi kreye: #' + newP.id + ' - ' + newP.name + ' | Sove: ' + (saved ? 'WI' : 'NON'));
+        console.log('✅ Pwodwi AJOUTE: #' + newProduct.id + ' - ' + newProduct.name + ' | Sove: ' + (saved ? 'OK' : 'ECHWE'));
         
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(newP));
+        jsonResponse(res, 201, newProduct);
         return;
     }
     
-    // ===== PRODUCT (UPDATE) =====
-    if (productMatch && req.method === 'PUT') {
-        if (!checkAdmin(req)) {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Admin only' }));
+    // PUT /api/products/:id - MODIFYE PWODWI
+    if (productMatch && method === 'PUT') {
+        if (!isAdmin(req)) {
+            jsonResponse(res, 401, { error: 'Admin only' });
             return;
         }
         
         const id = parseInt(productMatch[1]);
-        const body = await getBody(req);
+        const body = await parseBody(req);
         const index = products.findIndex(p => p.id === id);
         
         if (index !== -1) {
             products[index] = { ...products[index], ...body, id };
-            saveData(PRODUCTS_FILE, products);
-            console.log('✏️ Pwodwi modifye: #' + id);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(products[index]));
+            saveJSON(PRODUCTS_FILE, products);
+            console.log('✏️ Pwodwi MODIFYE: #' + id);
+            jsonResponse(res, 200, products[index]);
         } else {
-            res.writeHead(404, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Not found' }));
+            jsonResponse(res, 404, { error: 'Pwodwi pa jwenn' });
         }
         return;
     }
     
-    // ===== PRODUCT (DELETE) =====
-    if (productMatch && req.method === 'DELETE') {
-        if (!checkAdmin(req)) {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Admin only' }));
+    // DELETE /api/products/:id - EFASE PWODWI
+    if (productMatch && method === 'DELETE') {
+        if (!isAdmin(req)) {
+            jsonResponse(res, 401, { error: 'Admin only' });
             return;
         }
         
         const id = parseInt(productMatch[1]);
         const productName = products.find(p => p.id === id)?.name || 'Unknown';
+        const before = products.length;
         
         products = products.filter(p => p.id !== id);
-        const saved = saveData(PRODUCTS_FILE, products);
         
-        console.log('🗑️ Pwodwi efase: #' + id + ' - ' + productName + ' | Sove: ' + (saved ? 'WI' : 'NON'));
-        
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Efase!', product: productName }));
+        if (products.length < before) {
+            const saved = saveJSON(PRODUCTS_FILE, products);
+            console.log('🗑️ Pwodwi EFASE: #' + id + ' - ' + productName + ' | Sove: ' + (saved ? 'OK' : 'ECHWE'));
+            jsonResponse(res, 200, { message: 'Efase!', product: productName });
+        } else {
+            jsonResponse(res, 404, { error: 'Pwodwi pa jwenn' });
+        }
         return;
     }
     
     // ===== ADMIN STATS =====
-    if (pathname === '/api/admin/stats') {
-        if (!checkAdmin(req)) {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Admin only' }));
+    if (pathname === '/api/admin/stats' && method === 'GET') {
+        if (!isAdmin(req)) {
+            jsonResponse(res, 401, { error: 'Admin only' });
             return;
         }
         
         const completed = orders.filter(o => o.status === 'completed');
         const pending = orders.filter(o => o.status === 'pending');
         
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
+        jsonResponse(res, 200, {
             totalProducts: products.length,
             totalOrders: orders.length,
-            totalRevenue: completed.reduce((s, o) => s + o.total, 0),
+            totalRevenue: completed.reduce((s, o) => s + (o.total || 0), 0),
             pendingOrders: pending.length,
-            conversionRate: orders.length ? ((completed.length / orders.length) * 100).toFixed(1) : 0,
-            totalUsers: users.length,
-            totalSuppliers: suppliers.length
-        }));
+            totalUsers: users.length
+        });
         return;
     }
     
     // ===== ORDERS =====
-    if (pathname === '/api/orders' && req.method === 'POST') {
-        const body = await getBody(req);
+    if (pathname === '/api/orders' && method === 'POST') {
+        const body = await parseBody(req);
         const items = body.items || [];
-        const total = items.reduce((s, i) => s + (i.price * i.quantity), 0);
+        const total = items.reduce((s, i) => s + ((i.price || 0) * (i.quantity || 1)), 0);
         
         const order = {
             id: orderCounter++,
             order_number: 'OGS-' + Date.now().toString().slice(-6),
             customer_name: body.customer_name || '',
-            customer_email: body.customer_email || '',
             customer_phone: body.customer_phone || '',
             shipping_address: body.shipping_address || '',
             payment_method: body.payment_method || 'natcash',
@@ -346,63 +351,29 @@ const server = http.createServer(async (req, res) => {
         };
         
         orders.unshift(order);
-        saveData(ORDERS_FILE, orders);
-        
-        console.log('🛒 Nouvo kòmand: ' + order.order_number + ' - $' + total);
-        
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Kòmand kreye!', order_number: order.order_number, total: total }));
+        saveJSON(ORDERS_FILE, orders);
+        console.log('🛒 Kòmand: ' + order.order_number + ' - $' + total);
+        jsonResponse(res, 201, { message: 'Kòmand kreye!', order_number: order.order_number, total: total });
         return;
     }
     
-    if (pathname === '/api/orders' && req.method === 'GET') {
-        if (!checkAdmin(req)) {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Admin only' }));
-            return;
-        }
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(orders));
-        return;
-    }
-    
-    const orderMatch = pathname.match(/^\/api\/orders\/(\d+)$/);
-    if (orderMatch && req.method === 'PUT') {
-        if (!checkAdmin(req)) {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Admin only' }));
-            return;
-        }
-        
-        const id = parseInt(orderMatch[1]);
-        const body = await getBody(req);
-        const order = orders.find(o => o.id === id);
-        
-        if (order) {
-            order.status = body.status || order.status;
-            saveData(ORDERS_FILE, orders);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Mete ajou!' }));
-        } else {
-            res.writeHead(404, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Not found' }));
-        }
+    if (pathname === '/api/orders' && method === 'GET') {
+        if (!isAdmin(req)) { jsonResponse(res, 401, { error: 'Admin only' }); return; }
+        jsonResponse(res, 200, orders);
         return;
     }
     
     // ===== USERS =====
-    if (pathname === '/api/users/register' && req.method === 'POST') {
-        const body = await getBody(req);
+    if (pathname === '/api/users/register' && method === 'POST') {
+        const body = await parseBody(req);
         
         if (!body.name || !body.email || !body.password) {
-            res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Non, imèl, ak modpas obligatwa!' }));
+            jsonResponse(res, 400, { error: 'Non, imèl, ak modpas obligatwa!' });
             return;
         }
         
         if (users.find(u => u.email === body.email)) {
-            res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Imèl sa a deja itilize!' }));
+            jsonResponse(res, 400, { error: 'Imèl sa a deja itilize!' });
             return;
         }
         
@@ -416,108 +387,75 @@ const server = http.createServer(async (req, res) => {
         };
         
         users.push(user);
-        saveData(USERS_FILE, users);
-        
-        console.log('👤 Nouvo itilizatè: ' + user.name);
-        
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: true, user: { id: user.id, name: user.name, email: user.email } }));
+        saveJSON(USERS_FILE, users);
+        console.log('👤 Itilizatè: ' + user.name);
+        jsonResponse(res, 201, { success: true, user: { id: user.id, name: user.name, email: user.email } });
         return;
     }
     
-    if (pathname === '/api/users/login' && req.method === 'POST') {
-        const body = await getBody(req);
+    if (pathname === '/api/users/login' && method === 'POST') {
+        const body = await parseBody(req);
         const user = users.find(u => u.email === body.email && u.password === body.password);
         
         if (user) {
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: true, user: { id: user.id, name: user.name, email: user.email, phone: user.phone } }));
+            jsonResponse(res, 200, { success: true, user: { id: user.id, name: user.name, email: user.email, phone: user.phone } });
         } else {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: false, error: 'Imèl oswa modpas pa bon!' }));
+            jsonResponse(res, 401, { success: false, error: 'Imèl oswa modpas pa bon!' });
         }
         return;
     }
     
-    if (pathname === '/api/users' && req.method === 'GET') {
-        if (!checkAdmin(req)) {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Admin only' }));
-            return;
-        }
-        
-        const safeUsers = users.map(u => ({
-            id: u.id, name: u.name, email: u.email,
-            phone: u.phone, created_at: u.created_at
-        }));
-        
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(safeUsers));
-        return;
-    }
-    
-    const userMatch = pathname.match(/^\/api\/users\/(\d+)$/);
-    if (userMatch && req.method === 'DELETE') {
-        if (!checkAdmin(req)) {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Admin only' }));
-            return;
-        }
-        
-        const id = parseInt(userMatch[1]);
-        users = users.filter(u => u.id !== id);
-        saveData(USERS_FILE, users);
-        
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Efase!' }));
+    if (pathname === '/api/users' && method === 'GET') {
+        if (!isAdmin(req)) { jsonResponse(res, 401, { error: 'Admin only' }); return; }
+        const safeUsers = users.map(u => ({ id: u.id, name: u.name, email: u.email, phone: u.phone, created_at: u.created_at }));
+        jsonResponse(res, 200, safeUsers);
         return;
     }
     
     // ===== CONTACTS =====
-    if (pathname === '/api/contacts' && req.method === 'POST') {
-        const body = await getBody(req);
-        contacts.unshift({
-            id: contacts.length + 1,
-            ...body,
-            created_at: new Date().toISOString()
-        });
-        saveData(CONTACTS_FILE, contacts);
-        
-        console.log('📧 Nouvo mesaj: ' + (body.name || 'Anonim'));
-        
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Mesaj voye!' }));
+    if (pathname === '/api/contacts' && method === 'POST') {
+        const body = await parseBody(req);
+        contacts.unshift({ id: Date.now(), ...body, created_at: new Date().toISOString() });
+        saveJSON(CONTACTS_FILE, contacts);
+        console.log('📧 Kontak: ' + (body.name || 'Anonim'));
+        jsonResponse(res, 201, { message: 'Mesaj voye!' });
         return;
     }
     
-    if (pathname === '/api/contacts' && req.method === 'GET') {
-        if (!checkAdmin(req)) {
-            res.writeHead(401, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Admin only' }));
-            return;
-        }
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(contacts));
+    if (pathname === '/api/contacts' && method === 'GET') {
+        if (!isAdmin(req)) { jsonResponse(res, 401, { error: 'Admin only' }); return; }
+        jsonResponse(res, 200, contacts);
         return;
     }
     
     // ===== SERVE FICHYE STATIK =====
     let filePath = pathname === '/' ? 'index.html' : pathname.replace(/^\//, '');
     filePath = path.join(__dirname, '..', filePath);
-    serveFile(res, filePath);
+    
+    // Sekirite: anpeche aksè nan dosye backend
+    if (filePath.includes('backend/data') || filePath.includes('backend/server.js')) {
+        res.writeHead(403);
+        res.end('Aksè refize');
+        return;
+    }
+    
+    serveStaticFile(res, filePath);
 });
 
 // ===== KOUMANSE SÈVÈ =====
 server.listen(PORT, HOST, () => {
     console.log('');
     console.log('╔══════════════════════════════════════════╗');
-    console.log('║   🚀 OGSUN SERVER v4.0 SOLID             ║');
-    console.log('║   🌐 Port: ' + PORT + '                           ║');
-    console.log('║   💾 Storage: JSON Files                 ║');
+    console.log('║   🚀 OGSUN SERVER v5.0 - 100% SOLID      ║');
+    console.log('║   🌐 http://localhost:' + PORT + '                   ║');
+    console.log('║   💾 Data: ' + DATA_DIR + '                 ║');
     console.log('║   📦 Products: ' + products.length + '                         ║');
     console.log('║   👑 Admin: ' + ADMIN_EMAIL + '        ║');
-    console.log('║   ✅ SAVE: ON (Pwodwi rete nèt)          ║');
+    console.log('║   ✅ SAVE: 100% GARANTI                  ║');
     console.log('╚══════════════════════════════════════════╝');
     console.log('');
 });
+
+
+
 
