@@ -3,106 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Admin Panel</title>
+    <title>OGSUN | Admin Panel Final</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --gold: #c9a84c; --gold-light: #e2c86e; --bg: #08090a; --bg-secondary: #0d0e10; --bg-card: #111215; --text: #e8e6e3; --text-secondary: #989694; --text-muted: #5c5a58; --border: rgba(255,255,255,0.04); --accent: #c9a84c; --accent-bg: rgba(201,168,76,0.06); --accent-bg-hover: rgba(201,168,76,0.12); --red: #e54b4b; --green: #3ecf8e; --orange: #f2994a; --blue: #5b9bd5; --purple: #ce93d8; --radius: 14px; --radius-sm: 8px; --radius-lg: 18px; --radius-xl: 22px; --shadow-lg: 0 8px 32px rgba(0,0,0,0.5); --glow-gold: 0 0 20px rgba(201,168,76,0.15); --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        body { font-family: 'Outfit', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-        ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: var(--bg-secondary); } ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 4px; }
+        :root { --gold: #c9a84c; --gold-light: #e2c86e; --bg: #08090a; --bg-secondary: #0d0e10; --bg-card: #111215; --text: #e8e6e3; --text-secondary: #989694; --text-muted: #5c5a58; --border: rgba(255,255,255,0.04); --accent: #c9a84c; --accent-bg: rgba(201,168,76,0.06); --red: #e54b4b; --green: #3ecf8e; --orange: #f2994a; --blue: #5b9bd5; --purple: #ce93d8; --radius: 12px; --radius-sm: 8px; --shadow-lg: 0 8px 32px rgba(0,0,0,0.5); --transition: all 0.25s ease; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
         
         .admin-layout { display: flex; min-height: 100vh; }
-        
-        .admin-sidebar { width: 250px; background: var(--bg-secondary); border-right: 1px solid var(--border); padding: 1.5rem 1rem; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; display: flex; flex-direction: column; }
-        .sidebar-logo { display: flex; align-items: center; gap: 0.6rem; padding: 0 0.3rem 1.2rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
-        .sidebar-logo .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, #8b6914, var(--gold-light)); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-weight: 800; font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; color: #000; box-shadow: var(--glow-gold); }
-        .sidebar-logo .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); letter-spacing: 1px; }
-        .sidebar-logo .logo-badge { font-size: 0.55rem; background: var(--accent-bg); color: var(--accent); padding: 0.15rem 0.4rem; border-radius: 50px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-left: auto; }
-        .sidebar-nav { display: flex; flex-direction: column; gap: 2px; flex: 1; }
-        .nav-section { color: var(--text-muted); font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; padding: 0.8rem 0.3rem 0.3rem; }
-        .nav-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0.6rem; border-radius: var(--radius-sm); color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.8rem; transition: var(--transition); cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: inherit; position: relative; }
+        .admin-sidebar { width: 240px; background: var(--bg-secondary); border-right: 1px solid var(--border); padding: 1.2rem 0.8rem; position: fixed; top: 0; left: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .sidebar-logo { display: flex; align-items: center; gap: 0.5rem; padding: 0 0.3rem 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .sidebar-logo .logo-icon { width: 34px; height: 34px; background: linear-gradient(135deg, #8b6914, var(--gold-light)); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-weight: 800; font-family: 'Space Grotesk', sans-serif; font-size: 1rem; color: #000; }
+        .sidebar-logo .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); letter-spacing: 1px; }
+        .sidebar-logo .logo-badge { font-size: 0.5rem; background: var(--accent-bg); color: var(--accent); padding: 0.1rem 0.35rem; border-radius: 50px; font-weight: 600; text-transform: uppercase; margin-left: auto; }
+        .sidebar-nav { display: flex; flex-direction: column; gap: 1px; }
+        .nav-section { color: var(--text-muted); font-size: 0.55rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; padding: 0.7rem 0.3rem 0.25rem; }
+        .nav-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.5rem; border-radius: var(--radius-sm); color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.75rem; transition: var(--transition); cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-family: inherit; }
         .nav-item:hover { background: var(--accent-bg); color: var(--text); }
-        .nav-item.active { background: var(--accent-bg-hover); color: var(--accent); font-weight: 600; }
-        .nav-item.active::before { content: ''; position: absolute; left: -0.4rem; top: 50%; transform: translateY(-50%); width: 2px; height: 16px; background: var(--accent); border-radius: 2px; }
-        .nav-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; opacity: 0.8; }
-        .nav-badge { margin-left: auto; background: var(--accent); color: #000; font-size: 0.6rem; padding: 0.1rem 0.4rem; border-radius: 50px; font-weight: 700; }
-        .sidebar-footer { padding-top: 0.8rem; border-top: 1px solid var(--border); margin-top: auto; }
+        .nav-item.active { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+        .nav-icon { font-size: 0.9rem; width: 18px; text-align: center; }
+        .nav-badge { margin-left: auto; background: var(--accent); color: #000; font-size: 0.55rem; padding: 0.1rem 0.35rem; border-radius: 50px; font-weight: 700; }
+        .sidebar-footer { padding-top: 0.6rem; border-top: 1px solid var(--border); margin-top: auto; }
         
-        .admin-main { flex: 1; margin-left: 250px; padding: 1.5rem 2rem; }
-        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
-        .topbar-left h1 { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; }
-        .topbar-left p { color: var(--text-muted); font-size: 0.75rem; margin-top: 2px; }
-        .topbar-right { display: flex; align-items: center; gap: 0.6rem; }
+        .admin-main { flex: 1; margin-left: 240px; padding: 1.5rem; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); }
+        .topbar-left h1 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; }
+        .topbar-left p { color: var(--text-muted); font-size: 0.7rem; }
         
-        .btn { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.4rem 0.8rem; border-radius: 50px; font-weight: 600; font-size: 0.75rem; cursor: pointer; transition: var(--transition); border: none; font-family: inherit; text-decoration: none; white-space: nowrap; }
+        .btn { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.35rem 0.7rem; border-radius: 50px; font-weight: 600; font-size: 0.7rem; cursor: pointer; transition: var(--transition); border: none; font-family: inherit; }
         .btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
-        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
         .btn-primary { background: var(--accent); color: #000; font-weight: 700; }
-        .btn-primary:hover { background: var(--gold-light); box-shadow: var(--glow-gold); transform: translateY(-1px); }
+        .btn-primary:hover { background: var(--gold-light); }
         .btn-danger { background: transparent; color: var(--red); border: 1px solid rgba(229,75,75,0.2); }
-        .btn-danger:hover { background: rgba(229,75,75,0.08); border-color: var(--red); }
         
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.8rem; margin-bottom: 1.5rem; }
-        .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; transition: var(--transition); position: relative; overflow: hidden; }
-        .stat-card:hover { transform: translateY(-2px); border-color: rgba(201,168,76,0.3); }
-        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: transparent; transition: var(--transition); }
-        .stat-card:hover::before { background: var(--accent); }
-        .stat-card-icon { width: 30px; height: 30px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.6rem; margin-bottom: 1.2rem; }
+        .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.9rem; }
+        .stat-card-icon { width: 28px; height: 28px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
         .stat-card-icon.revenue { background: rgba(62,207,142,0.08); color: var(--green); }
         .stat-card-icon.orders { background: rgba(91,155,213,0.08); color: var(--blue); }
         .stat-card-icon.pending { background: rgba(242,153,74,0.08); color: var(--orange); }
         .stat-card-icon.products { background: var(--accent-bg); color: var(--accent); }
-        .stat-card-icon.promos { background: rgba(156,39,176,0.08); color: #9c27b0; }
-        .stat-card-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; line-height: 1; }
-        .stat-card-label { color: var(--text-muted); font-size: 0.7rem; margin-top: 2px; }
+        .stat-card-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; }
+        .stat-card-label { color: var(--text-muted); font-size: 0.65rem; }
         
-        .content-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1.2rem; }
-        .content-card-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.2rem; border-bottom: 1px solid var(--border); }
-        .content-card-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; font-weight: 600; }
+        .content-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
+        .content-card-header { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
+        .content-card-header h2 { font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem; font-weight: 600; }
+        .content-card-body { padding: 0.8rem; }
         
         .table-wrapper { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 0.6rem 0.8rem; color: var(--text-muted); font-weight: 600; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; background: rgba(255,255,255,0.01); border-bottom: 1px solid var(--border); }
-        td { padding: 0.6rem 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.02); color: var(--text-secondary); font-size: 0.8rem; }
-        tr:hover td { background: rgba(255,255,255,0.01); }
-        .status { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 50px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
+        th { text-align: left; padding: 0.5rem 0.7rem; color: var(--text-muted); font-weight: 600; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border); }
+        td { padding: 0.5rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.75rem; }
+        .status { display: inline-block; padding: 0.12rem 0.4rem; border-radius: 50px; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; }
         .status.pending { background: rgba(242,153,74,0.08); color: var(--orange); }
         .status.completed { background: rgba(62,207,142,0.08); color: var(--green); }
-        .status.cancelled { background: rgba(229,75,75,0.08); color: var(--red); }
         
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 999; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); z-index: 999; align-items: center; justify-content: center; }
         .modal-overlay.show { display: flex; }
-        .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 1.5rem; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: var(--shadow-lg); animation: modalIn 0.3s ease; }
-        @keyframes modalIn { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .form-group { margin-bottom: 0.8rem; }
-        .form-group label { display: block; color: var(--text-muted); margin-bottom: 0.2rem; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.5rem 0.7rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.8rem; color: var(--text); transition: var(--transition); }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--accent); }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-        .modal-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 1rem; }
+        .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; max-width: 450px; width: 90%; max-height: 75vh; overflow-y: auto; }
+        .modal h2 { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; margin-bottom: 1rem; }
+        .form-group { margin-bottom: 0.6rem; }
+        .form-group label { display: block; color: var(--text-muted); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.15rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.45rem 0.6rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 0.75rem; color: var(--text); }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+        .modal-actions { display: flex; gap: 0.4rem; justify-content: flex-end; margin-top: 0.8rem; }
         
-        .toast { position: fixed; top: 15px; right: 15px; z-index: 9999; padding: 10px 16px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.78rem; box-shadow: var(--shadow-lg); animation: slideIn 0.35s ease; display: flex; align-items: center; gap: 0.4rem; background: var(--bg-card); border: 1px solid var(--border); }
+        .toast { position: fixed; top: 12px; right: 12px; z-index: 9999; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 0.72rem; background: var(--bg-card); border: 1px solid var(--border); animation: slideIn 0.3s ease; }
         .toast-success { border-left: 3px solid var(--green); }
         .toast-error { border-left: 3px solid var(--red); }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
         
-        .alert-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-        .alert-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 2rem; max-width: 380px; width: 90%; text-align: center; box-shadow: var(--shadow-lg); animation: scaleIn 0.3s ease; }
-        @keyframes scaleIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
-        .alert-icon { font-size: 2.5rem; margin-bottom: 0.6rem; }
-        .alert-title { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
-        .alert-message { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.2rem; }
-        .alert-actions { display: flex; gap: 0.5rem; justify-content: center; }
+        .alert-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .alert-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; max-width: 350px; width: 90%; text-align: center; }
+        .alert-icon { font-size: 2rem; margin-bottom: 0.4rem; }
+        .alert-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .alert-message { color: var(--text-secondary); font-size: 0.78rem; margin-bottom: 1rem; }
+        .alert-actions { display: flex; gap: 0.4rem; justify-content: center; }
         
-        .promo-code { font-family: 'Space Grotesk', monospace; background: rgba(156,39,176,0.1); color: #ce93d8; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 700; letter-spacing: 1px; }
-        .commission-badge { display: inline-block; background: rgba(62,207,142,0.1); color: var(--green); padding: 0.15rem 0.5rem; border-radius: 50px; font-size: 0.7rem; font-weight: 600; }
+        .promo-code { font-family: monospace; background: rgba(156,39,176,0.1); color: #ce93d8; padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 700; }
+        .commission-badge { background: rgba(62,207,142,0.1); color: var(--green); padding: 0.1rem 0.4rem; border-radius: 50px; font-size: 0.65rem; font-weight: 600; }
         
-        .bg-option { cursor: pointer; padding: 0.8rem; border: 2px solid var(--border); border-radius: 10px; text-align: center; transition: var(--transition); }
-        .bg-option:hover { border-color: var(--accent); }
-        .bg-option.selected { border-color: var(--accent); background: var(--accent-bg); }
-        .bg-preview { width: 100%; height: 60px; border-radius: 6px; margin-bottom: 0.4rem; }
+        .bg-option { cursor: pointer; padding: 0.6rem; border: 2px solid var(--border); border-radius: 8px; text-align: center; transition: var(--transition); }
+        .bg-option:hover, .bg-option.selected { border-color: var(--accent); background: var(--accent-bg); }
+        .bg-preview { width: 100%; height: 45px; border-radius: 4px; margin-bottom: 0.3rem; }
         
-        @media (max-width: 768px) { .admin-sidebar { width: 100%; position: static; padding: 0.8rem; } .admin-main { margin-left: 0; padding: 1rem; } .stats-grid { grid-template-columns: 1fr 1fr; } .form-row { grid-template-columns: 1fr; } }
+        .deposit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.8rem; margin-bottom: 0.6rem; display: flex; gap: 0.8rem; align-items: center; }
+        .deposit-card img { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; cursor: pointer; }
+        .deposit-card img:hover { opacity: 0.8; }
+        
+        @media (max-width: 768px) { .admin-sidebar { width: 100%; position: static; } .admin-main { margin-left: 0; } }
     </style>
 </head>
 <body>
@@ -118,73 +110,82 @@
             <button class="nav-item" onclick="showTab('products', this)"><span class="nav-icon">⊞</span> Pwodwi <span class="nav-badge" id="productCount">0</span></button>
             <button class="nav-item" onclick="showTab('orders', this)"><span class="nav-icon">☰</span> Kòmand <span class="nav-badge" id="orderCount">0</span></button>
             <button class="nav-item" onclick="showTab('promos', this)"><span class="nav-icon">🎫</span> Kòd Promo <span class="nav-badge" id="promoCount">10</span></button>
+            <button class="nav-item" onclick="showTab('users', this)"><span class="nav-icon">👥</span> Itilizatè <span class="nav-badge" id="userCount">0</span></button>
+            <button class="nav-item" onclick="showTab('visitors', this)"><span class="nav-icon">📊</span> Vizit</button>
+            <button class="nav-item" onclick="showTab('deposits', this)"><span class="nav-icon">📸</span> Depo</button>
             <div class="nav-section">Paramèt</div>
             <button class="nav-item" onclick="showTab('settings', this)"><span class="nav-icon">⚙</span> Paramèt</button>
         </nav>
         <div class="sidebar-footer">
-            <a href="index.html" class="nav-item" style="color:var(--text-muted);"><span class="nav-icon">↩</span> Retounen sit</a>
+            <a href="index.html" class="nav-item"><span class="nav-icon">↩</span> Sit</a>
             <button class="nav-item" onclick="logout()" style="color:var(--red);"><span class="nav-icon">⏻</span> Dekonekte</button>
         </div>
     </aside>
     
     <main class="admin-main">
-        <div class="topbar"><div class="topbar-left"><h1 id="pageTitle">Tablodbò</h1><p id="pageSubtitle">Revni ak estatistik jeneral</p></div><div class="topbar-right"><button class="btn btn-ghost" onclick="loadAll()">↻ Rafrechi</button></div></div>
+        <div class="topbar"><div class="topbar-left"><h1 id="pageTitle">Tablodbò</h1><p id="pageSubtitle">Revni ak estatistik</p></div><div class="topbar-right"><button class="btn btn-ghost" onclick="loadAll()">↻ Rafrechi</button></div></div>
         
         <!-- DASHBOARD -->
         <div id="tab-dashboard">
             <div class="stats-grid">
-                <div class="stat-card"><div class="stat-card-icon revenue">$</div><div class="stat-card-value" id="statRevenue">$0</div><div class="stat-card-label">Revni Total</div></div>
+                <div class="stat-card"><div class="stat-card-icon revenue">$</div><div class="stat-card-value" id="statRevenue">$0</div><div class="stat-card-label">Revni</div></div>
                 <div class="stat-card"><div class="stat-card-icon orders">#</div><div class="stat-card-value" id="statOrders">0</div><div class="stat-card-label">Kòmand</div></div>
                 <div class="stat-card"><div class="stat-card-icon pending">◷</div><div class="stat-card-value" id="statPending">0</div><div class="stat-card-label">An Atant</div></div>
                 <div class="stat-card"><div class="stat-card-icon products">⊞</div><div class="stat-card-value" id="statProducts">0</div><div class="stat-card-label">Pwodwi</div></div>
             </div>
-            <div class="content-card"><div class="content-card-header"><h2>Dènye Kòmand</h2></div><div class="table-wrapper"><table><thead><tr><th>N°</th><th>Kliyan</th><th>Total</th><th>Stati</th><th>Dat</th></tr></thead><tbody id="recentOrders"><tr><td colspan="5" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div>
+            <div class="content-card"><div class="content-card-header"><h2>Dènye Kòmand</h2></div><div class="table-wrapper"><table><thead><tr><th>N°</th><th>Kliyan</th><th>Total</th><th>Stati</th><th>Dat</th></tr></thead><tbody id="recentOrders"><tr><td colspan="5" style="text-align:center;padding:1.5rem;">Chajman...</td></tr></tbody></table></div></div>
         </div>
         
         <!-- PRODUCTS -->
-        <div id="tab-products" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>Tout Pwodwi</h2><button class="btn btn-primary" onclick="openProductModal()">+ Ajoute</button></div><div class="table-wrapper"><table><thead><tr><th>ID</th><th>Non</th><th>Pri</th><th>Stock</th><th>Badge</th><th></th></tr></thead><tbody id="allProducts"><tr><td colspan="6" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div>
+        <div id="tab-products" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>Tout Pwodwi</h2><button class="btn btn-primary" onclick="openProductModal()">+ Ajoute</button></div><div class="table-wrapper"><table><thead><tr><th>ID</th><th>Non</th><th>Pri</th><th>Stock</th><th>Badge</th><th></th></tr></thead><tbody id="allProducts"><tr><td colspan="6" style="text-align:center;padding:1.5rem;">Chajman...</td></tr></tbody></table></div></div></div>
         
         <!-- ORDERS -->
-        <div id="tab-orders" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>Tout Kòmand</h2></div><div class="table-wrapper"><table><thead><tr><th>N°</th><th>Kliyan</th><th>Total</th><th>Kòd Promo</th><th>Stati</th><th>Dat</th><th></th></tr></thead><tbody id="allOrders"><tr><td colspan="7" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div>
+        <div id="tab-orders" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>Tout Kòmand</h2></div><div class="table-wrapper"><table><thead><tr><th>N°</th><th>Kliyan</th><th>Total</th><th>Kòd Promo</th><th>Stati</th><th>Dat</th><th></th></tr></thead><tbody id="allOrders"><tr><td colspan="7" style="text-align:center;padding:1.5rem;">Chajman...</td></tr></tbody></table></div></div></div>
         
         <!-- PROMOS -->
         <div id="tab-promos" style="display:none;">
             <div class="stats-grid" style="margin-bottom:1rem;">
-                <div class="stat-card"><div class="stat-card-icon promos">$</div><div class="stat-card-value" id="promoTotalRevenue">$0</div><div class="stat-card-label">Revni Kòd Promo</div></div>
-                <div class="stat-card"><div class="stat-card-icon promos">#</div><div class="stat-card-value" id="promoTotalOrders">0</div><div class="stat-card-label">Kòmand ak Kòd</div></div>
-                <div class="stat-card"><div class="stat-card-icon promos">💰</div><div class="stat-card-value" id="promoTotalCommission">$0</div><div class="stat-card-label">Komisyon Total</div></div>
-                <div class="stat-card"><div class="stat-card-icon promos">🎫</div><div class="stat-card-value" id="activePromos">10</div><div class="stat-card-label">Kòd Aktif</div></div>
+                <div class="stat-card"><div class="stat-card-icon revenue">$</div><div class="stat-card-value" id="promoTotalRevenue">$0</div><div class="stat-card-label">Revni Kòd Promo</div></div>
+                <div class="stat-card"><div class="stat-card-icon orders">#</div><div class="stat-card-value" id="promoTotalOrders">0</div><div class="stat-card-label">Kòmand ak Kòd</div></div>
+                <div class="stat-card"><div class="stat-card-icon pending">💰</div><div class="stat-card-value" id="promoTotalCommission">$0</div><div class="stat-card-label">Komisyon Total</div></div>
+                <div class="stat-card"><div class="stat-card-icon products">🎫</div><div class="stat-card-value" id="activePromos">10</div><div class="stat-card-label">Kòd Aktif</div></div>
             </div>
-            <div class="content-card"><div class="content-card-header"><h2>🎫 Tout Kòd Promo</h2><button class="btn btn-primary" onclick="openPromoModal()">+ Ajoute</button></div><div class="table-wrapper"><table><thead><tr><th>Kòd</th><th>Afilye</th><th>NatCash</th><th>2k-4499</th><th>4500-6999</th><th>7k-9499</th><th>9500+</th><th>Kòmand</th><th>Komisyon</th><th>Stat</th><th></th></tr></thead><tbody id="allPromos"><tr><td colspan="11" style="text-align:center;padding:2rem;">Chajman...</td></tr></tbody></table></div></div></div>
+            <div class="content-card"><div class="content-card-header"><h2>🎫 Tout Kòd Promo</h2><button class="btn btn-primary" onclick="openPromoModal()">+ Ajoute</button></div><div class="table-wrapper"><table><thead><tr><th>Kòd</th><th>Afilye</th><th>NatCash</th><th>2k-4499</th><th>4500-6999</th><th>7k-9499</th><th>9500+</th><th>Komisyon</th><th>Stat</th><th></th></tr></thead><tbody id="allPromos"><tr><td colspan="10" style="text-align:center;padding:1.5rem;">Chajman...</td></tr></tbody></table></div></div></div>
+        </div>
+        
+        <!-- USERS -->
+        <div id="tab-users" style="display:none;"><div class="content-card"><div class="content-card-header"><h2>👥 Tout Itilizatè Ki Enskri</h2></div><div class="table-wrapper"><table><thead><tr><th>ID</th><th>Non</th><th>Imèl</th><th>Telefòn</th><th>Dat Enskripsyon</th></tr></thead><tbody id="allUsers"><tr><td colspan="5" style="text-align:center;padding:1.5rem;">Chajman...</td></tr></tbody></table></div></div></div>
+        
+        <!-- VISITORS -->
+        <div id="tab-visitors" style="display:none;">
+            <div class="stats-grid" style="margin-bottom:1rem;">
+                <div class="stat-card"><div class="stat-card-icon orders">👁</div><div class="stat-card-value" id="statTotalVisits">0</div><div class="stat-card-label">Vizit Total</div></div>
+                <div class="stat-card"><div class="stat-card-icon pending">🕐</div><div class="stat-card-value" id="statTodayVisits">0</div><div class="stat-card-label">Jodi a</div></div>
+                <div class="stat-card"><div class="stat-card-icon products">📱</div><div class="stat-card-value" id="statMobileVisits">0</div><div class="stat-card-label">Mobile</div></div>
+                <div class="stat-card"><div class="stat-card-icon revenue">💻</div><div class="stat-card-value" id="statDesktopVisits">0</div><div class="stat-card-label">Desktop</div></div>
+            </div>
+            <div class="content-card"><div class="content-card-header"><h2>📊 Dènye Vizit</h2></div><div class="table-wrapper"><table><thead><tr><th>Dat</th><th>Paj</th><th>Aparey</th></tr></thead><tbody id="recentVisits"><tr><td colspan="3" style="text-align:center;padding:1.5rem;">Chajman...</td></tr></tbody></table></div></div>
+        </div>
+        
+        <!-- DEPOSITS -->
+        <div id="tab-deposits" style="display:none;">
+            <div class="content-card"><div class="content-card-header"><h2>📸 Depo NatCash Kliyan</h2></div>
+            <div class="content-card-body" id="depositList"><p style="color:var(--text-muted);text-align:center;padding:2rem;">Pa gen depo ankò. Kliyan ka voye screenshot sou WhatsApp.</p></div></div>
         </div>
         
         <!-- SETTINGS -->
         <div id="tab-settings" style="display:none;">
-            <div class="content-card">
-                <div class="content-card-header"><h2>⚙ Paramèt Sit</h2></div>
-                <div style="padding:1.5rem;">
-                    <h3 style="color:var(--gold);margin-bottom:1rem;">🎨 Background Akèy</h3>
-                    <div style="display:flex;gap:0.8rem;flex-wrap:wrap;" id="bgOptions">
-                        <div class="bg-option" onclick="changeBg('default')" id="bg-default">
-                            <div class="bg-preview" style="background:linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%);"></div>
-                            <small>Krèm (Default)</small>
-                        </div>
-                        <div class="bg-option" onclick="changeBg('white')" id="bg-white">
-                            <div class="bg-preview" style="background:#ffffff;border:1px solid #eee;"></div>
-                            <small>Blan</small>
-                        </div>
-                        <div class="bg-option" onclick="changeBg('gold-light')" id="bg-gold-light">
-                            <div class="bg-preview" style="background:linear-gradient(135deg, #fef9e7, #fdf2c8);"></div>
-                            <small>Lò Klè</small>
-                        </div>
-                        <div class="bg-option" onclick="changeBg('gradient-gold')" id="bg-gradient-gold">
-                            <div class="bg-preview" style="background:linear-gradient(135deg, #c9a84c, #e2c86e);"></div>
-                            <small>Gradient Lò</small>
-                        </div>
-                    </div>
-                    <p style="color:var(--green);margin-top:1rem;" id="bgStatus">✅ Background aktyèl: <span id="currentBgName">Krèm (Default)</span></p>
-                    <button class="btn btn-primary" onclick="saveBgSettings()" style="margin-top:0.5rem;">💾 Anrejistre Background</button>
+            <div class="content-card"><div class="content-card-header"><h2>⚙ Paramèt</h2></div>
+            <div class="content-card-body">
+                <h3 style="color:var(--gold);margin-bottom:0.8rem;">🎨 Background Akèy</h3>
+                <div style="display:flex;gap:0.6rem;flex-wrap:wrap;" id="bgOptions">
+                    <div class="bg-option" onclick="changeBg('default')" id="bg-default"><div class="bg-preview" style="background:linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%);"></div><small>Krèm</small></div>
+                    <div class="bg-option" onclick="changeBg('white')" id="bg-white"><div class="bg-preview" style="background:#fff;border:1px solid #eee;"></div><small>Blan</small></div>
+                    <div class="bg-option" onclick="changeBg('gold-light')" id="bg-gold-light"><div class="bg-preview" style="background:linear-gradient(135deg, #fef9e7, #fdf2c8);"></div><small>Lò Klè</small></div>
+                    <div class="bg-option" onclick="changeBg('gradient-gold')" id="bg-gradient-gold"><div class="bg-preview" style="background:linear-gradient(135deg, #c9a84c, #e2c86e);"></div><small>Lò</small></div>
                 </div>
+                <p style="color:var(--green);margin-top:0.6rem;font-size:0.75rem;" id="bgStatus"></p>
+                <button class="btn btn-primary" onclick="saveBgSettings()">💾 Anrejistre</button>
             </div>
         </div>
         
@@ -203,19 +204,12 @@
 
 <!-- PROMO MODAL -->
 <div class="modal-overlay" id="promoModal"><div class="modal"><h2 id="promoModalTitle">Ajoute Kòd Promo</h2><input type="hidden" id="promoId">
-    <div class="form-row"><div class="form-group"><label>Kòd Promo *</label><input type="text" id="promoCode" placeholder="OGSUN-PRO1" required></div><div class="form-group"><label>Non Afilye *</label><input type="text" id="promoAffiliate" placeholder="Jan Pòl" required></div></div>
-    <div class="form-row"><div class="form-group"><label>Telefòn</label><input type="tel" id="promoPhone"></div><div class="form-group"><label>Nimewo NatCash</label><input type="tel" id="promoNatcash"></div></div>
-    <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:0.8rem;margin-bottom:0.8rem;">
-        <h4 style="color:var(--gold);margin-bottom:0.6rem;font-size:0.85rem;">💰 Sistèm Komisyon</h4>
-        <div class="form-row">
-            <div class="form-group"><label>2000-4499 HTG</label><input type="number" id="promoComm2k" value="500" min="0"></div>
-            <div class="form-group"><label>4500-6999 HTG</label><input type="number" id="promoComm4k" value="1000" min="0"></div>
-        </div>
-        <div class="form-row">
-            <div class="form-group"><label>7000-9499 HTG</label><input type="number" id="promoComm7k" value="1500" min="0"></div>
-            <div class="form-group"><label>9500+ HTG</label><input type="number" id="promoComm9k" value="2000" min="0"></div>
-        </div>
-        <small style="color:var(--text-muted);">💰 Pa gen komisyon si kòmand < 2000 HTG</small>
+    <div class="form-row"><div class="form-group"><label>Kòd *</label><input type="text" id="promoCode" required></div><div class="form-group"><label>Afilye *</label><input type="text" id="promoAffiliate" required></div></div>
+    <div class="form-row"><div class="form-group"><label>Telefòn</label><input type="tel" id="promoPhone"></div><div class="form-group"><label>NatCash</label><input type="tel" id="promoNatcash"></div></div>
+    <div style="background:rgba(255,255,255,0.03);border-radius:6px;padding:0.6rem;margin-bottom:0.6rem;">
+        <h4 style="color:var(--gold);font-size:0.75rem;margin-bottom:0.4rem;">💰 Komisyon</h4>
+        <div class="form-row"><div class="form-group"><label>2000-4499</label><input type="number" id="promoComm2k" value="500"></div><div class="form-group"><label>4500-6999</label><input type="number" id="promoComm4k" value="1000"></div></div>
+        <div class="form-row"><div class="form-group"><label>7000-9499</label><input type="number" id="promoComm7k" value="1500"></div><div class="form-group"><label>9500+</label><input type="number" id="promoComm9k" value="2000"></div></div>
     </div>
     <div class="modal-actions"><button class="btn btn-ghost" onclick="closePromoModal()">Anile</button><button class="btn btn-primary" onclick="savePromo()">Anrejistre</button></div>
 </div></div>
@@ -237,137 +231,144 @@ function fetchAPI(url, options) {
 }
 
 function showToast(msg, type) {
-    type = type || 'success'; var t = document.createElement('div');
-    t.className = 'toast toast-' + type; t.textContent = (type === 'success' ? '✓ ' : '✕ ') + msg;
-    document.body.appendChild(t);
-    setTimeout(function() { t.style.opacity = '0'; t.style.transition = 'all 0.3s'; setTimeout(function() { t.remove(); }, 300); }, 2500);
+    var t = document.createElement('div'); t.className = 'toast toast-' + (type||'success');
+    t.textContent = (type==='success'?'✓ ':'✕ ')+msg; document.body.appendChild(t);
+    setTimeout(function(){ t.remove(); }, 2500);
 }
-
-function showAlert(title, message, type, onOk) {
-    type = type || 'info'; var icons = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
-    var overlay = document.createElement('div'); overlay.className = 'alert-overlay';
-    overlay.innerHTML = '<div class="alert-box"><div class="alert-icon" style="color:' + (type === 'error' ? 'var(--red)' : 'var(--accent)') + ';">' + (icons[type] || 'ℹ') + '</div><div class="alert-title">' + (title || 'Info') + '</div><div class="alert-message">' + (message || '') + '</div><div class="alert-actions"><button class="btn btn-primary" id="alertOkBtn">OK</button></div></div>';
-    document.body.appendChild(overlay);
-    document.getElementById('alertOkBtn').onclick = function() { overlay.remove(); if (onOk) onOk(); };
-    overlay.onclick = function(e) { if (e.target === overlay) { overlay.remove(); if (onOk) onOk(); } };
+function showAlert(title, msg, type, ok) {
+    var o = document.createElement('div'); o.className = 'alert-overlay';
+    o.innerHTML = '<div class="alert-box"><div class="alert-icon">'+(type==='error'?'✕':'ℹ')+'</div><div class="alert-title">'+title+'</div><div class="alert-message">'+msg+'</div><div class="alert-actions"><button class="btn btn-primary" id="alertOk">OK</button></div></div>';
+    document.body.appendChild(o); document.getElementById('alertOk').onclick = function(){ o.remove(); if(ok)ok(); };
 }
-
-function showConfirm(title, message, onConfirm, onCancel) {
-    var overlay = document.createElement('div'); overlay.className = 'alert-overlay';
-    overlay.innerHTML = '<div class="alert-box"><div class="alert-icon" style="color:var(--orange);">⚠</div><div class="alert-title">' + (title || 'Konfimasyon') + '</div><div class="alert-message">' + (message || '') + '</div><div class="alert-actions"><button class="btn btn-ghost" id="confirmNoBtn">Non</button><button class="btn btn-primary" id="confirmYesBtn">Wi</button></div></div>';
-    document.body.appendChild(overlay);
-    document.getElementById('confirmYesBtn').onclick = function() { overlay.remove(); if (onConfirm) onConfirm(); };
-    document.getElementById('confirmNoBtn').onclick = function() { overlay.remove(); if (onCancel) onCancel(); };
-    overlay.onclick = function(e) { if (e.target === overlay) { overlay.remove(); if (onCancel) onCancel(); } };
+function showConfirm(title, msg, yes, no) {
+    var o = document.createElement('div'); o.className = 'alert-overlay';
+    o.innerHTML = '<div class="alert-box"><div class="alert-icon">⚠</div><div class="alert-title">'+title+'</div><div class="alert-message">'+msg+'</div><div class="alert-actions"><button class="btn btn-ghost" id="cfmNo">Non</button><button class="btn btn-primary" id="cfmYes">Wi</button></div></div>';
+    document.body.appendChild(o); document.getElementById('cfmYes').onclick = function(){ o.remove(); if(yes)yes(); };
+    document.getElementById('cfmNo').onclick = function(){ o.remove(); if(no)no(); };
 }
 
 // ===== DASHBOARD =====
 function loadDashboard() {
-    fetchAPI(API + '/admin/stats').then(function(s) {
-        document.getElementById('statRevenue').textContent = '$' + (s.totalRevenue || 0).toLocaleString();
-        document.getElementById('statOrders').textContent = s.totalOrders || 0;
-        document.getElementById('statPending').textContent = s.pendingOrders || 0;
-        document.getElementById('statProducts').textContent = s.totalProducts || 0;
+    fetchAPI(API+'/admin/stats').then(function(s) {
+        document.getElementById('statRevenue').textContent = '$'+(s.totalRevenue||0).toLocaleString();
+        document.getElementById('statOrders').textContent = s.totalOrders||0;
+        document.getElementById('statPending').textContent = s.pendingOrders||0;
+        document.getElementById('statProducts').textContent = s.totalProducts||0;
     });
-    fetchAPI(API + '/orders').then(function(o) {
-        var tbody = document.getElementById('recentOrders');
-        if (!o.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;">Pa gen kòmand</td></tr>'; return; }
-        tbody.innerHTML = o.slice(0,5).map(function(x) { return '<tr><td><strong>#'+x.order_number+'</strong></td><td>'+(x.customer_name||'N/A')+'</td><td style="color:var(--accent);">$'+(x.total||0).toFixed(2)+'</td><td><span class="status '+x.status+'">'+x.status+'</span></td><td>'+new Date(x.created_at).toLocaleDateString()+'</td></tr>'; }).join('');
+    fetchAPI(API+'/orders').then(function(o) {
+        var t = document.getElementById('recentOrders');
+        if(!o.length){ t.innerHTML='<tr><td colspan="5" style="text-align:center;padding:1.5rem;">Pa gen kòmand</td></tr>'; return; }
+        t.innerHTML = o.slice(0,5).map(function(x){ return '<tr><td><strong>#'+x.order_number+'</strong></td><td>'+(x.customer_name||'N/A')+'</td><td style="color:var(--accent);">$'+(x.total||0).toFixed(2)+'</td><td><span class="status '+x.status+'">'+x.status+'</span></td><td>'+new Date(x.created_at).toLocaleDateString()+'</td></tr>'; }).join('');
     });
 }
 
 // ===== PRODUCTS =====
 function loadProducts() {
-    fetch(API + '/products').then(function(r) { return r.json(); }).then(function(p) {
+    fetch(API+'/products').then(function(r){return r.json();}).then(function(p){
         document.getElementById('productCount').textContent = p.length;
-        var tbody = document.getElementById('allProducts');
-        if (!p.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;">Pa gen pwodwi</td></tr>'; return; }
-        tbody.innerHTML = p.map(function(x) { return '<tr><td>#'+x.id+'</td><td><strong>'+x.name+'</strong></td><td style="color:var(--accent);">$'+(x.price||0).toFixed(2)+'</td><td>'+(x.stock||0)+'</td><td>'+(x.badge||'—')+'</td><td><button class="btn btn-ghost" onclick="editProduct('+x.id+')">✎</button> <button class="btn btn-danger" onclick="deleteProduct('+x.id+')">✕</button></td></tr>'; }).join('');
+        var t = document.getElementById('allProducts');
+        if(!p.length){ t.innerHTML='<tr><td colspan="6" style="text-align:center;padding:1.5rem;">Pa gen pwodwi</td></tr>'; return; }
+        t.innerHTML = p.map(function(x){ return '<tr><td>#'+x.id+'</td><td><strong>'+x.name+'</strong></td><td style="color:var(--accent);">$'+(x.price||0).toFixed(2)+'</td><td>'+(x.stock||0)+'</td><td>'+(x.badge||'—')+'</td><td><button class="btn btn-ghost" onclick="editProduct('+x.id+')">✎</button> <button class="btn btn-danger" onclick="deleteProduct('+x.id+')">✕</button></td></tr>'; }).join('');
     });
 }
 function saveProduct() {
     var d = { name: document.getElementById('prodName').value, category: document.getElementById('prodCategory').value, price: parseFloat(document.getElementById('prodPrice').value)||0, old_price: document.getElementById('prodOldPrice').value?parseFloat(document.getElementById('prodOldPrice').value):null, stock: parseInt(document.getElementById('prodStock').value)||0, badge: document.getElementById('prodBadge').value, image: document.getElementById('prodImage').value||'logo.png', image_url: document.getElementById('prodImage').value||'logo.png', description: document.getElementById('prodDesc').value };
-    if (!d.name || !d.price) { showToast('Non ak pri obligatwa!', 'error'); return; }
+    if(!d.name||!d.price){ showToast('Non ak pri obligatwa!','error'); return; }
     var id = document.getElementById('productId').value;
-    fetchAPI(id ? API + '/products/' + id : API + '/products', { method: id ? 'PUT' : 'POST', body: JSON.stringify(d) }).then(function() { closeProductModal(); loadProducts(); loadDashboard(); showToast('Pwodwi anrejistre!', 'success'); });
+    fetchAPI(id?API+'/products/'+id:API+'/products', { method: id?'PUT':'POST', body: JSON.stringify(d) }).then(function(){ closeProductModal(); loadProducts(); loadDashboard(); showToast('Anrejistre!','success'); });
 }
-function editProduct(id) { fetch(API + '/products/' + id).then(function(r) { return r.json(); }).then(function(p) { document.getElementById('productId').value=p.id; document.getElementById('prodName').value=p.name; document.getElementById('prodCategory').value=p.category||''; document.getElementById('prodPrice').value=p.price; document.getElementById('prodOldPrice').value=p.old_price||''; document.getElementById('prodStock').value=p.stock; document.getElementById('prodBadge').value=p.badge||''; document.getElementById('prodImage').value=p.image||''; document.getElementById('prodDesc').value=p.description||''; document.getElementById('modalTitle').textContent='Modifye Pwodwi'; document.getElementById('productModal').classList.add('show'); }); }
-function deleteProduct(id) { showConfirm('Efase Pwodwi', 'Efase #'+id+'?', function() { fetchAPI(API + '/products/' + id, { method: 'DELETE' }).then(function() { loadProducts(); loadDashboard(); showToast('Efase!', 'success'); }); }); }
+function editProduct(id) { fetch(API+'/products/'+id).then(function(r){return r.json();}).then(function(p){ document.getElementById('productId').value=p.id; document.getElementById('prodName').value=p.name; document.getElementById('prodCategory').value=p.category||''; document.getElementById('prodPrice').value=p.price; document.getElementById('prodOldPrice').value=p.old_price||''; document.getElementById('prodStock').value=p.stock; document.getElementById('prodBadge').value=p.badge||''; document.getElementById('prodImage').value=p.image||''; document.getElementById('prodDesc').value=p.description||''; document.getElementById('modalTitle').textContent='Modifye'; document.getElementById('productModal').classList.add('show'); }); }
+function deleteProduct(id) { showConfirm('Efase','Efase #'+id+'?', function(){ fetchAPI(API+'/products/'+id,{method:'DELETE'}).then(function(){ loadProducts(); loadDashboard(); showToast('Efase!','success'); }); }); }
 function openProductModal() { document.getElementById('productId').value=''; document.getElementById('prodName').value=''; document.getElementById('prodCategory').value=''; document.getElementById('prodPrice').value=''; document.getElementById('prodOldPrice').value=''; document.getElementById('prodStock').value=''; document.getElementById('prodBadge').value=''; document.getElementById('prodImage').value=''; document.getElementById('prodDesc').value=''; document.getElementById('modalTitle').textContent='Ajoute Pwodwi'; document.getElementById('productModal').classList.add('show'); }
 function closeProductModal() { document.getElementById('productModal').classList.remove('show'); }
 
 // ===== ORDERS =====
 function loadOrders() {
-    fetchAPI(API + '/orders').then(function(o) {
+    fetchAPI(API+'/orders').then(function(o){
         document.getElementById('orderCount').textContent = o.length;
-        var tbody = document.getElementById('allOrders');
-        if (!o.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;">Pa gen kòmand</td></tr>'; return; }
-        tbody.innerHTML = o.map(function(x) { return '<tr><td><strong>#'+x.order_number+'</strong></td><td>'+(x.customer_name||'N/A')+'</td><td style="color:var(--accent);">$'+(x.total||0).toFixed(2)+'</td><td>'+(x.promo_code||'—')+'</td><td><span class="status '+x.status+'">'+x.status+'</span></td><td>'+new Date(x.created_at).toLocaleDateString()+'</td><td><button class="btn btn-ghost" onclick="updateOrderStatus('+x.id+',\'completed\')">✓</button> <button class="btn btn-ghost" onclick="updateOrderStatus('+x.id+',\'cancelled\')">✕</button></td></tr>'; }).join('');
+        var t = document.getElementById('allOrders');
+        if(!o.length){ t.innerHTML='<tr><td colspan="7" style="text-align:center;padding:1.5rem;">Pa gen kòmand</td></tr>'; return; }
+        t.innerHTML = o.map(function(x){ return '<tr><td><strong>#'+x.order_number+'</strong></td><td>'+(x.customer_name||'N/A')+'</td><td style="color:var(--accent);">$'+(x.total||0).toFixed(2)+'</td><td>'+(x.promo_code||'—')+'</td><td><span class="status '+x.status+'">'+x.status+'</span></td><td>'+new Date(x.created_at).toLocaleDateString()+'</td><td><button class="btn btn-ghost" onclick="updateOrderStatus('+x.id+',\'completed\')">✓</button></td></tr>'; }).join('');
     });
 }
-function updateOrderStatus(id, st) { fetchAPI(API + '/orders/' + id, { method: 'PUT', body: JSON.stringify({ status: st }) }).then(function() { loadOrders(); loadDashboard(); showToast('Mete ajou!', 'success'); }); }
+function updateOrderStatus(id, st) { fetchAPI(API+'/orders/'+id, { method:'PUT', body:JSON.stringify({status:st}) }).then(function(){ loadOrders(); loadDashboard(); }); }
 
 // ===== PROMOS =====
 var promos = [];
 function loadPromos() {
-    promos = JSON.parse(localStorage.getItem('ogsun-promos') || '[]');
-    if (promos.length === 0) {
-        promos = [
-            { id:1, code:'OGSUN-PRO1', affiliate:'Afilye #1', phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 },
-            { id:2, code:'OGSUN-PRO2', affiliate:'Afilye #2', phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 },
-            { id:3, code:'OGSUN-PRO3', affiliate:'Afilye #3', phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 },
-            { id:4, code:'OGSUN-PRO4', affiliate:'Afilye #4', phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 },
-            { id:5, code:'OGSUN-PRO5', affiliate:'Afilye #5', phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 },
-            { id:6, code:'OGSUN-PRO6', affiliate:'Afilye #6', phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 },
-            { id:7, code:'OGSUN-PRO7', affiliate:'Afilye #7', phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 },
-            { id:8, code:'OGSUN-PRO8', affiliate:'Afilye #8', phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 },
-            { id:9, code:'OGSUN-PRO9', affiliate:'Afilye #9', phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 },
-            { id:10, code:'OGSUN-PRO10', affiliate:'Afilye #10', phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 }
-        ];
+    promos = JSON.parse(localStorage.getItem('ogsun-promos')||'[]');
+    if(!promos.length) {
+        for(var i=1; i<=10; i++) promos.push({ id:i, code:'OGSUN-PRO'+i, affiliate:'Afilye #'+i, phone:'', natcash:'', comm2k:500, comm4k:1000, comm7k:1500, comm9k:2000, active:true, orders:0, revenue:0, totalCommission:0 });
         savePromos();
     }
     renderPromos();
 }
 function savePromos() { localStorage.setItem('ogsun-promos', JSON.stringify(promos)); }
 function renderPromos() {
-    var tr = promos.reduce(function(s,p){return s+(p.revenue||0);},0), to = promos.reduce(function(s,p){return s+(p.orders||0);},0), tc = promos.reduce(function(s,p){return s+(p.totalCommission||0);},0), ac = promos.filter(function(p){return p.active;}).length;
-    document.getElementById('promoTotalRevenue').textContent='$'+tr.toLocaleString(); document.getElementById('promoTotalOrders').textContent=to;
-    document.getElementById('promoTotalCommission').textContent='$'+tc.toLocaleString(); document.getElementById('activePromos').textContent=ac; document.getElementById('promoCount').textContent=ac;
-    document.getElementById('allPromos').innerHTML = promos.map(function(p){ return '<tr><td><span class="promo-code">'+p.code+'</span></td><td><strong>'+p.affiliate+'</strong></td><td>'+(p.natcash||'—')+'</td><td>'+(p.comm2k||500)+' HTG</td><td>'+(p.comm4k||1000)+' HTG</td><td>'+(p.comm7k||1500)+' HTG</td><td>'+(p.comm9k||2000)+' HTG</td><td>'+(p.orders||0)+'</td><td><span class="commission-badge">$'+(p.totalCommission||0).toLocaleString()+'</span></td><td><span style="color:'+(p.active?'var(--green)':'var(--red)')+';">'+(p.active?'Aktif':'Inaktif')+'</span></td><td><button class="btn btn-ghost" onclick="editPromo('+p.id+')">✎</button> <button class="btn btn-ghost" onclick="togglePromo('+p.id+')">'+(p.active?'⏸':'▶')+'</button></td></tr>'; }).join('');
+    var tr=0,to=0,tc=0,ac=0;
+    promos.forEach(function(p){ tr+=p.revenue||0; to+=p.orders||0; tc+=p.totalCommission||0; if(p.active)ac++; });
+    document.getElementById('promoTotalRevenue').textContent='$'+tr.toLocaleString();
+    document.getElementById('promoTotalOrders').textContent=to;
+    document.getElementById('promoTotalCommission').textContent='$'+tc.toLocaleString();
+    document.getElementById('activePromos').textContent=ac;
+    document.getElementById('promoCount').textContent=ac;
+    document.getElementById('allPromos').innerHTML = promos.map(function(p){ return '<tr><td><span class="promo-code">'+p.code+'</span></td><td><strong>'+p.affiliate+'</strong></td><td>'+(p.natcash||'—')+'</td><td>'+(p.comm2k||500)+'</td><td>'+(p.comm4k||1000)+'</td><td>'+(p.comm7k||1500)+'</td><td>'+(p.comm9k||2000)+'</td><td><span class="commission-badge">$'+(p.totalCommission||0).toLocaleString()+'</span></td><td><span style="color:'+(p.active?'var(--green)':'var(--red)')+';">'+(p.active?'Aktif':'Inaktif')+'</span></td><td><button class="btn btn-ghost" onclick="editPromo('+p.id+')">✎</button> <button class="btn btn-ghost" onclick="togglePromo('+p.id+')">'+(p.active?'⏸':'▶')+'</button></td></tr>'; }).join('');
 }
 function openPromoModal() { document.getElementById('promoId').value=''; document.getElementById('promoCode').value=''; document.getElementById('promoAffiliate').value=''; document.getElementById('promoPhone').value=''; document.getElementById('promoNatcash').value=''; document.getElementById('promoComm2k').value='500'; document.getElementById('promoComm4k').value='1000'; document.getElementById('promoComm7k').value='1500'; document.getElementById('promoComm9k').value='2000'; document.getElementById('promoModal').classList.add('show'); }
 function editPromo(id) { var p=promos.find(function(pr){return pr.id===id;}); if(!p)return; document.getElementById('promoId').value=p.id; document.getElementById('promoCode').value=p.code; document.getElementById('promoAffiliate').value=p.affiliate; document.getElementById('promoPhone').value=p.phone||''; document.getElementById('promoNatcash').value=p.natcash||''; document.getElementById('promoComm2k').value=p.comm2k||500; document.getElementById('promoComm4k').value=p.comm4k||1000; document.getElementById('promoComm7k').value=p.comm7k||1500; document.getElementById('promoComm9k').value=p.comm9k||2000; document.getElementById('promoModal').classList.add('show'); }
 function savePromo() {
     var d={ id: parseInt(document.getElementById('promoId').value)||promos.length+1, code: document.getElementById('promoCode').value.toUpperCase(), affiliate: document.getElementById('promoAffiliate').value, phone: document.getElementById('promoPhone').value, natcash: document.getElementById('promoNatcash').value, comm2k: parseInt(document.getElementById('promoComm2k').value)||500, comm4k: parseInt(document.getElementById('promoComm4k').value)||1000, comm7k: parseInt(document.getElementById('promoComm7k').value)||1500, comm9k: parseInt(document.getElementById('promoComm9k').value)||2000, active:true, orders:0, revenue:0, totalCommission:0 };
-    if (!d.code || !d.affiliate) { showToast('Kòd ak non afilye obligatwa!', 'error'); return; }
+    if(!d.code||!d.affiliate){ showToast('Kòd ak non afilye obligatwa!','error'); return; }
     var ex=promos.find(function(p){return p.id===d.id;});
     if(ex){ var i=promos.indexOf(ex); promos[i]={...ex,...d,orders:ex.orders,revenue:ex.revenue,totalCommission:ex.totalCommission}; }
     else { promos.push(d); }
-    savePromos(); renderPromos(); closePromoModal(); showToast('Kòd promo anrejistre!', 'success');
+    savePromos(); renderPromos(); closePromoModal(); showToast('Anrejistre!','success');
 }
 function togglePromo(id) { var p=promos.find(function(pr){return pr.id===id;}); if(p){p.active=!p.active;savePromos();renderPromos();} }
 function closePromoModal() { document.getElementById('promoModal').classList.remove('show'); }
 
-// ===== SETTINGS / BACKGROUND =====
-function changeBg(type) {
-    document.querySelectorAll('.bg-option').forEach(function(el) { el.classList.remove('selected'); });
-    document.getElementById('bg-' + type)?.classList.add('selected');
-    var names = { 'default': 'Krèm (Default)', 'white': 'Blan', 'gold-light': 'Lò Klè', 'gradient-gold': 'Gradient Lò' };
-    document.getElementById('currentBgName').textContent = names[type] || type;
-    document.getElementById('bgStatus').textContent = '✅ Background chwazi: ' + (names[type] || type) + ' (Anrejistre pou aplike)';
+// ===== USERS =====
+function loadUsers() {
+    fetch(API+'/users').then(function(r){return r.json();}).then(function(u){
+        document.getElementById('userCount').textContent = u.length;
+        var t = document.getElementById('allUsers');
+        if(!u.length){ t.innerHTML='<tr><td colspan="5" style="text-align:center;padding:1.5rem;">Pa gen itilizatè ki enskri</td></tr>'; return; }
+        t.innerHTML = u.map(function(x){ return '<tr><td>#'+x.id+'</td><td><strong>'+x.name+'</strong></td><td>'+x.email+'</td><td>'+(x.phone||'—')+'</td><td>'+new Date(x.created_at).toLocaleDateString()+'</td></tr>'; }).join('');
+    });
 }
-function saveBgSettings() {
-    var selected = document.querySelector('.bg-option.selected');
-    if (!selected) { showToast('Chwazi yon background!', 'error'); return; }
-    var type = selected.id.replace('bg-', '');
-    localStorage.setItem('ogsun-bg', type);
-    showToast('Background anrejistre! Rafrechi paj akèy la.', 'success');
+
+// ===== VISITORS =====
+function loadVisitors() {
+    var visits = JSON.parse(localStorage.getItem('ogsun-visits')||'[]');
+    var today = new Date().toDateString();
+    var total = visits.length;
+    var todayCount = visits.filter(function(v){ return new Date(v.date).toDateString() === today; }).length;
+    var mobile = visits.filter(function(v){ return v.device === 'mobile'; }).length;
+    var desktop = total - mobile;
+    
+    document.getElementById('statTotalVisits').textContent = total;
+    document.getElementById('statTodayVisits').textContent = todayCount;
+    document.getElementById('statMobileVisits').textContent = mobile;
+    document.getElementById('statDesktopVisits').textContent = desktop;
+    
+    var t = document.getElementById('recentVisits');
+    if(!visits.length){ t.innerHTML='<tr><td colspan="3" style="text-align:center;padding:1.5rem;">Pa gen vizit ankò</td></tr>'; return; }
+    t.innerHTML = visits.slice(-10).reverse().map(function(v){ return '<tr><td>'+new Date(v.date).toLocaleString()+'</td><td>'+v.page+'</td><td>'+(v.device==='mobile'?'📱':'💻')+'</td></tr>'; }).join('');
 }
-// Chaje background ki te anrejistre
-(function() {
-    var saved = localStorage.getItem('ogsun-bg') || 'default';
-    document.getElementById('bg-' + saved)?.classList.add('selected');
-})();
+
+// ===== DEPOSITS =====
+function loadDeposits() {
+    var deposits = JSON.parse(localStorage.getItem('ogsun-deposits')||'[]');
+    var container = document.getElementById('depositList');
+    if(!deposits.length){ container.innerHTML='<p style="color:var(--text-muted);text-align:center;padding:2rem;">Pa gen depo ankò.</p>'; return; }
+    container.innerHTML = deposits.map(function(d, i){ return '<div class="deposit-card"><img src="'+d.screenshot+'" onclick="window.open(\''+d.screenshot+'\')" onerror="this.src=\'logo.png\'"><div><strong>'+d.customer+'</strong><p style="color:var(--text-secondary);font-size:0.7rem;">'+d.amount+' HTG</p><p style="color:var(--text-muted);font-size:0.6rem;">'+new Date(d.date).toLocaleString()+'</p><button class="btn btn-danger" onclick="deleteDeposit('+i+')">✕</button></div></div>'; }).join('');
+}
+function deleteDeposit(i) { var d = JSON.parse(localStorage.getItem('ogsun-deposits')||'[]'); d.splice(i,1); localStorage.setItem('ogsun-deposits', JSON.stringify(d)); loadDeposits(); }
+
+// ===== SETTINGS =====
+function changeBg(type) { document.querySelectorAll('.bg-option').forEach(function(e){ e.classList.remove('selected'); }); document.getElementById('bg-'+type).classList.add('selected'); document.getElementById('bgStatus').textContent = '✅ '+type+' chwazi - Anrejistre pou aplike'; }
+function saveBgSettings() { var s = document.querySelector('.bg-option.selected'); if(!s){ showToast('Chwazi yon background!','error'); return; } localStorage.setItem('ogsun-bg', s.id.replace('bg-','')); showToast('Background anrejistre!','success'); }
+(function(){ var s = localStorage.getItem('ogsun-bg')||'default'; document.getElementById('bg-'+s)?.classList.add('selected'); })();
 
 // ===== TABS =====
 function showTab(tab, btn) {
@@ -375,11 +376,17 @@ function showTab(tab, btn) {
     document.querySelectorAll('.nav-item').forEach(function(b){b.classList.remove('active');}); btn.classList.add('active');
     document.querySelectorAll('[id^="tab-"]').forEach(function(t){t.style.display='none';});
     document.getElementById('tab-'+tab).style.display='block';
-    var titles = { dashboard:'Tablodbò', products:'Pwodwi', orders:'Kòmand', promos:'Kòd Promo', settings:'Paramèt' };
-    document.getElementById('pageTitle').textContent = titles[tab] || '';
-    if (tab==='dashboard') loadDashboard(); if (tab==='products') loadProducts(); if (tab==='orders') loadOrders(); if (tab==='promos') loadPromos();
+    var titles = { dashboard:'Tablodbò', products:'Pwodwi', orders:'Kòmand', promos:'Kòd Promo', users:'Itilizatè', visitors:'Vizit', deposits:'Depo', settings:'Paramèt' };
+    document.getElementById('pageTitle').textContent = titles[tab]||'';
+    if(tab==='dashboard') loadDashboard();
+    if(tab==='products') loadProducts();
+    if(tab==='orders') loadOrders();
+    if(tab==='promos') loadPromos();
+    if(tab==='users') loadUsers();
+    if(tab==='visitors') loadVisitors();
+    if(tab==='deposits') loadDeposits();
 }
-function loadAll() { if (currentTab==='dashboard') loadDashboard(); if (currentTab==='products') loadProducts(); if (currentTab==='orders') loadOrders(); if (currentTab==='promos') loadPromos(); }
+function loadAll() { if(currentTab==='dashboard') loadDashboard(); if(currentTab==='products') loadProducts(); if(currentTab==='orders') loadOrders(); if(currentTab==='promos') loadPromos(); if(currentTab==='users') loadUsers(); if(currentTab==='visitors') loadVisitors(); if(currentTab==='deposits') loadDeposits(); }
 function logout() { localStorage.clear(); window.location.href = 'index.html'; }
 
 document.getElementById('productModal').addEventListener('click', function(e){ if(e.target===this) closeProductModal(); });
@@ -390,4 +397,14 @@ loadDashboard();
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 
