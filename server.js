@@ -251,6 +251,46 @@ const server = http.createServer(async (req, res) => {
         jsonRes(res, 200, promos);
         return;
     }
+
+// ===== PROMOS =====
+if (pathname === '/api/promos' && method === 'GET') {
+    const promos = db.prepare('SELECT * FROM promos ORDER BY id').all();
+    jsonRes(res, 200, promos);
+    return;
+}
+
+// ✅ AJOUTE ROUTE SA A:
+if (pathname === '/api/promos/verify' && method === 'POST') {
+    const b = await getBody(req);
+    const code = (b.code || '').toUpperCase().trim();
+    const name = (b.name || '').trim();
+    
+    console.log('🔍 Verifye afilye: ' + name + ' / ' + code);
+    
+    // Chèche ak non ak kòd
+    const promo = db.prepare(
+        'SELECT * FROM promos WHERE UPPER(code) = ? AND LOWER(affiliate_name) = ? AND active = 1'
+    ).get(code, name.toLowerCase());
+    
+    if (promo) {
+        console.log('✅ Afilye jwenn: ' + promo.affiliate_name);
+        jsonRes(res, 200, promo);
+    } else {
+        // Eseye chèche ak kòd sèlman
+        const promoByCode = db.prepare(
+            'SELECT * FROM promos WHERE UPPER(code) = ? AND active = 1'
+        ).get(code);
+        
+        if (promoByCode) {
+            console.log('⚠️ Kòd jwenn men non pa match: ' + promoByCode.affiliate_name + ' ≠ ' + name);
+            jsonRes(res, 401, { error: 'Non pa kòrèk pou kòd sa a! Non afilye a se: ' + promoByCode.affiliate_name });
+        } else {
+            console.log('❌ Kòd pa jwenn: ' + code);
+            jsonRes(res, 401, { error: 'Kòd pa valab oswa pa aktif!' });
+        }
+    }
+    return;
+}
     
     if (pathname === '/api/promos/verify' && method === 'POST') {
         const b = await getBody(req);
@@ -267,6 +307,8 @@ const server = http.createServer(async (req, res) => {
         jsonRes(res, 201, db.prepare('SELECT * FROM promos WHERE id = ?').get(result.lastInsertRowid));
         return;
     }
+
+
     
     // ===== ADMIN STATS =====
     if (pathname === '/api/admin/stats') {
@@ -370,3 +412,4 @@ server.listen(PORT, HOST, () => {
     console.log('✅ Kòd Promo: ' + db.prepare('SELECT COUNT(*) as c FROM promos').get().c);
     console.log('');
 });
+
