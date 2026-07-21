@@ -124,7 +124,7 @@
             <h3 style="font-family:'Space Grotesk',sans-serif;color:#1a1a1a">Admin OGSUN</h3>
             <p style="color:#666;margin:10px 0 20px">Antre kòd sekrè</p>
             <input type="password" id="adminPasswordInput" placeholder="Kòd sekrè" style="width:100%;padding:12px;border:2px solid #e8e0d0;border-radius:10px;text-align:center;outline:none">
-            <div style="display:flex;gap:10px;margin-top:15px"><button onclick="closeAdminPopup()" style="flex:1;padding:12px;border:2px solid #e8e0d0;background:#fff;color:#666;border-radius:10px;cursor:pointer">Anile</button><button onclick="verifyAdmin()" style="flex:1;padding:12px;background:#c9a84c;color:#fff;border:none;border-radius:10px;cursor:pointer">Konekte</button></div>
+            <div style="display:flex;gap:10px;margin-top:15px"><button onclick="closeAdminPopup()" style="flex:1;padding:12px;border:2px solid #e8e0d0;background:#fff;color:#666;border-radius:10px;cursor:pointer">Anile</button><button onclick="verifyAdmin()" id="adminVerifyBtn" style="flex:1;padding:12px;background:#c9a84c;color:#fff;border:none;border-radius:10px;cursor:pointer">Konekte</button></div>
             <p id="adminError" style="color:#c62828;font-size:0.85rem;margin-top:10px;display:none"></p>
         </div>
     </div>
@@ -133,46 +133,86 @@
     <script>
     AOS.init({duration:800,once:true});
     var API='https://ogsun-mache-lakay-blqd.onrender.com/api';
-    
+
     // Anrejistre vizit
     function recordVisit(){
         var device=/Mobile|Android|iPhone/i.test(navigator.userAgent)?'mobile':'desktop';
-        try{fetch(API+'/visitors',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'index',device:device,ip:'auto'})}).catch(function(){})}catch(e){}
+        try{fetch(API+'/visitors',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page:'index',device:device})}).catch(function(){})}catch(e){}
     }
     recordVisit();
-    
+
     function showToast(msg,type){
         type=type||'success';var t=document.createElement('div');
         t.className='toast toast-'+type;t.innerHTML='<span>'+(type==='success'?'✓':'✕')+'</span> '+msg;
         document.body.appendChild(t);setTimeout(function(){t.remove()},3000);
     }
-    
-    function addToCart(name,price){
+
+    // FIX: addToCart kounye a sove 'id' pwodwi a tou.
+    // Backend nouvo a (server.js) BEZWEN id la pou l ka rekalkile pri
+    // reyèl la sou sèvè a lè yon kòmand pase (/api/orders). San id,
+    // checkout ta echwe paske sèvè a pa ta ka jwenn pwodwi a.
+    function addToCart(id,name,price){
         var cart=JSON.parse(localStorage.getItem('ogsun-cart')||'[]');
-        var existing=cart.find(function(i){return i.name===name});
-        if(existing){existing.quantity+=1}else{cart.push({name:name,quantity:1,price:price})}
+        var existing=cart.find(function(i){return i.id===id});
+        if(existing){existing.quantity+=1}else{cart.push({id:id,name:name,quantity:1,price:price})}
         localStorage.setItem('ogsun-cart',JSON.stringify(cart));
         showToast(name+' ajoute nan panye!','success');
     }
-    
+
     fetch(API+'/products').then(function(r){return r.json()}).then(function(products){
         var grid=document.getElementById('productsGrid');
         if(!products||products.length===0){grid.innerHTML='<p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem">Pa gen pwodwi.</p>';return}
         var featured=products.filter(function(p){return p.badge==='Popilè'||p.badge==='Nouvo'||p.badge==='Eko'});
         var display=featured.concat(products.filter(function(p){return!featured.includes(p)}));
         grid.innerHTML=display.map(function(p){
-            return'<a href="product.html?id='+p.id+'" class="product-card"><div class="product-img-wrap"><img src="'+(p.image||p.image_url||'logo.png')+'" class="product-img" onerror="this.src=\'logo.png\'">'+(p.badge?'<span class="product-badge">'+p.badge+'</span>':'')+'</div><div class="product-info"><span class="product-cat">'+(p.category||'')+'</span><h3 class="product-name">'+p.name+'</h3><div class="product-price"><span class="current-price">$'+(p.price||0).toFixed(2)+'</span>'+(p.old_price?'<span class="old-price">$'+p.old_price.toFixed(2)+'</span>':'')+'</div><span class="cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(\''+p.name+'\','+(p.price||0)+')">Ajoute nan panye</span></div></a>';
+            return'<a href="product.html?id='+p.id+'" class="product-card"><div class="product-img-wrap"><img src="'+(p.image||p.image_url||'logo.png')+'" class="product-img" onerror="this.src=\'logo.png\'">'+(p.badge?'<span class="product-badge">'+p.badge+'</span>':'')+'</div><div class="product-info"><span class="product-cat">'+(p.category||'')+'</span><h3 class="product-name">'+p.name+'</h3><div class="product-price"><span class="current-price">$'+(p.price||0).toFixed(2)+'</span>'+(p.old_price?'<span class="old-price">$'+p.old_price.toFixed(2)+'</span>':'')+'</div><span class="cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart('+p.id+',\''+p.name+'\','+(p.price||0)+')">Ajoute nan panye</span></div></a>';
         }).join('');
     }).catch(function(){document.getElementById('productsGrid').innerHTML='<p style="text-align:center;color:var(--red);grid-column:1/-1;padding:2rem">Pa ka chaje pwodwi.</p>'});
-    
+
     document.getElementById('secretAdminSearch').addEventListener('keydown',function(e){
         if(e.key==='Enter'&&this.value.trim().toLowerCase()==='adminogsun'){this.value='';this.blur();document.getElementById('adminPopup').style.display='flex';document.getElementById('adminPasswordInput').focus()}
     });
-    function verifyAdmin(){if(document.getElementById('adminPasswordInput').value==='OGPLUG45'){document.getElementById('adminPopup').style.display='none';window.location.href='admin-login.html'}else{document.getElementById('adminError').textContent='Kòd pa bon!';document.getElementById('adminError').style.display='block'}}
-    function closeAdminPopup(){document.getElementById('adminPopup').style.display='none';document.getElementById('adminError').style.display='none'}
+
+    // FIX SEKIRITE: anvan, modpas admin lan ('OGPLUG45') te ekri an klè
+    // dirèkteman nan kòd sous paj la — nenpòt moun ki fè "View Source"
+    // te ka wè l. Kounye a, verifikasyon an fèt VRÈMAN sou sèvè a atravè
+    // /api/admin/login; modpas la pa janm ekri nan HTML/JS kliyan an.
+    function verifyAdmin(){
+        var pwd = document.getElementById('adminPasswordInput').value;
+        var errEl = document.getElementById('adminError');
+        var btn = document.getElementById('adminVerifyBtn');
+        errEl.style.display='none';
+        btn.disabled = true;
+        btn.textContent = 'Verifikasyon...';
+
+        fetch(API+'/admin/login',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({email:'metelluscarlinsky@gmail.com',password:pwd})
+        })
+        .then(function(r){return r.json()})
+        .then(function(data){
+            btn.disabled = false;
+            btn.textContent = 'Konekte';
+            if(data && data.success && data.token){
+                localStorage.setItem('ogsun-admin-token', data.token);
+                document.getElementById('adminPopup').style.display='none';
+                window.location.href='admin-login.html';
+            } else {
+                errEl.textContent = data.error || 'Kòd pa bon!';
+                errEl.style.display='block';
+            }
+        })
+        .catch(function(){
+            btn.disabled = false;
+            btn.textContent = 'Konekte';
+            errEl.textContent = 'Pa ka konekte ak sèvè a. Eseye ankò.';
+            errEl.style.display='block';
+        });
+    }
+    function closeAdminPopup(){document.getElementById('adminPopup').style.display='none';document.getElementById('adminError').style.display='none';document.getElementById('adminPasswordInput').value=''}
     </script>
 
 </body>
 </html>
-
 

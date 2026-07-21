@@ -35,23 +35,23 @@
 <body>
     <div class="container">
         <div class="header"><h1>Dashboard <span>Afilye</span></h1><button class="btn-logout" onclick="logout()">Dekonekte</button></div>
-        
+
         <div class="welcome-card">
             <div><h2 id="greeting">Byenveni!</h2><p style="color:var(--gray);margin-top:0.3rem">Men rezime aktivite w yo</p></div>
             <div class="promo-code-display" id="promoCode">------</div>
         </div>
-        
+
         <div class="stats-grid">
             <div class="stat-card revenue"><div class="value" id="statRevenue">$0</div><div class="label">Revni Jenere</div></div>
             <div class="stat-card orders"><div class="value" id="statOrders">0</div><div class="label">Kòmand</div></div>
             <div class="stat-card commission"><div class="value" id="statCommission">$0</div><div class="label">Komisyon</div></div>
         </div>
-        
+
         <div class="content-card">
             <div class="content-card-header"><h3>📋 Enfòmasyon Mwen</h3></div>
             <div class="content-card-body" id="affiliateInfo"></div>
         </div>
-        
+
         <div class="content-card">
             <div class="content-card-header"><h3>💰 Komisyon Mwen</h3></div>
             <div class="content-card-body">
@@ -69,11 +69,11 @@
     var code = localStorage.getItem('ogsun-affiliate-code');
     var name = localStorage.getItem('ogsun-affiliate-name');
     var data = JSON.parse(localStorage.getItem('ogsun-affiliate-data') || 'null');
-    
+
     if (!code || !name) {
         window.location.href = 'affiliate-login.html';
     }
-    
+
     // Rafrechi done depi API
     function refreshData() {
         fetch(API + '/promos/verify', {
@@ -86,14 +86,18 @@
             if (d && d.id) {
                 localStorage.setItem('ogsun-affiliate-data', JSON.stringify(d));
                 displayData(d);
+            } else {
+                // FIX: si sèvè a reponn men kòd la pa valab ankò (pa egzanp
+                logout();
             }
         })
         .catch(function() {
-            // Si API pa mache, itilize localStorage
+            // Si se yon erè rezo (pa yon repons sèvè), itilize sa nou gen
+            // deja lokalman pou pa kase eksperyans lan san rezon.
             if (data) displayData(data);
         });
     }
-    
+
     function displayData(d) {
         document.getElementById('greeting').textContent = 'Byenveni, ' + d.affiliate_name + '!';
         document.getElementById('promoCode').textContent = d.code;
@@ -105,20 +109,20 @@
         document.getElementById('comm7k').textContent = (d.comm7k || 1500) + ' HTG';
         document.getElementById('comm9k').textContent = (d.comm9k || 2000) + ' HTG';
         document.getElementById('natcash').textContent = d.natcash || '---';
-        
-        document.getElementById('affiliateInfo').innerHTML = 
+
+        document.getElementById('affiliateInfo').innerHTML =
             '<div class="info-row"><span class="label">Non</span><span>' + d.affiliate_name + '</span></div>' +
             '<div class="info-row"><span class="label">Kòd</span><span>' + d.code + '</span></div>' +
             '<div class="info-row"><span class="label">Telefòn</span><span>' + (d.phone || '---') + '</span></div>';
     }
-    
+
     // Afiche done
     if (data) displayData(data);
     refreshData();
-    
+
     // Rafrechi chak 30 segonn
     setInterval(refreshData, 30000);
-    
+
     function logout() {
         localStorage.removeItem('ogsun-affiliate-code');
         localStorage.removeItem('ogsun-affiliate-name');
