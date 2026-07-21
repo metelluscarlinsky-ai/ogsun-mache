@@ -35,19 +35,23 @@
 <body>
     <div class="container">
         <div class="header"><h1>Dashboard <span>Afilye</span></h1><button class="btn-logout" onclick="logout()">Dekonekte</button></div>
+        
         <div class="welcome-card">
-            <div><h2 id="greeting">Byenveni!</h2><p style="color:var(--gray);margin-top:0.3rem;">Men rezime aktivite w yo</p></div>
+            <div><h2 id="greeting">Byenveni!</h2><p style="color:var(--gray);margin-top:0.3rem">Men rezime aktivite w yo</p></div>
             <div class="promo-code-display" id="promoCode">------</div>
         </div>
+        
         <div class="stats-grid">
             <div class="stat-card revenue"><div class="value" id="statRevenue">$0</div><div class="label">Revni Jenere</div></div>
             <div class="stat-card orders"><div class="value" id="statOrders">0</div><div class="label">Kòmand</div></div>
             <div class="stat-card commission"><div class="value" id="statCommission">$0</div><div class="label">Komisyon</div></div>
         </div>
+        
         <div class="content-card">
             <div class="content-card-header"><h3>📋 Enfòmasyon Mwen</h3></div>
             <div class="content-card-body" id="affiliateInfo"></div>
         </div>
+        
         <div class="content-card">
             <div class="content-card-header"><h3>💰 Komisyon Mwen</h3></div>
             <div class="content-card-body">
@@ -59,32 +63,70 @@
             </div>
         </div>
     </div>
+
     <script>
+    var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
     var code = localStorage.getItem('ogsun-affiliate-code');
     var name = localStorage.getItem('ogsun-affiliate-name');
     var data = JSON.parse(localStorage.getItem('ogsun-affiliate-data') || 'null');
-    if (!code || !name || !data) window.location.href = 'affiliate-login.html';
     
-    var promos = JSON.parse(localStorage.getItem('ogsun-promos') || '[]');
-    var updated = promos.find(function(p) { return p.code === code && p.affiliate.toLowerCase() === name.toLowerCase() && p.active; });
-    if (updated) { localStorage.setItem('ogsun-affiliate-data', JSON.stringify(updated)); data = updated; }
+    if (!code || !name) {
+        window.location.href = 'affiliate-login.html';
+    }
     
-    document.getElementById('greeting').textContent = 'Byenveni, ' + data.affiliate + '!';
-    document.getElementById('promoCode').textContent = data.code;
-    document.getElementById('statRevenue').textContent = '$' + (data.revenue || 0).toLocaleString();
-    document.getElementById('statOrders').textContent = data.orders || 0;
-    document.getElementById('statCommission').textContent = '$' + (data.totalCommission || 0).toLocaleString();
-    document.getElementById('comm2k').textContent = (data.comm2k || 500) + ' HTG';
-    document.getElementById('comm4k').textContent = (data.comm4k || 1000) + ' HTG';
-    document.getElementById('comm7k').textContent = (data.comm7k || 1500) + ' HTG';
-    document.getElementById('comm9k').textContent = (data.comm9k || 2000) + ' HTG';
-    document.getElementById('natcash').textContent = data.natcash || '---';
-    document.getElementById('affiliateInfo').innerHTML = 
-        '<div class="info-row"><span class="label">Non</span><span>'+data.affiliate+'</span></div>' +
-        '<div class="info-row"><span class="label">Kòd</span><span>'+data.code+'</span></div>' +
-        '<div class="info-row"><span class="label">Telefòn</span><span>'+(data.phone||'---')+'</span></div>';
+    // Rafrechi done depi API
+    function refreshData() {
+        fetch(API + '/promos/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, code: code })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+            if (d && d.id) {
+                localStorage.setItem('ogsun-affiliate-data', JSON.stringify(d));
+                displayData(d);
+            }
+        })
+        .catch(function() {
+            // Si API pa mache, itilize localStorage
+            if (data) displayData(data);
+        });
+    }
     
-    function logout() { localStorage.removeItem('ogsun-affiliate-code'); localStorage.removeItem('ogsun-affiliate-name'); localStorage.removeItem('ogsun-affiliate-data'); window.location.href = 'affiliate-login.html'; }
+    function displayData(d) {
+        document.getElementById('greeting').textContent = 'Byenveni, ' + d.affiliate_name + '!';
+        document.getElementById('promoCode').textContent = d.code;
+        document.getElementById('statRevenue').textContent = '$' + (d.revenue || 0).toLocaleString();
+        document.getElementById('statOrders').textContent = d.orders_count || 0;
+        document.getElementById('statCommission').textContent = '$' + (d.commission || 0).toLocaleString();
+        document.getElementById('comm2k').textContent = (d.comm2k || 500) + ' HTG';
+        document.getElementById('comm4k').textContent = (d.comm4k || 1000) + ' HTG';
+        document.getElementById('comm7k').textContent = (d.comm7k || 1500) + ' HTG';
+        document.getElementById('comm9k').textContent = (d.comm9k || 2000) + ' HTG';
+        document.getElementById('natcash').textContent = d.natcash || '---';
+        
+        document.getElementById('affiliateInfo').innerHTML = 
+            '<div class="info-row"><span class="label">Non</span><span>' + d.affiliate_name + '</span></div>' +
+            '<div class="info-row"><span class="label">Kòd</span><span>' + d.code + '</span></div>' +
+            '<div class="info-row"><span class="label">Telefòn</span><span>' + (d.phone || '---') + '</span></div>';
+    }
+    
+    // Afiche done
+    if (data) displayData(data);
+    refreshData();
+    
+    // Rafrechi chak 30 segonn
+    setInterval(refreshData, 30000);
+    
+    function logout() {
+        localStorage.removeItem('ogsun-affiliate-code');
+        localStorage.removeItem('ogsun-affiliate-name');
+        localStorage.removeItem('ogsun-affiliate-data');
+        window.location.href = 'affiliate-login.html';
+    }
     </script>
+
 </body>
 </html>
+
