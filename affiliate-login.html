@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --gold: #c9a84c; --bg: #08090a; --card: #111215; --text: #e8e6e3; --gray: #989694; --border: rgba(255,255,255,0.06); --radius: 16px; --green: #3ecf8e; --red: #e54b4b; }
+        :root { --gold: #c9a84c; --bg: #08090a; --card: #111215; --text: #e8e6e3; --gray: #989694; --border: rgba(255,255,255,0.06); --radius: 16px; --red: #e54b4b; --green: #3ecf8e; }
         body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 1rem; }
         .login-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .login-card h1 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; color: var(--gold); margin-bottom: 0.5rem; }
@@ -29,50 +29,107 @@
 
     <div class="login-card">
         <h1>🎫 Espas Afilye OGSUN</h1>
-        <p>Antre kòd afilye w la pou wè dashboard ou</p>
+        <p>Antre non w ak kòd afilye w la</p>
         
         <div class="msg" id="msg"></div>
         
-        <form onsubmit="loginAffiliate(event)">
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Non Afilye</label>
+                <input type="text" id="affiliateName" placeholder="Antre non w" required autocomplete="off">
+            </div>
             <div class="form-group">
                 <label>Kòd Afilye</label>
                 <input type="text" id="affiliateCode" placeholder="OGSUN-PRO1" required autocomplete="off">
             </div>
-            <button type="submit" class="btn-login">🔓 Konekte</button>
+            <button type="submit" class="btn-login">Konekte</button>
         </form>
         
         <a href="index.html" class="back-link">← Retounen sou OGSUN</a>
     </div>
 
     <script>
-    function loginAffiliate(e) {
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        var name = document.getElementById('affiliateName').value.trim();
         var code = document.getElementById('affiliateCode').value.trim().toUpperCase();
         var msg = document.getElementById('msg');
         
-        if (!code) { msg.className = 'msg error'; msg.textContent = 'Antre kòd afilye ou!'; return; }
+        // Verifye chan yo
+        if (!name) {
+            msg.className = 'msg error';
+            msg.textContent = 'Antre non afilye ou!';
+            return;
+        }
         
-        // Verifye si kòd la egziste nan localStorage
+        if (!code) {
+            msg.className = 'msg error';
+            msg.textContent = 'Antre kòd afilye ou!';
+            return;
+        }
+        
+        // Chaje done depi admin
         var promos = JSON.parse(localStorage.getItem('ogsun-promos') || '[]');
-        var promo = promos.find(function(p) { return p.code === code && p.active; });
+        
+        // Chèche kòd KI MATCH AK NON AK KÒD
+        var promo = promos.find(function(p) {
+            return p.code.toUpperCase() === code && 
+                   p.affiliate.toLowerCase() === name.toLowerCase() && 
+                   p.active;
+        });
         
         if (promo) {
             msg.className = 'msg success';
             msg.textContent = '✅ Byenveni ' + promo.affiliate + '!';
             
-            // Sove sesyon afilye
-            localStorage.setItem('ogsun-affiliate-code', code);
+            // Sove sesyon
+            localStorage.setItem('ogsun-affiliate-code', promo.code);
+            localStorage.setItem('ogsun-affiliate-name', promo.affiliate);
             localStorage.setItem('ogsun-affiliate-data', JSON.stringify(promo));
             
             setTimeout(function() {
                 window.location.href = 'affiliate-dashboard.html';
             }, 1000);
         } else {
-            msg.className = 'msg error';
-            msg.textContent = '❌ Kòd pa valab oswa pa aktif!';
+            // Verifye si kòd la egziste men non pa match
+            var codeExists = promos.find(function(p) { return p.code.toUpperCase() === code; });
+            
+            if (codeExists) {
+                msg.className = 'msg error';
+                msg.textContent = '❌ Non pa match ak kòd sa a! Verifye non ou.';
+            } else {
+                msg.className = 'msg error';
+                msg.textContent = '❌ Kòd pa valab oswa pa aktif!';
+            }
         }
-    }
+    });
+    
+    // Si deja konekte, verifye si toujou valab
+    (function() {
+        var savedCode = localStorage.getItem('ogsun-affiliate-code');
+        var savedName = localStorage.getItem('ogsun-affiliate-name');
+        
+        if (savedCode && savedName) {
+            var promos = JSON.parse(localStorage.getItem('ogsun-promos') || '[]');
+            var promo = promos.find(function(p) {
+                return p.code === savedCode && 
+                       p.affiliate.toLowerCase() === savedName.toLowerCase() && 
+                       p.active;
+            });
+            
+            if (promo) {
+                localStorage.setItem('ogsun-affiliate-data', JSON.stringify(promo));
+                window.location.href = 'affiliate-dashboard.html';
+            } else {
+                localStorage.removeItem('ogsun-affiliate-code');
+                localStorage.removeItem('ogsun-affiliate-name');
+                localStorage.removeItem('ogsun-affiliate-data');
+            }
+        }
+    })();
     </script>
 
 </body>
 </html>
+
