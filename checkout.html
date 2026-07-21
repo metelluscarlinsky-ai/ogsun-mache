@@ -4,74 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OGSUN | Peman 2026</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#c9a84c">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --gold: #c9a84c; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; --red: #c62828; --green: #2e7d32; }
-        body { font-family: 'Outfit', sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.6; }
-        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .logo-wrapper { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-        .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
-        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
-        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.88rem; }
-        .nav-link:hover { color: var(--gold); }
-        .nav-btn { background: var(--gold); color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.88rem; }
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--gold:#c9a84c;--gold-light:#e2c86e;--bg:#fafaf9;--white:#fff;--text:#1a1a1a;--gray:#666;--border:#e8e0d0;--radius:16px;--red:#c62828;--green:#2e7d32}
+        body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.9rem 2rem;background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+        .nav-container{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .logo-wrapper{display:flex;align-items:center;gap:0.5rem;text-decoration:none}
+        .logo-img{width:44px;height:44px;object-fit:contain;border-radius:10px}
+        .logo-text{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:800;color:var(--gold);letter-spacing:2px}
+        .nav-links{display:flex;gap:1.5rem;align-items:center}
+        .nav-link{color:var(--gray);text-decoration:none;font-weight:500;font-size:0.9rem}
+        .nav-link:hover{color:var(--gold)}
+        .nav-btn{background:var(--gold);color:#fff;padding:0.6rem 1.5rem;border-radius:50px;font-weight:600;text-decoration:none;font-size:0.9rem}
         
-        .checkout-page { padding: 7rem 2rem 3rem; max-width: 700px; margin: 0 auto; }
-        .checkout-title { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 2rem; }
-        .checkout-title span { color: var(--gold); }
+        .checkout-page{padding:7rem 2rem 3rem;max-width:700px;margin:0 auto}
+        .checkout-title{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:800;text-align:center;margin-bottom:2rem}
+        .checkout-title span{color:var(--gold)}
         
-        .form-section { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; margin-bottom: 1.2rem; }
-        .form-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; margin-bottom: 1rem; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; color: var(--gray); margin-bottom: 0.3rem; font-size: 0.85rem; font-weight: 500; }
-        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem; background: #fafaf9; border: 1px solid var(--border); border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.9rem; color: var(--text); }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--gold); }
-        .form-group textarea { resize: vertical; min-height: 70px; }
+        .form-section{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;margin-bottom:1.2rem}
+        .form-section h2{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;margin-bottom:1rem}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .form-group{margin-bottom:1rem}
+        .form-group label{display:block;color:var(--gray);margin-bottom:0.3rem;font-size:0.85rem;font-weight:500}
+        .form-group input,.form-group textarea{width:100%;padding:0.8rem;background:#fafaf9;border:1px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:0.9rem;color:var(--text)}
+        .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--gold)}
+        .form-group textarea{resize:vertical;min-height:70px}
         
-        .upload-area { border: 2px dashed var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s; background: #fafaf9; }
-        .upload-area:hover { border-color: var(--gold); }
-        .upload-area.has-file { border-color: var(--green); background: rgba(62,207,142,0.03); }
-        .upload-area input { display: none; }
-        .upload-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        .upload-text { color: var(--gray); font-size: 0.9rem; }
-        .upload-preview { margin-top: 1rem; display: none; }
-        .upload-preview img { max-width: 100%; max-height: 250px; border-radius: 8px; border: 1px solid var(--border); }
-        .upload-preview.show { display: block; }
-        .file-name { color: var(--green); font-size: 0.85rem; margin-top: 0.3rem; }
+        .upload-area{border:2px dashed var(--border);border-radius:12px;padding:1.5rem;text-align:center;cursor:pointer;transition:all 0.3s;background:#fafaf9}
+        .upload-area:hover{border-color:var(--gold)}
+        .upload-area.has-file{border-color:var(--green);background:rgba(62,207,142,0.03)}
+        .upload-area input{display:none}
+        .upload-icon{font-size:2.5rem;margin-bottom:0.5rem}
+        .upload-text{color:var(--gray);font-size:0.9rem}
+        .upload-preview{margin-top:1rem;display:none}
+        .upload-preview img{max-width:100%;max-height:250px;border-radius:8px;border:1px solid var(--border)}
+        .upload-preview.show{display:block}
+        .file-name{color:var(--green);font-size:0.85rem;margin-top:0.3rem}
         
-        .natcash-info { background: rgba(233,30,99,0.05); border: 1px solid rgba(233,30,99,0.2); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; text-align: center; }
-        .natcash-info strong { color: #E91E63; font-size: 1.2rem; }
+        .natcash-info{background:rgba(233,30,99,0.05);border:1px solid rgba(233,30,99,0.2);border-radius:10px;padding:1rem;margin-bottom:1rem;text-align:center}
+        .natcash-info strong{color:#E91E63;font-size:1.2rem}
         
-        .promo-section { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-        .promo-section input { flex: 1; padding: 0.6rem; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; }
-        .promo-section button { padding: 0.6rem 1rem; background: var(--gold); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .promo-section{display:flex;gap:0.5rem;margin-bottom:1rem}
+        .promo-section input{flex:1;padding:0.6rem;border:1px solid var(--border);border-radius:8px;font-family:inherit}
+        .promo-section button{padding:0.6rem 1rem;background:var(--gold);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600}
         
-        .order-summary { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.6rem; color: var(--gray); font-size: 0.9rem; }
-        .summary-total { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
-        .summary-total span:last-child { color: var(--gold); }
+        .order-summary{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem}
+        .summary-row{display:flex;justify-content:space-between;margin-bottom:0.6rem;color:var(--gray);font-size:0.9rem}
+        .summary-total{display:flex;justify-content:space-between;font-size:1.3rem;font-weight:700;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+        .summary-total span:last-child{color:var(--gold)}
         
-        .btn { display: block; width: 100%; padding: 1rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; text-align: center; border: none; margin-top: 0.7rem; transition: all 0.3s; font-family: inherit; }
-        .btn-gold { background: var(--gold); color: #fff; }
-        .btn-gold:hover { background: #e2c86e; transform: translateY(-2px); }
-        .btn-whatsapp { background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-        .btn-whatsapp:hover { background: #1fa855; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn{display:block;width:100%;padding:1rem;border-radius:50px;font-weight:700;font-size:1rem;cursor:pointer;text-align:center;border:none;margin-top:0.7rem;transition:all 0.3s;font-family:inherit}
+        .btn-gold{background:var(--gold);color:#fff}
+        .btn-gold:hover{background:var(--gold-light);transform:translateY(-2px)}
+        .btn-whatsapp{background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+        .btn-whatsapp:hover{background:#1fa855}
+        .btn:disabled{opacity:0.5;cursor:not-allowed}
         
-        .msg { padding: 0.8rem; border-radius: 8px; margin-bottom: 1rem; font-weight: 500; font-size: 0.85rem; display: none; }
-        .msg.error { display: block; background: rgba(198,40,40,0.08); color: var(--red); border: 1px solid rgba(198,40,40,0.2); }
-        .msg.success { display: block; background: rgba(46,125,50,0.08); color: var(--green); border: 1px solid rgba(46,125,50,0.2); }
+        .msg{padding:0.8rem;border-radius:8px;margin-bottom:1rem;font-weight:500;font-size:0.85rem;display:none}
+        .msg.error{display:block;background:rgba(198,40,40,0.08);color:var(--red);border:1px solid rgba(198,40,40,0.2)}
+        .msg.success{display:block;background:rgba(46,125,50,0.08);color:var(--green);border:1px solid rgba(46,125,50,0.2)}
         
-        .toast { position: fixed; top: 15px; right: 15px; z-index: 9999; padding: 10px 18px; border-radius: 10px; font-weight: 600; font-size: 0.85rem; box-shadow: 0 8px 25px rgba(0,0,0,0.12); animation: slideIn 0.35s ease; }
-        .toast-success { background: #e8f5e9; color: var(--green); border: 1px solid #c8e6c9; }
-        .toast-error { background: #ffebee; color: var(--red); border: 1px solid #ffcdd2; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: translateX(0); } }
+        .toast{position:fixed;top:15px;right:15px;z-index:9999;padding:10px 18px;border-radius:10px;font-weight:600;font-size:0.85rem;box-shadow:0 8px 25px rgba(0,0,0,0.12);animation:slideIn 0.3s ease}
+        .toast-success{background:#e8f5e9;color:var(--green);border:1px solid #c8e6c9}
+        .toast-error{background:#ffebee;color:var(--red);border:1px solid #ffcdd2}
+        @keyframes slideIn{from{opacity:0;transform:translateX(80px)}to{opacity:1;transform:translateX(0)}}
         
-        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+        @media(max-width:768px){.form-row{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
@@ -95,7 +97,6 @@
             </div>
             <div class="form-group"><label>Telefòn *</label><input type="tel" id="phone" placeholder="+509 0000 0000" required></div>
             <div class="form-group"><label>Adrès Livrezon *</label><textarea id="address" placeholder="Antre adrès konplè ou..." required></textarea></div>
-            
             <div class="promo-section">
                 <input type="text" id="promoCodeInput" placeholder="Kòd Promo (si ou genyen)">
                 <button type="button" onclick="applyPromo()">Aplike</button>
@@ -126,6 +127,13 @@
                 <img id="previewImage" src="" alt="Screenshot depo a">
                 <button class="btn btn-gold" style="margin-top:0.5rem;" onclick="clearScreenshot()">❌ Retire</button>
             </div>
+            
+            <!-- Verifye nimewo NatCash -->
+            <div id="natcashVerify" style="margin-top:1rem;display:none;">
+                <p style="font-size:0.85rem;color:var(--gray);">🔍 Verifye nimewo NatCash sou screenshot la:</p>
+                <input type="text" id="natcashNumberInput" placeholder="Antre nimewo ki sou screenshot la" style="width:100%;padding:0.7rem;border:1px solid var(--border);border-radius:8px;margin-top:0.3rem;">
+                <p id="natcashVerifyMsg" style="font-size:0.8rem;margin-top:0.3rem;"></p>
+            </div>
         </div>
         
         <div class="order-summary">
@@ -142,194 +150,123 @@
     <script>
     var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
     var WHATSAPP = '50932924776';
-    var NATCASH_NUMBER = '32924776';
+    var CORRECT_NATCASH = '32924776';
     var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
-    var total = cart.reduce(function(s, i) { return s + (i.price * i.quantity); }, 0);
-    var totalAvecLivrezon = total;
-    var promoApplied = false;
-    var promoCode = '';
-    var screenshotFile = null;
+    var total = cart.reduce(function(s,i){return s+(i.price*i.quantity);},0);
+    var LIVREZON_GRATIS=5000,FRAIS_LIVREZON=total<LIVREZON_GRATIS?500:0,totalAvec=total+FRAIS_LIVREZON;
+    var screenshotFile=null,promoApplied=false,promoCode='';
     
-    // Livrezon
-    var LIVREZON_GRATIS = 5000;
-    var FRAIS_LIVREZON = total < LIVREZON_GRATIS ? 500 : 0;
-    totalAvecLivrezon = total + FRAIS_LIVREZON;
+    document.getElementById('natcashAmount').textContent='$'+totalAvec.toFixed(2);
     
-    document.getElementById('natcashAmount').textContent = '$' + totalAvecLivrezon.toFixed(2);
+    var s='';cart.forEach(function(i){s+='<div class="summary-row"><span>'+i.name+' x'+i.quantity+'</span><span>$'+(i.price*i.quantity).toFixed(2)+'</span></div>';});
+    s+='<div class="summary-row"><span>Livrezon</span><span style="color:'+(FRAIS_LIVREZON===0?'var(--green)':'var(--red)')+';">'+(FRAIS_LIVREZON===0?'GRATIS':'$'+FRAIS_LIVREZON.toFixed(2))+'</span></div>';
+    s+='<div class="summary-total"><span>Total</span><span>$'+totalAvec.toFixed(2)+'</span></div>';
+    document.getElementById('checkoutSummary').innerHTML=s;
     
-    // Rezime
-    var summary = '';
-    cart.forEach(function(i) { summary += '<div class="summary-row"><span>' + i.name + ' x' + i.quantity + '</span><span>$' + (i.price * i.quantity).toFixed(2) + '</span></div>'; });
-    summary += '<div class="summary-row"><span>Livrezon</span><span style="color:' + (FRAIS_LIVREZON === 0 ? 'var(--green)' : 'var(--red)') + ';">' + (FRAIS_LIVREZON === 0 ? 'GRATIS' : '$' + FRAIS_LIVREZON.toFixed(2)) + '</span></div>';
-    summary += '<div class="summary-total"><span>Total</span><span>$' + totalAvecLivrezon.toFixed(2) + '</span></div>';
-    document.getElementById('checkoutSummary').innerHTML = summary;
+    function showToast(msg,type){type=type||'success';var t=document.createElement('div');t.className='toast toast-'+type;t.textContent=(type==='success'?'✓ ':'✕ ')+msg;document.body.appendChild(t);setTimeout(function(){t.remove();},3000);}
     
-    function showToast(msg, type) {
-        type = type || 'success'; var t = document.createElement('div');
-        t.className = 'toast toast-' + type; t.textContent = (type === 'success' ? '✓ ' : '✕ ') + msg;
-        document.body.appendChild(t); setTimeout(function() { t.remove(); }, 3000);
-    }
-    
-    function handleScreenshot(event) {
-        var file = event.target.files[0];
-        if (!file) return;
-        if (!file.type.startsWith('image/')) { showToast('Chwazi yon imaj!', 'error'); return; }
-        screenshotFile = file;
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            document.getElementById('previewImage').src = e.target.result;
+    function handleScreenshot(event){
+        var file=event.target.files[0];if(!file)return;
+        if(!file.type.startsWith('image/')){showToast('Chwazi yon imaj!','error');return;}
+        screenshotFile=file;
+        var reader=new FileReader();
+        reader.onload=function(e){
+            document.getElementById('previewImage').src=e.target.result;
             document.getElementById('uploadPreview').classList.add('show');
-            document.getElementById('fileName').textContent = '✅ ' + file.name;
+            document.getElementById('fileName').textContent='✅ '+file.name;
             document.getElementById('uploadArea').classList.add('has-file');
+            document.getElementById('natcashVerify').style.display='block';
         };
         reader.readAsDataURL(file);
     }
     
-    function clearScreenshot() {
-        screenshotFile = null;
-        document.getElementById('screenshotInput').value = '';
+    function clearScreenshot(){
+        screenshotFile=null;
+        document.getElementById('screenshotInput').value='';
         document.getElementById('uploadPreview').classList.remove('show');
-        document.getElementById('fileName').textContent = '';
+        document.getElementById('fileName').textContent='';
         document.getElementById('uploadArea').classList.remove('has-file');
+        document.getElementById('natcashVerify').style.display='none';
+        document.getElementById('natcashNumberInput').value='';
+        document.getElementById('natcashVerifyMsg').textContent='';
     }
     
-    function applyPromo() {
-        var code = document.getElementById('promoCodeInput').value.trim().toUpperCase();
-        var msg = document.getElementById('promoMessage');
-        if (!code) { msg.textContent = 'Antre yon kòd!'; msg.style.color = 'var(--red)'; return; }
-        var promos = JSON.parse(localStorage.getItem('ogsun-promos') || '[]');
-        var promo = promos.find(function(p) { return p.code === code && p.active; });
-        if (promo) {
-            promoApplied = true; promoCode = code;
-            msg.textContent = '✅ Kòd aplike! Afilye: ' + promo.affiliate;
-            msg.style.color = 'var(--green)';
-            showToast('Kòd promo aplike!', 'success');
-        } else {
-            promoApplied = false; promoCode = '';
-            msg.textContent = '❌ Kòd pa valab!';
-            msg.style.color = 'var(--red)';
-        }
+    function applyPromo(){
+        var code=document.getElementById('promoCodeInput').value.trim().toUpperCase();
+        var msg=document.getElementById('promoMessage');
+        if(!code){msg.textContent='Antre yon kòd!';msg.style.color='var(--red)';return;}
+        var promos=JSON.parse(localStorage.getItem('ogsun-promos')||'[]');
+        var promo=promos.find(function(p){return p.code===code&&p.active;});
+        if(promo){promoApplied=true;promoCode=code;msg.textContent='✅ Kòd aplike! Afilye: '+promo.affiliate;msg.style.color='var(--green)';showToast('Kòd promo aplike!','success');}
+        else{promoApplied=false;promoCode='';msg.textContent='❌ Kòd pa valab!';msg.style.color='var(--red)';}
     }
     
-    function confirmOrder() {
-        var firstName = document.getElementById('firstName').value.trim();
-        var lastName = document.getElementById('lastName').value.trim();
-        var phone = document.getElementById('phone').value.trim();
-        var address = document.getElementById('address').value.trim();
-        var msg = document.getElementById('paymentMsg');
+    function confirmOrder(){
+        var firstName=document.getElementById('firstName').value.trim();
+        var lastName=document.getElementById('lastName').value.trim();
+        var phone=document.getElementById('phone').value.trim();
+        var address=document.getElementById('address').value.trim();
+        var msg=document.getElementById('paymentMsg');
         
-        if (!firstName || !lastName || !phone || !address) {
-            msg.className = 'msg error';
-            msg.textContent = '❌ Ranpli tout chan livrezon yo!';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            return;
-        }
+        if(!firstName||!lastName||!phone||!address){msg.className='msg error';msg.textContent='❌ Ranpli tout chan livrezon yo!';return;}
+        if(cart.length===0){msg.className='msg error';msg.textContent='❌ Panye w vid!';return;}
+        if(!screenshotFile){msg.className='msg error';msg.textContent='❌ Ajoute screenshot depo NatCash la!';return;}
         
-        if (cart.length === 0) {
-            msg.className = 'msg error';
-            msg.textContent = '❌ Panye w vid!';
-            return;
-        }
+        // Verifye nimewo NatCash
+        var natcashInput=document.getElementById('natcashNumberInput').value.trim();
+        var verifyMsg=document.getElementById('natcashVerifyMsg');
         
-        if (!screenshotFile) {
-            msg.className = 'msg error';
-            msg.textContent = '❌ Ajoute screenshot depo NatCash la!';
-            return;
-        }
+        if(!natcashInput){verifyMsg.textContent='❌ Antre nimewo ki sou screenshot la!';verifyMsg.style.color='var(--red)';return;}
+        if(natcashInput!==CORRECT_NATCASH){verifyMsg.textContent='❌ Nimewo pa kòrèk! Nimewo NatCash OGSUN se '+CORRECT_NATCASH;verifyMsg.style.color='var(--red)';return;}
+        verifyMsg.textContent='✅ Nimewo verifye!';verifyMsg.style.color='var(--green)';
         
-        msg.className = 'msg success';
-        msg.textContent = '⏳ Kòmand ap trete...';
+        msg.className='msg success';msg.textContent='⏳ Kòmand ap trete...';
         
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            var screenshotData = e.target.result;
+        var reader=new FileReader();
+        reader.onload=function(e){
+            var screenshotData=e.target.result;
             
-            // Sove kòmand
-            var orders = JSON.parse(localStorage.getItem('ogsun-orders') || '[]');
-            var order = {
-                id: Date.now(),
-                order_number: 'OGS-' + Date.now().toString().slice(-6),
-                customer_name: firstName + ' ' + lastName,
-                customer_phone: phone,
-                shipping_address: address,
-                items: cart,
-                total: totalAvecLivrezon,
-                payment_method: 'natcash',
-                natcash_number: NATCASH_NUMBER,
-                promo_code: promoCode,
-                status: 'pending',
-                screenshot: screenshotData,
-                created_at: new Date().toISOString()
-            };
-            orders.unshift(order);
-            localStorage.setItem('ogsun-orders', JSON.stringify(orders));
+            var orders=JSON.parse(localStorage.getItem('ogsun-orders')||'[]');
+            var order={id:Date.now(),order_number:'OGS-'+Date.now().toString().slice(-6),customer_name:firstName+' '+lastName,customer_phone:phone,shipping_address:address,items:cart,total:totalAvec,payment_method:'natcash',natcash_number:CORRECT_NATCASH,promo_code:promoCode,status:'pending',screenshot:screenshotData,created_at:new Date().toISOString()};
+            orders.unshift(order);localStorage.setItem('ogsun-orders',JSON.stringify(orders));
             
-            // Sove depo
-            var deposits = JSON.parse(localStorage.getItem('ogsun-deposits') || '[]');
-            deposits.unshift({
-                id: Date.now(),
-                customer: firstName + ' ' + lastName,
-                phone: phone,
-                amount: '$' + totalAvecLivrezon.toFixed(2),
-                natcash_number: NATCASH_NUMBER,
-                screenshot: screenshotData,
-                date: new Date().toISOString()
-            });
-            localStorage.setItem('ogsun-deposits', JSON.stringify(deposits));
+            var deposits=JSON.parse(localStorage.getItem('ogsun-deposits')||'[]');
+            deposits.unshift({id:Date.now(),customer:firstName+' '+lastName,phone:phone,amount:'$'+totalAvec.toFixed(2),natcash_number:CORRECT_NATCASH,screenshot:screenshotData,date:new Date().toISOString()});
+            localStorage.setItem('ogsun-deposits',JSON.stringify(deposits));
             
-            // Voye sou API si disponib
-            try {
-                fetch(API + '/orders', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        customer_name: firstName + ' ' + lastName,
-                        customer_phone: phone,
-                        shipping_address: address,
-                        items: cart,
-                        total: totalAvecLivrezon,
-                        payment_method: 'natcash',
-                        promo_code: promoCode
-                    })
-                }).catch(function() {});
-            } catch(e) {}
+            try{fetch(API+'/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({customer_name:firstName+' '+lastName,customer_phone:phone,shipping_address:address,items:cart,total:totalAvec,payment_method:'natcash',promo_code:promoCode})}).catch(function(){})}catch(e){}
             
-            // Voye sou WhatsApp
-            var pl = '';
-            cart.forEach(function(it, idx) { pl += (idx+1) + '. ' + it.name + ' x' + it.quantity + ' = $' + (it.price * it.quantity).toFixed(2) + '%0A'; });
-            var whatsappMsg = encodeURIComponent('*NOUVO KÒMAND OGSUN*%0A%0A*Non:* ' + firstName + ' ' + lastName + '%0A*Telefòn:* ' + phone + '%0A*Adrès:* ' + address + '%0A%0A*Pwodwi:*%0A' + pl + '%0A*Total:* $' + totalAvecLivrezon.toFixed(2) + '%0A%0A*PEMAN NATCASH*%0A📱 *Nimewo:* ' + NATCASH_NUMBER);
+            var pl='';cart.forEach(function(it,idx){pl+=(idx+1)+'. '+it.name+' x'+it.quantity+' = $'+(it.price*it.quantity).toFixed(2)+'%0A';});
+            var wMsg=encodeURIComponent('*NOUVO KÒMAND OGSUN*%0A%0A*Non:* '+firstName+' '+lastName+'%0A*Telefòn:* '+phone+'%0A*Adrès:* '+address+'%0A%0A*Pwodwi:*%0A'+pl+'%0A*Total:* $'+totalAvec.toFixed(2)+'%0A%0A*PEMAN NATCASH*%0A📱 *Nimewo:* '+CORRECT_NATCASH);
             
-            // Vide panye
             localStorage.removeItem('ogsun-cart');
-            
-            msg.className = 'msg success';
-            msg.textContent = '✅ Kòmand #' + order.order_number + ' konfime! N ap verifye peman an.';
-            
-            document.getElementById('confirmBtn').disabled = true;
-            document.getElementById('confirmBtn').textContent = '✅ Kòmand Konfime!';
-            
-            setTimeout(function() {
-                window.open('https://wa.me/' + WHATSAPP + '?text=' + whatsappMsg, '_blank');
-            }, 1500);
+            msg.className='msg success';msg.textContent='✅ Kòmand #'+order.order_number+' konfime! N ap verifye peman an.';
+            document.getElementById('confirmBtn').disabled=true;document.getElementById('confirmBtn').textContent='✅ Kòmand Konfime!';
+            setTimeout(function(){window.open('https://wa.me/'+WHATSAPP+'?text='+wMsg,'_blank');},1500);
         };
         reader.readAsDataURL(screenshotFile);
     }
     
-    function orderViaWhatsApp() {
-        var firstName = document.getElementById('firstName').value.trim();
-        var phone = document.getElementById('phone').value.trim();
-        var address = document.getElementById('address').value.trim();
-        if (!firstName || !phone || !address) { showToast('Ranpli chan yo!', 'error'); return; }
-        if (cart.length === 0) { showToast('Panye vid!', 'error'); return; }
-        var pl = '';
-        cart.forEach(function(it, idx) { pl += (idx+1) + '. ' + it.name + ' x' + it.quantity + ' = $' + (it.price * it.quantity).toFixed(2) + '%0A'; });
-        var msg = encodeURIComponent('*NOUVO KÒMAND OGSUN*%0A%0A*Non:* ' + firstName + '%0A*Telefòn:* ' + phone + '%0A*Adrès:* ' + address + '%0A%0A*Pwodwi:*%0A' + pl + '%0A*Total:* $' + totalAvecLivrezon.toFixed(2));
-        window.open('https://wa.me/' + WHATSAPP + '?text=' + msg, '_blank');
+    function orderViaWhatsApp(){
+        var firstName=document.getElementById('firstName').value.trim();
+        var phone=document.getElementById('phone').value.trim();
+        var address=document.getElementById('address').value.trim();
+        if(!firstName||!phone||!address){showToast('Ranpli chan yo!','error');return;}
+        if(cart.length===0){showToast('Panye vid!','error');return;}
+        var pl='';cart.forEach(function(it,idx){pl+=(idx+1)+'. '+it.name+' x'+it.quantity+' = $'+(it.price*it.quantity).toFixed(2)+'%0A';});
+        var msg=encodeURIComponent('*NOUVO KÒMAND OGSUN*%0A%0A*Non:* '+firstName+'%0A*Telefòn:* '+phone+'%0A*Adrès:* '+address+'%0A%0A*Pwodwi:*%0A'+pl+'%0A*Total:* $'+totalAvec.toFixed(2));
+        window.open('https://wa.me/'+WHATSAPP+'?text='+msg,'_blank');
     }
     </script>
 
 </body>
 </html>
+
+
+
+
+
+
 
 
 

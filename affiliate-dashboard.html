@@ -6,153 +6,85 @@
     <title>OGSUN | Dashboard Afilye</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --gold: #c9a84c; --bg: #08090a; --card: #111215; --text: #e8e6e3; --gray: #989694; --border: rgba(255,255,255,0.06); --radius: 16px; --green: #3ecf8e; --red: #e54b4b; --orange: #f2994a; --blue: #5b9bd5; --purple: #ce93d8; }
-        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); padding: 2rem; min-height: 100vh; }
-        .container { max-width: 900px; margin: 0 auto; }
-        
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; }
-        .header h1 span { color: var(--gold); }
-        .btn-logout { background: transparent; color: var(--red); border: 1px solid rgba(229,75,75,0.3); padding: 0.5rem 1.2rem; border-radius: 50px; cursor: pointer; font-weight: 600; font-family: inherit; font-size: 0.85rem; }
-        .btn-logout:hover { background: rgba(229,75,75,0.1); }
-        
-        .welcome-card { background: linear-gradient(135deg, rgba(156,39,176,0.15), rgba(156,39,176,0.03)); border: 1px solid rgba(156,39,176,0.3); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .welcome-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; }
-        .promo-code-display { background: rgba(156,39,176,0.2); color: var(--purple); padding: 0.5rem 1.5rem; border-radius: 50px; font-family: monospace; font-size: 1.3rem; font-weight: 700; letter-spacing: 2px; }
-        
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; margin-bottom: 1.5rem; }
-        .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; text-align: center; }
-        .stat-card .icon { font-size: 1.8rem; margin-bottom: 0.3rem; }
-        .stat-card .value { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; }
-        .stat-card .label { color: var(--gray); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
-        .stat-card.revenue .value { color: var(--green); }
-        .stat-card.orders .value { color: var(--blue); }
-        .stat-card.commission .value { color: var(--gold); }
-        .stat-card.clients .value { color: var(--purple); }
-        
-        .content-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
-        .content-card-header { padding: 1rem 1.2rem; border-bottom: 1px solid var(--border); }
-        .content-card-header h3 { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; }
-        .content-card-body { padding: 1.2rem; }
-        
-        .info-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.02); font-size: 0.85rem; }
-        .info-row:last-child { border-bottom: none; }
-        .info-row .label { color: var(--gray); }
-        .info-row .val { color: var(--text); font-weight: 500; }
-        
-        .empty-state { text-align: center; padding: 2rem; color: var(--gray); }
-        
-        @media (max-width: 768px) { .welcome-card { flex-direction: column; text-align: center; gap: 1rem; } }
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--gold:#c9a84c;--bg:#08090a;--card:#111215;--text:#e8e6e3;--gray:#989694;--green:#3ecf8e;--red:#e54b4b;--blue:#5b9bd5;--purple:#ce93d8;--radius:16px}
+        body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);padding:2rem;min-height:100vh}
+        .container{max-width:900px;margin:0 auto}
+        .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem}
+        .header h1{font-family:'Space Grotesk',sans-serif;font-size:1.6rem}
+        .header h1 span{color:var(--gold)}
+        .btn-logout{background:transparent;color:var(--red);border:1px solid rgba(229,75,75,0.3);padding:0.5rem 1.2rem;border-radius:50px;cursor:pointer;font-weight:600;font-family:inherit}
+        .welcome-card{background:linear-gradient(135deg,rgba(156,39,176,0.15),rgba(156,39,176,0.03));border:1px solid rgba(156,39,176,0.3);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center}
+        .promo-code-display{background:rgba(156,39,176,0.2);color:var(--purple);padding:0.5rem 1.5rem;border-radius:50px;font-family:monospace;font-size:1.3rem;font-weight:700;letter-spacing:2px}
+        .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.8rem;margin-bottom:1.5rem}
+        .stat-card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius);padding:1.2rem;text-align:center}
+        .stat-card .value{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700}
+        .stat-card .label{color:var(--gray);font-size:0.7rem;text-transform:uppercase;letter-spacing:1px}
+        .stat-card.revenue .value{color:var(--green)}
+        .stat-card.orders .value{color:var(--blue)}
+        .stat-card.commission .value{color:var(--gold)}
+        .content-card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius);overflow:hidden;margin-bottom:1rem}
+        .content-card-header{padding:1rem 1.2rem;border-bottom:1px solid rgba(255,255,255,0.06)}
+        .content-card-header h3{font-family:'Space Grotesk',sans-serif;font-size:0.95rem}
+        .content-card-body{padding:1.2rem}
+        .info-row{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.02);font-size:0.85rem}
+        .info-row .label{color:var(--gray)}
+        @media(max-width:768px){.welcome-card{flex-direction:column;text-align:center;gap:1rem}}
     </style>
 </head>
 <body>
-
     <div class="container">
-        <div class="header">
-            <h1>Dashboard <span>Afilye</span></h1>
-            <button class="btn-logout" onclick="logout()">Dekonekte</button>
-        </div>
-        
+        <div class="header"><h1>Dashboard <span>Afilye</span></h1><button class="btn-logout" onclick="logout()">Dekonekte</button></div>
         <div class="welcome-card">
-            <div>
-                <h2 id="affiliateGreeting">Byenveni!</h2>
-                <p style="color:var(--gray);margin-top:0.3rem;">Men rezime aktivite w yo</p>
-            </div>
-            <div class="promo-code-display" id="promoCodeDisplay">------</div>
+            <div><h2 id="greeting">Byenveni!</h2><p style="color:var(--gray);margin-top:0.3rem;">Men rezime aktivite w yo</p></div>
+            <div class="promo-code-display" id="promoCode">------</div>
         </div>
-        
         <div class="stats-grid">
-            <div class="stat-card revenue"><div class="icon">💰</div><div class="value" id="statRevenue">$0</div><div class="label">Revni Jenere</div></div>
-            <div class="stat-card orders"><div class="icon">📦</div><div class="value" id="statOrders">0</div><div class="label">Kòmand</div></div>
-            <div class="stat-card commission"><div class="icon">💵</div><div class="value" id="statCommission">$0</div><div class="label">Komisyon Total</div></div>
-            <div class="stat-card clients"><div class="icon">👥</div><div class="value" id="statClients">0</div><div class="label">Kliyan</div></div>
+            <div class="stat-card revenue"><div class="value" id="statRevenue">$0</div><div class="label">Revni Jenere</div></div>
+            <div class="stat-card orders"><div class="value" id="statOrders">0</div><div class="label">Kòmand</div></div>
+            <div class="stat-card commission"><div class="value" id="statCommission">$0</div><div class="label">Komisyon</div></div>
         </div>
-        
         <div class="content-card">
             <div class="content-card-header"><h3>📋 Enfòmasyon Mwen</h3></div>
-            <div class="content-card-body" id="affiliateInfo"><p style="color:var(--gray);">Chajman...</p></div>
+            <div class="content-card-body" id="affiliateInfo"></div>
         </div>
-        
         <div class="content-card">
             <div class="content-card-header"><h3>💰 Komisyon Mwen</h3></div>
             <div class="content-card-body">
-                <div class="info-row"><span class="label">2000 - 4499 HTG</span><span class="val" id="comm2k">500 HTG</span></div>
-                <div class="info-row"><span class="label">4500 - 6999 HTG</span><span class="val" id="comm4k">1000 HTG</span></div>
-                <div class="info-row"><span class="label">7000 - 9499 HTG</span><span class="val" id="comm7k">1500 HTG</span></div>
-                <div class="info-row"><span class="label">9500+ HTG</span><span class="val" id="comm9k">2000 HTG</span></div>
-                <div class="info-row"><span class="label">Nimewo NatCash</span><span class="val" id="natcashNumber">---</span></div>
+                <div class="info-row"><span class="label">2000-4499 HTG</span><span id="comm2k">500 HTG</span></div>
+                <div class="info-row"><span class="label">4500-6999 HTG</span><span id="comm4k">1000 HTG</span></div>
+                <div class="info-row"><span class="label">7000-9499 HTG</span><span id="comm7k">1500 HTG</span></div>
+                <div class="info-row"><span class="label">9500+ HTG</span><span id="comm9k">2000 HTG</span></div>
+                <div class="info-row"><span class="label">Nimewo NatCash</span><span id="natcash">---</span></div>
             </div>
         </div>
     </div>
-
     <script>
-    // Verifye si afilye konekte
-    var affiliateCode = localStorage.getItem('ogsun-affiliate-code');
-    var affiliateName = localStorage.getItem('ogsun-affiliate-name');
-    var affiliateData = JSON.parse(localStorage.getItem('ogsun-affiliate-data') || 'null');
+    var code = localStorage.getItem('ogsun-affiliate-code');
+    var name = localStorage.getItem('ogsun-affiliate-name');
+    var data = JSON.parse(localStorage.getItem('ogsun-affiliate-data') || 'null');
+    if (!code || !name || !data) window.location.href = 'affiliate-login.html';
     
-    if (!affiliateCode || !affiliateName || !affiliateData) {
-        window.location.href = 'affiliate-login.html';
-    }
-    
-    // Rafrechi done depi admin
     var promos = JSON.parse(localStorage.getItem('ogsun-promos') || '[]');
-    var updated = promos.find(function(p) {
-        return p.code === affiliateCode && 
-               p.affiliate.toLowerCase() === affiliateName.toLowerCase() && 
-               p.active;
-    });
+    var updated = promos.find(function(p) { return p.code === code && p.affiliate.toLowerCase() === name.toLowerCase() && p.active; });
+    if (updated) { localStorage.setItem('ogsun-affiliate-data', JSON.stringify(updated)); data = updated; }
     
-    if (updated) {
-        localStorage.setItem('ogsun-affiliate-data', JSON.stringify(updated));
-        affiliateData = updated;
-    }
-    
-    // Afiche enfòmasyon
-    document.getElementById('affiliateGreeting').textContent = 'Byenveni, ' + affiliateData.affiliate + '!';
-    document.getElementById('promoCodeDisplay').textContent = affiliateData.code;
-    document.getElementById('comm2k').textContent = (affiliateData.comm2k || 500) + ' HTG';
-    document.getElementById('comm4k').textContent = (affiliateData.comm4k || 1000) + ' HTG';
-    document.getElementById('comm7k').textContent = (affiliateData.comm7k || 1500) + ' HTG';
-    document.getElementById('comm9k').textContent = (affiliateData.comm9k || 2000) + ' HTG';
-    document.getElementById('natcashNumber').textContent = affiliateData.natcash || '---';
-    
-    // Enfòmasyon afilye
+    document.getElementById('greeting').textContent = 'Byenveni, ' + data.affiliate + '!';
+    document.getElementById('promoCode').textContent = data.code;
+    document.getElementById('statRevenue').textContent = '$' + (data.revenue || 0).toLocaleString();
+    document.getElementById('statOrders').textContent = data.orders || 0;
+    document.getElementById('statCommission').textContent = '$' + (data.totalCommission || 0).toLocaleString();
+    document.getElementById('comm2k').textContent = (data.comm2k || 500) + ' HTG';
+    document.getElementById('comm4k').textContent = (data.comm4k || 1000) + ' HTG';
+    document.getElementById('comm7k').textContent = (data.comm7k || 1500) + ' HTG';
+    document.getElementById('comm9k').textContent = (data.comm9k || 2000) + ' HTG';
+    document.getElementById('natcash').textContent = data.natcash || '---';
     document.getElementById('affiliateInfo').innerHTML = 
-        '<div class="info-row"><span class="label">Non</span><span class="val">' + affiliateData.affiliate + '</span></div>' +
-        '<div class="info-row"><span class="label">Kòd</span><span class="val">' + affiliateData.code + '</span></div>' +
-        '<div class="info-row"><span class="label">Telefòn</span><span class="val">' + (affiliateData.phone || '---') + '</span></div>' +
-        '<div class="info-row"><span class="label">NatCash</span><span class="val">' + (affiliateData.natcash || '---') + '</span></div>';
+        '<div class="info-row"><span class="label">Non</span><span>'+data.affiliate+'</span></div>' +
+        '<div class="info-row"><span class="label">Kòd</span><span>'+data.code+'</span></div>' +
+        '<div class="info-row"><span class="label">Telefòn</span><span>'+(data.phone||'---')+'</span></div>';
     
-    // Stats
-    document.getElementById('statRevenue').textContent = '$' + (affiliateData.revenue || 0).toLocaleString();
-    document.getElementById('statOrders').textContent = affiliateData.orders || 0;
-    document.getElementById('statCommission').textContent = '$' + (affiliateData.totalCommission || 0).toLocaleString();
-    document.getElementById('statClients').textContent = affiliateData.clients || 0;
-    
-    function logout() {
-        localStorage.removeItem('ogsun-affiliate-code');
-        localStorage.removeItem('ogsun-affiliate-name');
-        localStorage.removeItem('ogsun-affiliate-data');
-        window.location.href = 'affiliate-login.html';
-    }
-    
-    // Rafrechi chak 30 segonn
-    setInterval(function() {
-        var promos = JSON.parse(localStorage.getItem('ogsun-promos') || '[]');
-        var updated = promos.find(function(p) {
-            return p.code === affiliateCode && 
-                   p.affiliate.toLowerCase() === affiliateName.toLowerCase() && 
-                   p.active;
-        });
-        if (updated) {
-            localStorage.setItem('ogsun-affiliate-data', JSON.stringify(updated));
-            location.reload();
-        }
-    }, 30000);
+    function logout() { localStorage.removeItem('ogsun-affiliate-code'); localStorage.removeItem('ogsun-affiliate-name'); localStorage.removeItem('ogsun-affiliate-data'); window.location.href = 'affiliate-login.html'; }
     </script>
-
 </body>
 </html>
-

@@ -4,234 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OGSUN | Panye 2026</title>
+    <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --gold: #b8960f; --gold-light: #d4af37; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; --red: #c62828; --green: #2e7d32; }
-        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.7; min-height: 100vh; }
-        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-        .nav-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .logo-wrapper { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-        .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
-        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
-        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.88rem; transition: color 0.3s; }
-        .nav-link:hover, .nav-link.active { color: var(--gold); }
-        .nav-btn { background: var(--gold); color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.88rem; }
-        .cart-page { padding: 7rem 2rem 3rem; max-width: 900px; margin: 0 auto; }
-        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-        .cart-title { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 800; }
-        .cart-title span { color: var(--gold); }
-        .cart-count { background: var(--gold); color: #fff; padding: 0.3rem 0.9rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; }
-        .continue-link { color: var(--gold); text-decoration: none; font-weight: 500; font-size: 0.9rem; }
-        .cart-empty { text-align: center; padding: 4rem 2rem; background: #fff; border-radius: var(--radius); border: 1px solid var(--border); }
-        .cart-empty h2 { font-family: 'Space Grotesk', sans-serif; margin-bottom: 0.5rem; }
-        .cart-empty p { color: var(--gray); margin-bottom: 1.5rem; }
-        .btn { display: inline-block; background: var(--gold); color: #fff; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: all 0.3s; }
-        .btn:hover { background: var(--gold-light); transform: translateY(-2px); }
-        .cart-item { display: flex; gap: 1rem; align-items: center; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem; margin-bottom: 0.8rem; transition: all 0.3s; }
-        .cart-item:hover { border-color: var(--gold); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .cart-item-img { width: 80px; height: 80px; object-fit: contain; background: #f5f0e8; border-radius: 10px; padding: 0.5rem; }
-        .cart-item-info { flex: 1; }
-        .cart-item-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; margin-bottom: 0.2rem; }
-        .cart-item-price { color: var(--gray); font-size: 0.9rem; }
-        .qty-control { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
-        .qty-btn { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-        .qty-btn:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
-        .qty-input { width: 45px; text-align: center; border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem; font-family: 'Outfit', sans-serif; font-size: 0.9rem; }
-        .cart-item-total { font-weight: 700; color: var(--gold); font-size: 1.1rem; min-width: 80px; text-align: right; }
-        .remove-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.3rem; transition: all 0.2s; padding: 0.3rem; }
-        .remove-btn:hover { color: var(--red); transform: scale(1.2); }
-        .cart-summary { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; margin-top: 1.5rem; }
-        .cart-summary h3 { font-family: 'Space Grotesk', sans-serif; margin-bottom: 1.2rem; font-size: 1.1rem; }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.7rem; color: var(--gray); font-size: 0.9rem; }
-        .summary-total { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
-        .summary-total span:last-child { color: var(--gold); }
-        .btn-checkout { display: block; width: 100%; background: var(--gold); color: #fff; border: none; padding: 1rem; border-radius: 50px; font-weight: 700; font-size: 1.05rem; cursor: pointer; text-align: center; text-decoration: none; margin-top: 1.2rem; }
-        .btn-checkout:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(184,150,15,0.25); }
-        .btn-whatsapp { display: block; width: 100%; background: #25D366; color: #fff; border: none; padding: 1rem; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; text-align: center; margin-top: 0.7rem; }
-        .btn-whatsapp:hover { background: #1fa855; }
-        .btn-whatsapp img { width: 20px; height: 20px; vertical-align: middle; margin-right: 6px; }
-        .footer { background: #1a1a1a; padding: 4rem 2rem 2rem; color: #aaa; margin-top: 3rem; }
-        .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
-        .footer-logo { width: 44px; margin-bottom: 1rem; border-radius: 8px; }
-        .footer h4 { color: #fff; margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
-        .footer a { display: block; color: #888; text-decoration: none; margin-bottom: 0.5rem; font-size: 0.82rem; transition: color 0.3s; }
-        .footer a:hover { color: var(--gold-light); }
-        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #333; color: #666; font-size: 0.78rem; }
-        .footer-bottom a { color: var(--gold-light); text-decoration: none; }
-        .toast { position: fixed; top: 18px; right: 18px; z-index: 9999; padding: 13px 20px; border-radius: 10px; font-weight: 600; font-size: 0.88rem; box-shadow: 0 8px 25px rgba(0,0,0,0.12); animation: slideIn 0.35s ease; display: flex; align-items: center; gap: 0.5rem; }
-        .toast-success { background: #e8f5e9; color: var(--green); border: 1px solid #c8e6c9; }
-        .toast-error { background: #ffebee; color: var(--red); border: 1px solid #ffcdd2; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: translateX(0); } }
-        @media (max-width: 768px) { .nav-links { display: none; } .cart-item { flex-wrap: wrap; } .cart-item-total { text-align: left; } .footer-grid { grid-template-columns: 1fr 1fr; } }
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--gold:#c9a84c;--gold-light:#e2c86e;--bg:#fafaf9;--white:#fff;--text:#1a1a1a;--gray:#666;--border:#e8e0d0;--radius:16px;--green:#2e7d32;--red:#c62828}
+        body{font-family:'Outfit',sans-serif;background:linear-gradient(180deg,#fafaf9 0%,#f5f0e8 50%,#efe8d8 100%);color:var(--text);line-height:1.7;min-height:100vh}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.9rem 2rem;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+        .nav-container{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .logo-wrapper{display:flex;align-items:center;gap:0.5rem;text-decoration:none}
+        .logo-img{width:44px;height:44px;object-fit:contain;border-radius:10px}
+        .logo-text{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:800;color:var(--gold);letter-spacing:2px}
+        .nav-links{display:flex;gap:1.5rem;align-items:center}
+        .nav-link{color:var(--gray);text-decoration:none;font-weight:500;font-size:0.9rem}
+        .nav-link:hover,.nav-link.active{color:var(--gold)}
+        .nav-btn{background:var(--gold);color:#fff;padding:0.6rem 1.5rem;border-radius:50px;font-weight:600;text-decoration:none}
+        .cart-page{padding:7rem 2rem 3rem;max-width:800px;margin:0 auto}
+        .cart-title{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:800;margin-bottom:1.5rem}
+        .cart-title span{color:var(--gold)}
+        .cart-empty{text-align:center;padding:4rem;background:#fff;border-radius:var(--radius);border:1px solid var(--border)}
+        .cart-empty h3{margin-bottom:1rem}
+        .cart-item{display:flex;gap:1rem;align-items:center;background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin-bottom:0.8rem}
+        .cart-item img{width:80px;height:80px;object-fit:contain;background:#f5f0e8;border-radius:10px;padding:0.5rem}
+        .cart-item-info{flex:1}
+        .cart-item-name{font-weight:600}
+        .cart-item-price{color:var(--gray);font-size:0.9rem}
+        .qty-control{display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem}
+        .qty-btn{width:28px;height:28px;border:1px solid var(--border);background:#fff;cursor:pointer;border-radius:6px;font-size:1rem}
+        .qty-input{width:45px;text-align:center;border:1px solid var(--border);border-radius:6px;padding:0.3rem}
+        .cart-item-total{font-weight:700;color:var(--gold)}
+        .remove-btn{background:none;border:none;color:#ccc;cursor:pointer;font-size:1.3rem}
+        .remove-btn:hover{color:var(--red)}
+        .cart-summary{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:1.5rem}
+        .summary-row{display:flex;justify-content:space-between;margin-bottom:0.5rem;color:var(--gray)}
+        .summary-total{display:flex;justify-content:space-between;font-size:1.3rem;font-weight:700;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+        .summary-total span:last-child{color:var(--gold)}
+        .btn{display:block;width:100%;padding:0.9rem;border-radius:50px;font-weight:700;text-align:center;text-decoration:none;cursor:pointer;border:none;transition:all 0.3s}
+        .btn-gold{background:var(--gold);color:#fff;margin-top:1rem}
+        .btn-gold:hover{background:var(--gold-light)}
+        .btn-whatsapp{background:#25D366;color:#fff;margin-top:0.5rem;display:flex;align-items:center;justify-content:center;gap:0.5rem}
+        .continue-link{color:var(--gold);text-decoration:none;font-weight:500;display:inline-block;margin-top:1rem}
+        .footer{background:#1a1a1a;padding:4rem 2rem 2rem;color:#aaa;margin-top:3rem}
+        .footer-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem}
+        .footer h4{color:#fff;margin-bottom:1rem;font-size:0.9rem}
+        .footer a{display:block;color:#888;text-decoration:none;margin-bottom:0.5rem;font-size:0.85rem}
+        .footer a:hover{color:var(--gold-light)}
+        .footer-bottom{text-align:center;padding-top:2rem;border-top:1px solid #333;color:#666;font-size:0.8rem}
+        @media(max-width:768px){.nav-links{display:none}.cart-item{flex-wrap:wrap}.footer-grid{grid-template-columns:1fr 1fr}}
     </style>
 </head>
 <body>
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo-wrapper"><img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
-alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">Akèy</a>
-                <a href="shop.html" class="nav-link">Boutik</a>
-                <a href="cart.html" class="nav-link active">Panye</a>
-                <a href="account.html" class="nav-link">Kont</a>
-                <a href="contact.html" class="nav-link">Kontakte</a>
-            </div>
+            <a href="index.html" class="logo-wrapper"><img src="logo.png" alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
+            <div class="nav-links"><a href="index.html" class="nav-link">Akèy</a><a href="shop.html" class="nav-link">Boutik</a><a href="cart.html" class="nav-link active">Panye</a><a href="account.html" class="nav-link">Kont</a></div>
             <a href="account.html" class="nav-btn">Konekte</a>
         </div>
     </nav>
 
     <main class="cart-page">
-        <div class="cart-header">
-            <h1 class="cart-title">Panye <span>mwen</span></h1>
-            <span class="cart-count" id="cartItemCount">0 atik</span>
-        </div>
+        <h1 class="cart-title">Panye <span>Mwen</span></h1>
         <div id="cartContent"></div>
-        <a href="shop.html" class="continue-link">Kontinye achte</a>
+        <a href="shop.html" class="continue-link">← Kontinye Achte</a>
     </main>
 
     <footer class="footer">
         <div class="footer-grid">
-            <div><img src="https://ogsun-mache-lakay-blqd.onrender.com/logo.png"
- alt="OGSUN" class="footer-logo"><p style="color:#888;font-size:0.85rem;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
+            <div><img src="logo.png" alt="OGSUN" style="width:44px;"><p style="color:#888;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
             <div><h4>Navigate</h4><a href="index.html">Akèy</a><a href="shop.html">Boutik</a><a href="cart.html">Panye</a></div>
             <div><h4>Enfòmasyon</h4><a href="about.html">Sou Nou</a><a href="contact.html">Kontakte</a><a href="faq.html">FAQ</a></div>
-            <div><h4>Sipò</h4><a href="faq.html">Livrezon</a><a href="faq.html">Retounen</a><a href="contact.html">Sipò</a></div>
+            <div><h4>Sipò</h4><a href="faq.html">Livrezon</a><a href="faq.html">Retounen</a><a href="contact.html">Èd</a></div>
         </div>
         <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève.</p></div>
     </footer>
 
     <script>
-    var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
-    var WHATSAPP = '50932924776';
-    var NATCASH = '50932924776';
-    var LIVREZON_GRATIS = 5000;
-    var FRAIS_LIVREZON = 500;
-    
-    function showToast(msg, type) {
-        type = type || 'success';
-        var t = document.createElement('div'); t.className = 'toast toast-' + type;
-        t.innerHTML = '<span>' + (type==='success' ? '&check;' : '&times;') + '</span> ' + msg;
-        document.body.appendChild(t);
-        setTimeout(function() { t.style.opacity='0'; t.style.transform='translateX(80px)'; t.style.transition='all 0.3s'; setTimeout(function(){t.remove();},300); },2500);
-    }
-    
-    // Chaje panye depi localStorage (reyèl + backup)
-    function getCart() {
-        return JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
-    }
-    
-    function saveCart(cart) {
-        localStorage.setItem('ogsun-cart', JSON.stringify(cart));
-    }
+    var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
+    function saveCart() { localStorage.setItem('ogsun-cart', JSON.stringify(cart)); renderCart(); }
     
     function renderCart() {
-        var cart = getCart();
-        var container = document.getElementById('cartContent');
-        var countEl = document.getElementById('cartItemCount');
-        
-        countEl.textContent = cart.length + ' atik';
-        
+        var c = document.getElementById('cartContent');
         if (cart.length === 0) {
-            container.innerHTML = '<div class="cart-empty"><h2>Panye w vid</h2><p>Ajoute kèk pwodwi nan boutik la!</p><a href="shop.html" class="btn">Ale nan Boutik</a></div>';
+            c.innerHTML = '<div class="cart-empty"><h3>🛒 Panye w vid</h3><p>Ajoute pwodwi nan boutik la!</p><a href="shop.html" class="btn btn-gold" style="margin-top:1rem;">Ale nan Boutik</a></div>';
             return;
         }
-        
         var total = 0;
         var html = '';
-        
-        cart.forEach(function(item, index) {
+        cart.forEach(function(item, i) {
             var itemTotal = item.price * item.quantity;
             total += itemTotal;
-            
-            html += '<div class="cart-item">' +
-                '<img src="' + (item.image || 'logo.png') + '" alt="' + item.name + '" class="cart-item-img" onerror="this.src=\'logo.png\'">' +
-                '<div class="cart-item-info">' +
-                    '<h3 class="cart-item-name">' + item.name + '</h3>' +
-                    '<p class="cart-item-price">$' + item.price.toFixed(2) + ' /inite</p>' +
-                    '<div class="qty-control">' +
-                        '<button class="qty-btn" onclick="updateQty(' + index + ', -1)">-</button>' +
-                        '<input type="number" class="qty-input" value="' + item.quantity + '" min="1" onchange="setQty(' + index + ', this.value)">' +
-                        '<button class="qty-btn" onclick="updateQty(' + index + ', 1)">+</button>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="cart-item-total">$' + itemTotal.toFixed(2) + '</div>' +
-                '<button class="remove-btn" onclick="removeItem(' + index + ')" title="Retire">&times;</button>' +
-            '</div>';
+            html += '<div class="cart-item"><img src="logo.png" alt="'+item.name+'"><div class="cart-item-info"><div class="cart-item-name">'+item.name+'</div><div class="cart-item-price">$'+item.price.toFixed(2)+' /inite</div><div class="qty-control"><button class="qty-btn" onclick="updateQty('+i+',-1)">-</button><input type="number" class="qty-input" value="'+item.quantity+'" onchange="setQty('+i+',this.value)"><button class="qty-btn" onclick="updateQty('+i+',1)">+</button></div></div><div class="cart-item-total">$'+itemTotal.toFixed(2)+'</div><button class="remove-btn" onclick="removeItem('+i+')">✕</button></div>';
         });
-        
-        // Livrezon
-        var fraisLivrezon = total >= LIVREZON_GRATIS ? 0 : FRAIS_LIVREZON;
-        var totalAvecLivrezon = total + fraisLivrezon;
-        var livrezonText = fraisLivrezon === 0 ? '<span style="color:var(--green);">GRATIS</span>' : '$' + fraisLivrezon.toFixed(2);
-        
-        html += '<div class="cart-summary">' +
-            '<h3>Rezime Kòmand</h3>' +
-            '<div class="summary-row"><span>Sou-total</span><span>$' + total.toFixed(2) + '</span></div>' +
-            '<div class="summary-row"><span>Livrezon</span><span>' + livrezonText + '</span></div>' +
-            (fraisLivrezon > 0 ? '<div class="summary-row"><small style="color:#e65100;">Ajoute $' + (LIVREZON_GRATIS - total).toFixed(2) + ' plis pou livrezon GRATIS (a partir de $' + LIVREZON_GRATIS.toLocaleString() + ')</small></div>' : '<div class="summary-row"><small style="color:var(--green);">Livrezon gratis! Kòmand depase $' + LIVREZON_GRATIS.toLocaleString() + '</small></div>') +
-            '<div class="summary-total"><span>Total</span><span>$' + totalAvecLivrezon.toFixed(2) + '</span></div>' +
-            '<a href="checkout.html" class="btn-checkout">Finalize Kòmand</a>' +
-            '<button class="btn-whatsapp" onclick="orderDirectWhatsApp()"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> Kòmande dirèk sou WhatsApp (32924776)</button>' +
-        '</div>';
-        
-        container.innerHTML = html;
+        html += '<div class="cart-summary"><div class="summary-row"><span>Sou-total</span><span>$'+total.toFixed(2)+'</span></div><div class="summary-row"><span>Livrezon</span><span>Kalkile nan peman</span></div><div class="summary-total"><span>Total Estimatif</span><span>$'+total.toFixed(2)+'</span></div><a href="checkout.html" class="btn btn-gold">Fè Kòmand</a><button class="btn btn-whatsapp" onclick="orderWhatsApp()"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" style="width:20px;"> Kòmande sou WhatsApp</button></div>';
+        c.innerHTML = html;
     }
     
-    function updateQty(index, change) {
-        var cart = getCart();
-        cart[index].quantity = Math.max(1, cart[index].quantity + change);
-        saveCart(cart);
-        renderCart();
+    function updateQty(i, change) { cart[i].quantity = Math.max(1, cart[i].quantity + change); saveCart(); }
+    function setQty(i, val) { cart[i].quantity = Math.max(1, parseInt(val) || 1); saveCart(); }
+    function removeItem(i) { cart.splice(i, 1); saveCart(); }
+    function orderWhatsApp() {
+        var pl = ''; cart.forEach(function(it, idx) { pl += (idx+1) + '. ' + it.name + ' x' + it.quantity + ' = $' + (it.price*it.quantity).toFixed(2) + '%0A'; });
+        var msg = encodeURIComponent('*NOUVO KÒMAND OGSUN*%0A%0A*Pwodwi:*%0A' + pl + '%0A*Total:* $' + cart.reduce(function(s,i){return s+(i.price*i.quantity);},0).toFixed(2));
+        window.open('https://wa.me/50932924776?text='+msg, '_blank');
     }
-    
-    function setQty(index, value) {
-        var cart = getCart();
-        cart[index].quantity = Math.max(1, parseInt(value) || 1);
-        saveCart(cart);
-        renderCart();
-    }
-    
-    function removeItem(index) {
-        var cart = getCart();
-        var name = cart[index].name;
-        cart.splice(index, 1);
-        saveCart(cart);
-        renderCart();
-        showToast(name + ' retire nan panye!', 'success');
-    }
-    
-    // Kòmande dirèk sou WhatsApp (san checkout)
-    function orderDirectWhatsApp() {
-        var cart = getCart();
-        if (cart.length === 0) { showToast('Panye w vid!', 'error'); return; }
-        
-        var total = cart.reduce(function(s,i){return s+(i.price*i.quantity);},0);
-        var fraisLivrezon = total >= LIVREZON_GRATIS ? 0 : FRAIS_LIVREZON;
-        var totalAvec = total + fraisLivrezon;
-        
-        var pl = '';
-        cart.forEach(function(it, idx) {
-            pl += (idx+1) + '. ' + it.name + ' x' + it.quantity + ' = $' + (it.price*it.quantity).toFixed(2) + '%0A';
-        });
-        
-        var msg = encodeURIComponent(
-            '*NOUVO KÒMAND OGSUN*%0A%0A' +
-            '*Pwodwi:*%0A' + pl + '%0A' +
-            '*Sou-total:* $' + total.toFixed(2) + '%0A' +
-            '*Livrezon:* ' + (fraisLivrezon === 0 ? 'GRATIS' : '$' + fraisLivrezon.toFixed(2)) + '%0A' +
-            '*Total:* $' + totalAvec.toFixed(2) + '%0A%0A' +
-            '_Voye non, adrès, ak telefòn pou finalize kòmand lan_'
-        );
-        
-        window.open('https://wa.me/' + WHATSAPP + '?text=' + msg, '_blank');
-    }
-    
     renderCart();
     </script>
 
 </body>
 </html>
+

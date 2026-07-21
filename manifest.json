@@ -1,0 +1,14 @@
+{
+  "name": "OGSUN - Mache Lakay",
+  "short_name": "OGSUN",
+  "description": "Pi bon platfòm e-commerce lokal an Ayiti",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#fafaf9",
+  "theme_color": "#c9a84c",
+  "icons": [
+    { "src": "logo.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "logo.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
+

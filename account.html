@@ -3,103 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Kont Kliyan 2026</title>
+    <title>OGSUN | Kont Mwen 2026</title>
+    <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --gold: #c9a84c; --gold-light: #e2c86e; --bg: #08090a; --bg-card: #111215;
-            --text: #e8e6e3; --text-secondary: #989694; --text-muted: #5c5a58;
-            --border: rgba(255,255,255,0.04); --accent: #c9a84c; --accent-bg: rgba(201,168,76,0.08);
-            --red: #e54b4b; --green: #3ecf8e; --radius: 16px; --radius-sm: 10px;
-            --shadow-lg: 0 8px 32px rgba(0,0,0,0.5); --glow-gold: 0 0 30px rgba(201,168,76,0.2);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        body { font-family: 'Outfit', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--gold:#c9a84c;--gold-light:#e2c86e;--bg:#fafaf9;--white:#fff;--text:#1a1a1a;--gray:#666;--border:#e8e0d0;--radius:16px;--green:#2e7d32;--red:#c62828}
+        body{font-family:'Outfit',sans-serif;background:linear-gradient(180deg,#fafaf9 0%,#f5f0e8 50%,#efe8d8 100%);color:var(--text);line-height:1.7;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0.9rem 2rem;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+        .nav-container{max-width:1300px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+        .logo-wrapper{display:flex;align-items:center;gap:0.5rem;text-decoration:none}
+        .logo-img{width:44px;height:44px;object-fit:contain;border-radius:10px}
+        .logo-text{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:800;color:var(--gold);letter-spacing:2px}
+        .nav-links{display:flex;gap:1.5rem;align-items:center}
+        .nav-link{color:var(--gray);text-decoration:none;font-weight:500;font-size:0.9rem}
+        .nav-link:hover,.nav-link.active{color:var(--gold)}
+        .nav-btn{background:var(--gold);color:#fff;padding:0.6rem 1.5rem;border-radius:50px;font-weight:600;text-decoration:none}
         
-        .account-container { width: 100%; max-width: 480px; }
-        .account-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow-lg), var(--glow-gold); }
-        .account-logo { text-align: center; margin-bottom: 1.5rem; }
-        .account-logo .icon { width: 56px; height: 56px; background: linear-gradient(135deg, #8b6914, var(--gold-light)); border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #000; font-weight: 800; font-family: 'Space Grotesk', sans-serif; box-shadow: var(--glow-gold); }
-        .account-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 700; text-align: center; margin-bottom: 0.3rem; }
-        .account-title span { color: var(--accent); }
-        .account-subtitle { color: var(--text-muted); text-align: center; font-size: 0.85rem; margin-bottom: 1.8rem; }
+        .account-container{width:100%;max-width:460px}
+        .account-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:2.5rem;box-shadow:0 10px 30px rgba(0,0,0,0.05)}
+        .account-title{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:800;text-align:center;margin-bottom:0.5rem}
+        .account-title span{color:var(--gold)}
+        .account-subtitle{color:var(--gray);text-align:center;margin-bottom:1.5rem;font-size:0.9rem}
         
-        .tab-switch { display: flex; background: rgba(255,255,255,0.02); border-radius: 50px; padding: 3px; margin-bottom: 1.8rem; }
-        .tab-btn { flex: 1; padding: 0.6rem; border: none; background: transparent; color: var(--text-muted); border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 0.82rem; transition: var(--transition); font-family: inherit; }
-        .tab-btn.active { background: var(--accent); color: #000; }
+        .tab-switch{display:flex;background:#f5f0e8;border-radius:50px;padding:3px;margin-bottom:1.5rem}
+        .tab-btn{flex:1;padding:0.6rem;border:none;background:transparent;color:var(--gray);border-radius:50px;cursor:pointer;font-weight:600;font-size:0.85rem;transition:all 0.3s}
+        .tab-btn.active{background:var(--gold);color:#fff}
         
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; color: var(--text-muted); margin-bottom: 0.3rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-        .form-group input { width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-family: inherit; font-size: 0.9rem; transition: var(--transition); }
-        .form-group input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        .form-group{margin-bottom:1rem}
+        .form-group label{display:block;color:var(--gray);margin-bottom:0.3rem;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+        .form-group input{width:100%;padding:0.8rem;background:#fafaf9;border:1px solid var(--border);border-radius:10px;font-family:'Outfit',sans-serif;font-size:0.9rem;color:var(--text)}
+        .form-group input:focus{outline:none;border-color:var(--gold)}
         
-        .btn-submit { width: 100%; padding: 0.85rem; background: var(--accent); color: #000; border: none; border-radius: 50px; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: var(--transition); font-family: inherit; margin-top: 0.5rem; }
-        .btn-submit:hover { background: var(--gold-light); box-shadow: var(--glow-gold); transform: translateY(-1px); }
-        .btn-ghost { width: 100%; padding: 0.75rem; background: transparent; color: var(--text-muted); border: 1px solid var(--border); border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: var(--transition); font-family: inherit; margin-top: 0.5rem; }
-        .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-submit{width:100%;padding:0.9rem;background:var(--gold);color:#fff;border:none;border-radius:50px;font-weight:700;font-size:1rem;cursor:pointer;transition:all 0.3s;margin-top:0.5rem}
+        .btn-submit:hover{background:var(--gold-light);transform:translateY(-2px)}
+        .btn-logout{width:100%;padding:0.7rem;background:transparent;color:var(--red);border:1px solid rgba(198,40,40,0.2);border-radius:50px;font-weight:600;cursor:pointer;margin-top:0.5rem;transition:all 0.3s}
+        .btn-logout:hover{background:rgba(198,40,40,0.05)}
         
-        .msg { padding: 0.8rem; border-radius: var(--radius-sm); margin-bottom: 1rem; text-align: center; font-weight: 500; font-size: 0.85rem; display: none; }
-        .msg.error { display: block; background: rgba(229,75,75,0.08); color: var(--red); border: 1px solid rgba(229,75,75,0.2); }
-        .msg.success { display: block; background: rgba(62,207,142,0.08); color: var(--green); border: 1px solid rgba(62,207,142,0.2); }
+        .msg{padding:0.7rem;border-radius:8px;margin-bottom:1rem;text-align:center;font-weight:500;font-size:0.85rem;display:none}
+        .msg.error{display:block;background:rgba(198,40,40,0.08);color:var(--red);border:1px solid rgba(198,40,40,0.2)}
+        .msg.success{display:block;background:rgba(46,125,50,0.08);color:var(--green);border:1px solid rgba(46,125,50,0.2)}
         
-        /* ===== PANÈL KLIYAN ===== */
-        .client-panel { display: none; }
-        .client-header { text-align: center; margin-bottom: 2rem; }
-        .client-avatar { width: 70px; height: 70px; background: linear-gradient(135deg, var(--accent), var(--gold-light)); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: #000; box-shadow: var(--glow-gold); }
-        .client-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; margin-top: 0.8rem; }
-        .client-email { color: var(--text-muted); font-size: 0.85rem; }
+        .profile-info{text-align:center}
+        .profile-avatar{width:80px;height:80px;background:linear-gradient(135deg,var(--gold),var(--gold-light));border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;margin-bottom:1rem}
+        .profile-name{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700}
+        .profile-email{color:var(--gray)}
         
-        .stats-mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 1.5rem; }
-        .stat-mini { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1rem; text-align: center; }
-        .stat-mini .value { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--accent); }
-        .stat-mini .label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+        .menu-links{display:flex;flex-direction:column;gap:0.4rem;margin-top:1.5rem}
+        .menu-link{display:flex;align-items:center;gap:0.5rem;padding:0.7rem 1rem;background:#fafaf9;border:1px solid var(--border);border-radius:10px;color:var(--text);text-decoration:none;font-weight:500;transition:all 0.3s}
+        .menu-link:hover{border-color:var(--gold);color:var(--gold)}
         
-        .menu-links { display: flex; flex-direction: column; gap: 0.4rem; }
-        .menu-link { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 1rem; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.85rem; transition: var(--transition); cursor: pointer; }
-        .menu-link:hover { background: var(--accent-bg); color: var(--accent); border-color: var(--accent); }
-        .menu-link .icon { font-size: 1.1rem; }
-        
-        .logout-btn { width: 100%; padding: 0.7rem; background: transparent; color: var(--red); border: 1px solid rgba(229,75,75,0.2); border-radius: 50px; font-weight: 600; cursor: pointer; font-size: 0.85rem; margin-top: 1rem; transition: var(--transition); font-family: inherit; }
-        .logout-btn:hover { background: rgba(229,75,75,0.08); }
-        
-        .back-link { display: block; text-align: center; color: var(--text-muted); text-decoration: none; font-size: 0.8rem; margin-top: 1rem; }
-        .back-link:hover { color: var(--accent); }
-        
-        @media (max-width: 500px) { .account-card { padding: 1.5rem; } .form-row { grid-template-columns: 1fr; } }
+        @media(max-width:768px){.nav-links{display:none}}
     </style>
 </head>
 <body>
 
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo-wrapper"><img src="logo.png" alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
+            <div class="nav-links"><a href="index.html" class="nav-link">Akèy</a><a href="shop.html" class="nav-link">Boutik</a><a href="cart.html" class="nav-link">Panye</a><a href="account.html" class="nav-link active">Kont</a></div>
+            <a href="index.html" class="nav-btn">Akèy</a>
+        </div>
+    </nav>
+
     <div class="account-container">
-        
-        <!-- FÒM LOGIN/REGISTER -->
         <div id="authSection" class="account-card">
-            <div class="account-logo"><div class="icon">O</div></div>
             <h1 class="account-title">Kont <span>OGSUN</span></h1>
-            <p class="account-subtitle">Antre nan mond pwodwi otantik ayisyen yo</p>
-            
+            <p class="account-subtitle">Konekte oswa kreye yon kont</p>
             <div class="tab-switch">
                 <button class="tab-btn active" onclick="showTab('login')">Konekte</button>
                 <button class="tab-btn" onclick="showTab('register')">Enskri</button>
             </div>
-            
             <div class="msg" id="authMsg"></div>
-            
-            <!-- LOGIN -->
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="form-group"><label>Imèl</label><input type="email" id="loginEmail" placeholder="imel@example.com" required></div>
                 <div class="form-group"><label>Modpas</label><input type="password" id="loginPassword" placeholder="••••••••" required></div>
                 <button type="submit" class="btn-submit">Konekte</button>
             </form>
-            
-            <!-- REGISTER -->
-            <form id="registerForm" style="display:none;" onsubmit="handleRegister(event)">
-                <div class="form-row">
-                    <div class="form-group"><label>Non</label><input type="text" id="regName" placeholder="Antre non w" required></div>
-                    <div class="form-group"><label>Siyati</label><input type="text" id="regLastName" placeholder="Antre siyati w"></div>
-                </div>
+            <form id="registerForm" style="display:none" onsubmit="handleRegister(event)">
+                <div class="form-group"><label>Non Konplè</label><input type="text" id="regName" placeholder="Antre non w" required></div>
                 <div class="form-group"><label>Imèl</label><input type="email" id="regEmail" placeholder="imel@example.com" required></div>
                 <div class="form-group"><label>Telefòn</label><input type="tel" id="regPhone" placeholder="+509 0000 0000"></div>
                 <div class="form-group"><label>Modpas</label><input type="password" id="regPassword" placeholder="Kreye modpas (min 4 karaktè)" required></div>
@@ -107,135 +89,85 @@
             </form>
         </div>
         
-        <!-- PANÈL KLIYAN -->
-        <div id="clientSection" class="account-card client-panel">
-            <div class="client-header">
-                <div class="client-avatar" id="clientInitials">?</div>
-                <div class="client-name" id="clientName">---</div>
-                <div class="client-email" id="clientEmail">---</div>
+        <div id="profileSection" class="account-card" style="display:none">
+            <div class="profile-info">
+                <div class="profile-avatar" id="profileInitials">?</div>
+                <div class="profile-name" id="profileName">---</div>
+                <div class="profile-email" id="profileEmail">---</div>
             </div>
-            
-            <div class="stats-mini">
-                <div class="stat-mini"><div class="value" id="clientOrders">0</div><div class="label">Kòmand</div></div>
-                <div class="stat-mini"><div class="value" id="clientPoints">0</div><div class="label">Pwen</div></div>
-                <div class="stat-mini"><div class="value" style="color:var(--green);">VIP</div><div class="label">Nivo</div></div>
-            </div>
-            
             <div class="menu-links">
-                <a href="orders.html" class="menu-link"><span class="icon">📋</span> Swivi Kòmand</a>
-                <a href="cart.html" class="menu-link"><span class="icon">🛒</span> Panye mwen</a>
-                <a href="shop.html" class="menu-link"><span class="icon">🛍</span> Ale nan Boutik</a>
-                <a href="contact.html" class="menu-link"><span class="icon">✉</span> Kontakte Sipò</a>
+                <a href="cart.html" class="menu-link">🛒 Panye Mwen</a>
+                <a href="checkout.html" class="menu-link">💳 Finalize Kòmand</a>
+                <a href="shop.html" class="menu-link">🛍 Ale nan Boutik</a>
+                <a href="contact.html" class="menu-link">📞 Kontakte Sipò</a>
             </div>
-            
-            <button class="logout-btn" onclick="logout()">Dekonekte</button>
-            <a href="index.html" class="back-link">← Retounen sou Akèy</a>
+            <button class="btn-logout" onclick="logout()">Dekonekte</button>
         </div>
-        
     </div>
 
     <script>
     var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
-    
-    // Tcheke si deja konekte
     var userToken = localStorage.getItem('ogsun-user-token');
     var userData = JSON.parse(localStorage.getItem('ogsun-user-data') || 'null');
+    if (userToken && userData) showProfile();
     
-    if (userToken && userData) { showClientPanel(); }
-    
-    function showTab(tab) {
-        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    function showTab(t) {
+        document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
         event.target.classList.add('active');
-        document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
-        document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+        document.getElementById('loginForm').style.display = t==='login'?'block':'none';
+        document.getElementById('registerForm').style.display = t==='register'?'block':'none';
         document.getElementById('authMsg').className = 'msg';
     }
     
-    function showMsg(type, msg) {
-        var el = document.getElementById('authMsg');
-        el.className = 'msg ' + type;
-        el.textContent = (type === 'error' ? '✕ ' : '✓ ') + msg;
-    }
+    function showMsg(t,m) { var el = document.getElementById('authMsg'); el.className = 'msg '+t; el.textContent = (t==='error'?'✕ ':'✓ ')+m; }
     
     function handleLogin(e) {
         e.preventDefault();
         var email = document.getElementById('loginEmail').value.trim();
         var pw = document.getElementById('loginPassword').value;
-        if (!email || !pw) { showMsg('error', 'Ranpli tout chan yo!'); return; }
-        showMsg('success', 'Koneksyon...');
-        
-        fetch(API + '/users/login', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email, password: pw })
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(d) {
-            if (d.success) {
-                localStorage.setItem('ogsun-user-token', d.token || 'user-token');
-                localStorage.setItem('ogsun-user-data', JSON.stringify(d.user));
-                showClientPanel();
-            } else {
-                showMsg('error', d.error || 'Imèl oswa modpas pa bon!');
-            }
-        })
-        .catch(function() { showMsg('error', 'Pa ka konekte ak sèvè a.'); });
+        if (!email || !pw) { showMsg('error','Ranpli tout chan yo!'); return; }
+        showMsg('success','Koneksyon...');
+        fetch(API+'/users/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,password:pw})})
+        .then(function(r){return r.json()})
+        .then(function(d){
+            if(d.success){localStorage.setItem('ogsun-user-token',d.token||'token');localStorage.setItem('ogsun-user-data',JSON.stringify(d.user));showProfile();}
+            else{showMsg('error',d.error||'Imèl oswa modpas pa bon!');}
+        }).catch(function(){showMsg('error','Pa ka konekte!');});
         return false;
     }
     
     function handleRegister(e) {
         e.preventDefault();
         var name = document.getElementById('regName').value.trim();
-        var lastName = document.getElementById('regLastName').value.trim();
         var email = document.getElementById('regEmail').value.trim();
         var phone = document.getElementById('regPhone').value.trim();
         var pw = document.getElementById('regPassword').value;
-        
-        if (!name || !email || !pw) { showMsg('error', 'Non, imèl, ak modpas obligatwa!'); return; }
-        if (pw.length < 4) { showMsg('error', 'Modpas dwe gen omwen 4 karaktè!'); return; }
-        showMsg('success', 'Kreasyon kont...');
-        
-        fetch(API + '/users/register', {
-            method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: name + (lastName ? ' ' + lastName : ''), email: email, phone: phone, password: pw })
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(d) {
-            if (d.success) {
-                showMsg('success', 'Kont kreye! Ou ka konekte kounya.');
-                document.getElementById('regName').value = '';
-                document.getElementById('regLastName').value = '';
-                document.getElementById('regEmail').value = '';
-                document.getElementById('regPhone').value = '';
-                document.getElementById('regPassword').value = '';
-                setTimeout(function() { showTab('login'); }, 1500);
-            } else {
-                showMsg('error', d.error || 'Erè kreasyon kont!');
-            }
-        })
-        .catch(function() { showMsg('error', 'Pa ka konekte ak sèvè a.'); });
+        if (!name || !email || !pw) { showMsg('error','Non, imèl, ak modpas obligatwa!'); return; }
+        if (pw.length < 4) { showMsg('error','Modpas dwe gen omwen 4 karaktè!'); return; }
+        showMsg('success','Kreasyon kont...');
+        fetch(API+'/users/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,email:email,phone:phone,password:pw})})
+        .then(function(r){return r.json()})
+        .then(function(d){
+            if(d.success){showMsg('success','Kont kreye! Ou ka konekte kounya.');document.getElementById('regName').value='';document.getElementById('regEmail').value='';document.getElementById('regPhone').value='';document.getElementById('regPassword').value='';setTimeout(function(){showTab('login')},1500);}
+            else{showMsg('error',d.error||'Erè!');}
+        }).catch(function(){showMsg('error','Pa ka konekte!');});
         return false;
     }
     
-    function showClientPanel() {
-        var userData = JSON.parse(localStorage.getItem('ogsun-user-data') || 'null');
-        if (!userData) return;
-        
-        document.getElementById('authSection').style.display = 'none';
-        document.getElementById('clientSection').style.display = 'block';
-        
-        document.getElementById('clientName').textContent = userData.name || 'Kliyan OGSUN';
-        document.getElementById('clientEmail').textContent = userData.email || '';
-        
-        var initials = (userData.name || 'OG').split(' ').map(function(n) { return n.charAt(0).toUpperCase(); }).join('').slice(0, 2);
-        document.getElementById('clientInitials').textContent = initials;
+    function showProfile() {
+        var ud = JSON.parse(localStorage.getItem('ogsun-user-data')||'null'); if(!ud)return;
+        document.getElementById('authSection').style.display='none';
+        document.getElementById('profileSection').style.display='block';
+        document.getElementById('profileName').textContent=ud.name||'Kliyan';
+        document.getElementById('profileEmail').textContent=ud.email||'';
+        document.getElementById('profileInitials').textContent=(ud.name||'OG').split(' ').map(function(n){return n.charAt(0).toUpperCase()}).join('').slice(0,2);
     }
     
-    function logout() {
-        localStorage.removeItem('ogsun-user-token');
-        localStorage.removeItem('ogsun-user-data');
-        location.reload();
-    }
+    function logout() { localStorage.removeItem('ogsun-user-token'); localStorage.removeItem('ogsun-user-data'); location.reload(); }
     </script>
 
 </body>
 </html>
+
+
+

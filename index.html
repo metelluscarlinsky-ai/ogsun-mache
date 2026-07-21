@@ -3,69 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OGSUN | Mache Lakay 2026</title>
+    <title>OGSUN | Mache Lakay - Luxury 2026</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#c9a84c">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --gold: #c9a84c; --gold-light: #e2c86e; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 14px; --green: #2e7d32; --red: #c62828; }
-        body { font-family: 'Outfit', 'Segoe UI', Arial, sans-serif; background: linear-gradient(180deg, #fafaf9 0%, #f5f0e8 50%, #efe8d8 100%); color: var(--text); line-height: 1.7; overflow-x: hidden; }
-        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        :root { --gold: #c9a84c; --gold-light: #e2c86e; --bg: #fafaf9; --white: #fff; --text: #1a1a1a; --gray: #666; --border: #e8e0d0; --radius: 16px; --green: #2e7d32; --red: #c62828; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+        
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 0.9rem 2rem; background: rgba(255,255,255,0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
         .nav-container { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
         .logo-wrapper { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
-        .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 8px; }
-        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
+        .logo-img { width: 44px; height: 44px; object-fit: contain; border-radius: 10px; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        .logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--gold); letter-spacing: 2px; }
         .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.88rem; transition: color 0.3s; }
+        .nav-link { color: var(--gray); text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: color 0.3s; }
         .nav-link:hover { color: var(--gold); }
-        .nav-btn { background: var(--gold); color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 50px; font-weight: 600; cursor: pointer; text-decoration: none; font-size: 0.88rem; }
-        .nav-btn:hover { background: var(--gold-light); }
-        .hero { min-height: 85vh; display: flex; align-items: center; padding: 7rem 2rem 3rem; background: linear-gradient(135deg, #fefefe 0%, #faf6ed 50%, #f5edd8 100%); }
-        .hero-content { max-width: 580px; }
-        .hero-badge { display: inline-block; background: rgba(184,150,15,0.08); color: var(--gold); padding: 0.35rem 1rem; border-radius: 50px; font-size: 0.78rem; font-weight: 600; margin-bottom: 1.5rem; border: 1px solid rgba(184,150,15,0.2); }
-        .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
-        .hero-title span { color: var(--gold); }
-        .hero-desc { font-size: 1.05rem; color: var(--gray); margin-bottom: 2rem; max-width: 460px; }
-        .hero-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; }
-        .btn-primary { background: var(--gold); color: #fff; padding: 0.9rem 2.2rem; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s; font-size: 0.95rem; }
-        .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(184,150,15,0.25); }
-        .btn-outline { background: transparent; color: var(--gold); border: 2px solid var(--gold); padding: 0.9rem 2.2rem; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s; font-size: 0.95rem; }
+        .nav-btn { background: var(--gold); color: #fff; padding: 0.6rem 1.5rem; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: 0.9rem; transition: all 0.3s; }
+        .nav-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,0.3); }
+        
+        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 2rem 3rem; background: linear-gradient(135deg, #fefefe 0%, #faf6ed 50%, #f5edd8 100%); position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%); top: -100px; right: -100px; border-radius: 50%; animation: pulse 4s ease-in-out infinite; }
+        @keyframes pulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.2);opacity:0.8} }
+        .hero-content { max-width: 650px; position: relative; z-index: 1; }
+        .hero-badge { display: inline-block; background: rgba(201,168,76,0.1); color: var(--gold); padding: 0.4rem 1.2rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem; border: 1px solid rgba(201,168,76,0.2); }
+        .hero-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
+        .hero-title span { background: linear-gradient(135deg, var(--gold), #e2c86e, #b8960f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-desc { font-size: 1.1rem; color: var(--gray); margin-bottom: 2rem; }
+        .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { background: var(--gold); color: #fff; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 700; text-decoration: none; transition: all 0.3s; font-size: 1rem; }
+        .btn-primary:hover { background: var(--gold-light); transform: translateY(-3px); box-shadow: 0 15px 35px rgba(201,168,76,0.4); }
+        .btn-outline { background: transparent; color: var(--gold); border: 2px solid var(--gold); padding: 1rem 2.5rem; border-radius: 50px; font-weight: 700; text-decoration: none; transition: all 0.3s; font-size: 1rem; }
         .btn-outline:hover { background: var(--gold); color: #fff; }
-        .section { padding: 4rem 2rem; background: var(--white); }
+        
+        .section { padding: 5rem 2rem; }
         .section-header { text-align: center; margin-bottom: 3rem; }
-        .section-badge { display: inline-block; background: rgba(184,150,15,0.06); color: var(--gold); padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; border: 1px solid rgba(184,150,15,0.15); margin-bottom: 0.8rem; }
-        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 0.3rem; }
-        .section-subtitle { color: var(--gray); font-size: 0.95rem; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.3rem; max-width: 1300px; margin: 0 auto; }
-        .product-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.08); border-color: var(--gold); }
+        .section-badge { display: inline-block; background: rgba(201,168,76,0.08); color: var(--gold); padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.8rem; }
+        .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .section-subtitle { color: var(--gray); }
+        
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; max-width: 1300px; margin: 0 auto; }
+        .product-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: all 0.4s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--gold); }
         .product-img-wrap { aspect-ratio: 1; overflow: hidden; background: #f5f0e8; position: relative; }
         .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .product-card:hover .product-img { transform: scale(1.04); }
-        .product-badge { position: absolute; top: 0.6rem; left: 0.6rem; background: var(--gold); color: #fff; padding: 0.2rem 0.7rem; border-radius: 50px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; z-index: 2; }
-        .product-info { padding: 1rem 1.1rem; }
-        .product-cat { color: var(--gold); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
-        .product-name { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; margin: 0.3rem 0; font-weight: 600; }
-        .product-price { display: flex; align-items: center; gap: 0.5rem; margin: 0.4rem 0; }
-        .current-price { font-size: 1.1rem; font-weight: 700; color: var(--gold); }
-        .old-price { text-decoration: line-through; color: #aaa; font-size: 0.8rem; }
-        .cart-btn { display: flex; align-items: center; justify-content: center; gap: 0.4rem; width: 100%; background: var(--gold); color: #fff; padding: 0.65rem; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; font-size: 0.82rem; transition: all 0.3s; }
+        .product-card:hover .product-img { transform: scale(1.05); }
+        .product-badge { position: absolute; top: 0.7rem; left: 0.7rem; background: var(--gold); color: #fff; padding: 0.2rem 0.8rem; border-radius: 50px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; z-index: 2; }
+        .product-info { padding: 1.2rem; }
+        .product-cat { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; }
+        .product-name { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; margin: 0.3rem 0; font-weight: 600; }
+        .product-price { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
+        .current-price { font-size: 1.2rem; font-weight: 700; color: var(--gold); }
+        .old-price { text-decoration: line-through; color: #aaa; font-size: 0.85rem; }
+        .cart-btn { display: block; width: 100%; background: var(--gold); color: #fff; padding: 0.7rem; border-radius: 50px; font-weight: 600; cursor: pointer; border: none; text-align: center; transition: all 0.3s; }
         .cart-btn:hover { background: var(--gold-light); }
-        .trust { padding: 2.5rem 2rem; background: #fafaf9; border-top: 1px solid var(--border); }
-        .trust-grid { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; max-width: 800px; margin: 0 auto; }
-        .trust-item { display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-weight: 500; font-size: 0.9rem; }
+        
+        .trust { padding: 3rem 2rem; background: #fafaf9; border-top: 1px solid var(--border); }
+        .trust-grid { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 0.5rem; color: var(--gray); font-weight: 500; }
+        .trust-dot { width: 10px; height: 10px; background: var(--gold); border-radius: 50%; }
+        
         .footer { background: #1a1a1a; padding: 4rem 2rem 2rem; color: #aaa; }
         .footer-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; }
-        .footer-logo { width: 44px; margin-bottom: 1rem; border-radius: 8px; }
-        .footer h4 { color: #fff; margin-bottom: 1rem; font-weight: 600; font-size: 0.9rem; }
-        .footer a { display: block; color: #888; text-decoration: none; margin-bottom: 0.5rem; font-size: 0.82rem; transition: color 0.3s; }
+        .footer h4 { color: #fff; margin-bottom: 1rem; font-size: 0.9rem; }
+        .footer a { display: block; color: #888; text-decoration: none; margin-bottom: 0.5rem; font-size: 0.85rem; transition: color 0.3s; }
         .footer a:hover { color: var(--gold-light); }
-        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #333; color: #666; font-size: 0.78rem; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #333; color: #666; font-size: 0.8rem; }
         .footer-bottom a { color: var(--gold-light); text-decoration: none; }
-        .toast { position: fixed; top: 18px; right: 18px; z-index: 9999; padding: 13px 20px; border-radius: 10px; font-weight: 600; font-size: 0.88rem; box-shadow: 0 8px 25px rgba(0,0,0,0.12); animation: slideIn 0.35s ease; display: flex; align-items: center; gap: 0.5rem; }
+        
+        .toast { position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 8px 25px rgba(0,0,0,0.12); animation: slideIn 0.3s ease; }
         .toast-success { background: #e8f5e9; color: var(--green); border: 1px solid #c8e6c9; }
         .toast-error { background: #ffebee; color: var(--red); border: 1px solid #ffcdd2; }
-        @keyframes slideIn { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: translateX(0); } }
-        @media (max-width: 768px) { .nav-links { display: none; } .hero { flex-direction: column; text-align: center; padding-top: 6rem; } .hero-desc { margin: 0 auto 1.5rem; } .hero-btns { justify-content: center; } .footer-grid { grid-template-columns: 1fr 1fr; } .products-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; } }
+        @keyframes slideIn { from{opacity:0;transform:translateX(80px)} to{opacity:1;transform:translateX(0)} }
+        
+        @media (max-width: 768px) { .nav-links { display: none; } .hero-title { font-size: 2rem; } .footer-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
@@ -73,26 +87,22 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo-wrapper"><img src="logo.png" alt="OGSUN" class="logo-img"><span class="logo-text">OGSUN</span></a>
-            <div class="nav-links" id="navLinks">
+            <div class="nav-links">
                 <a href="index.html" class="nav-link active">Akèy</a>
                 <a href="shop.html" class="nav-link">Boutik</a>
                 <a href="cart.html" class="nav-link">Panye</a>
                 <a href="account.html" class="nav-link">Kont</a>
                 <a href="affiliate-login.html" class="nav-link">Afilye</a>
-                <a href="contact.html" class="nav-link">Kontakte</a>
             </div>
-            <div style="display:flex;align-items:center;gap:1rem;">
-                <a href="cart.html" style="color:var(--text);text-decoration:none;font-weight:600;">Panye</a>
-                <a href="account.html" class="nav-btn">Konekte</a>
-            </div>
+            <a href="account.html" class="nav-btn">Konekte</a>
         </div>
     </nav>
 
     <section class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">Nouvo Koleksyon 2026</div>
+        <div class="hero-content" data-aos="fade-up">
+            <div class="hero-badge">✦ Nouvo Koleksyon 2026</div>
             <h1 class="hero-title">Mache Lakay<br><span>OGSUN Style</span></h1>
-            <p class="hero-desc">Dekouvri eleganas ak kalite pwodwi lokal yo. Chak atik rakonte yon istwa, chak kreyasyon se yon zèv atizanal ki soti nan men atizan ayisyen yo.</p>
+            <p class="hero-desc">Dekouvri eleganas ak kalite pwodwi lokal yo. Chak atik rakonte yon istwa, chak kreyasyon se yon zèv atizanal.</p>
             <div class="hero-btns">
                 <a href="shop.html" class="btn-primary">Achte Kounya</a>
                 <a href="about.html" class="btn-outline">Sou Nou</a>
@@ -101,83 +111,71 @@
     </section>
 
     <section class="section">
-        <div class="section-header">
-            <span class="section-badge">Ki pi cho</span>
-            <h2 class="section-title">Pwodwi <span style="color:var(--gold);">Popilè</span></h2>
-            <p class="section-subtitle">Sa k ap fè bri nan mache a</p>
-        </div>
-        <div class="products-grid" id="productsGrid">
-            <p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem;">Chajman pwodwi...</p>
-        </div>
+        <div class="section-header"><span class="section-badge">Ki pi cho</span><h2 class="section-title">Pwodwi Popilè</h2><p class="section-subtitle">Sa k ap fè bri nan mache a</p></div>
+        <div class="products-grid" id="productsGrid"><p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem;">Chajman pwodwi...</p></div>
     </section>
 
-    <section class="trust">
-        <div class="trust-grid">
-            <div class="trust-item"><span style="font-weight:700;color:var(--gold);">&#9679;</span> Peman Sekirize</div>
-            <div class="trust-item"><span style="font-weight:700;color:var(--gold);">&#9679;</span> Livrezon Rapid</div>
-            <div class="trust-item"><span style="font-weight:700;color:var(--gold);">&#9679;</span> Garanti Kalite</div>
-            <div class="trust-item"><span style="font-weight:700;color:var(--gold);">&#9679;</span> Sipò Kliyan</div>
-        </div>
-    </section>
+    <section class="trust"><div class="trust-grid">
+        <div class="trust-item"><span class="trust-dot"></span> Peman Sekirize</div>
+        <div class="trust-item"><span class="trust-dot"></span> Livrezon Rapid</div>
+        <div class="trust-item"><span class="trust-dot"></span> Garanti Kalite</div>
+        <div class="trust-item"><span class="trust-dot"></span> Sipò Kliyan</div>
+    </div></section>
 
     <footer class="footer">
         <div class="footer-grid">
-            <div><img src="logo.png" alt="OGSUN" class="footer-logo"><p style="color:#888;font-size:0.85rem;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
+            <div><img src="logo.png" alt="OGSUN" style="width:44px;margin-bottom:1rem;"><p style="color:#888;">Pi bon platfòm e-commerce lokal an Ayiti.</p></div>
             <div><h4>Navigate</h4><a href="index.html">Akèy</a><a href="shop.html">Boutik</a><a href="cart.html">Panye</a><a href="affiliate-login.html">Afilye</a></div>
             <div><h4>Enfòmasyon</h4><a href="about.html">Sou Nou</a><a href="contact.html">Kontakte</a><a href="faq.html">FAQ</a></div>
             <div><h4>Sipò</h4><a href="faq.html">Livrezon</a><a href="faq.html">Retounen</a><a href="contact.html">Èd</a></div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève.</p></div>
+        <div class="footer-bottom"><p>&copy; 2026 <a href="index.html">OGSUN</a>. Tout dwa rezève. Fèt ak ❤️ nan Ayiti.</p></div>
     </footer>
 
-    <!-- Admin sekrè -->
     <div style="position:fixed;bottom:15px;right:15px;z-index:9998;">
-        <input type="text" id="secretAdminSearch" placeholder="..."
-               style="width:35px;height:35px;border-radius:17px;border:1px solid #ddd;background:rgba(255,255,255,0.8);padding:0 6px;font-size:12px;color:#333;outline:none;transition:all 0.3s;"
-               onfocus="this.style.width='160px';this.placeholder='Kòd admin...';"
-               onblur="this.style.width='35px';this.placeholder='...';this.value='';">
+        <input type="text" id="secretAdminSearch" placeholder="..." style="width:35px;height:35px;border-radius:17px;border:1px solid #ddd;background:rgba(255,255,255,0.8);padding:0 6px;font-size:12px;color:#333;outline:none;transition:all 0.3s;" onfocus="this.style.width='160px';this.placeholder='Kòd admin...';" onblur="this.style.width='35px';this.placeholder='...';this.value='';">
     </div>
     <div id="adminPopup" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;">
         <div style="background:#fff;border-radius:16px;padding:30px;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,0.3);">
-            <h3 style="font-family:'Space Grotesk',sans-serif;color:#1a1a1a;margin-bottom:10px;">Admin OGSUN</h3>
-            <p style="color:#666;margin-bottom:20px;font-size:0.9rem;">Antre kòd sekrè</p>
-            <input type="password" id="adminPasswordInput" placeholder="Kòd sekrè" style="width:100%;padding:12px;border:2px solid #e8e0d0;border-radius:10px;font-size:1rem;text-align:center;margin-bottom:15px;outline:none;">
-            <div style="display:flex;gap:10px;">
-                <button onclick="closeAdminPopup()" style="flex:1;padding:12px;border:2px solid #e8e0d0;background:#fff;color:#666;border-radius:10px;font-weight:600;cursor:pointer;">Anile</button>
-                <button onclick="verifyAdmin()" style="flex:1;padding:12px;background:#b8960f;color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer;">Konekte</button>
+            <h3 style="font-family:'Space Grotesk',sans-serif;color:#1a1a1a;">Admin OGSUN</h3>
+            <p style="color:#666;margin:10px 0 20px;">Antre kòd sekrè</p>
+            <input type="password" id="adminPasswordInput" placeholder="Kòd sekrè" style="width:100%;padding:12px;border:2px solid #e8e0d0;border-radius:10px;text-align:center;outline:none;">
+            <div style="display:flex;gap:10px;margin-top:15px;">
+                <button onclick="closeAdminPopup()" style="flex:1;padding:12px;border:2px solid #e8e0d0;background:#fff;color:#666;border-radius:10px;cursor:pointer;">Anile</button>
+                <button onclick="verifyAdmin()" style="flex:1;padding:12px;background:#c9a84c;color:#fff;border:none;border-radius:10px;cursor:pointer;">Konekte</button>
             </div>
             <p id="adminError" style="color:#c62828;font-size:0.85rem;margin-top:10px;display:none;"></p>
         </div>
     </div>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+    AOS.init({ duration: 800, once: true });
+    
     var API = 'https://ogsun-mache-lakay-blqd.onrender.com/api';
     
     function showToast(msg, type) {
         type = type || 'success'; var t = document.createElement('div');
-        t.className = 'toast toast-' + type; t.innerHTML = '<span>' + (type === 'success' ? '&check;' : '&times;') + '</span> ' + msg;
-        document.body.appendChild(t);
-        setTimeout(function() { t.style.opacity = '0'; t.style.transform = 'translateX(80px)'; t.style.transition = 'all 0.3s'; setTimeout(function() { t.remove(); }, 300); }, 3000);
+        t.className = 'toast toast-' + type; t.innerHTML = '<span>' + (type === 'success' ? '✓' : '✕') + '</span> ' + msg;
+        document.body.appendChild(t); setTimeout(function() { t.remove(); }, 3000);
     }
     
     function addToCart(name, price) {
         var cart = JSON.parse(localStorage.getItem('ogsun-cart') || '[]');
-        var existing = cart.find(function(item) { return item.name === name; });
+        var existing = cart.find(function(i) { return i.name === name; });
         if (existing) { existing.quantity += 1; }
         else { cart.push({ name: name, quantity: 1, price: price }); }
         localStorage.setItem('ogsun-cart', JSON.stringify(cart));
         showToast(name + ' ajoute nan panye!', 'success');
     }
     
-    fetch(API + '/products').then(function(res) { return res.json(); }).then(function(products) {
+    fetch(API + '/products').then(function(r) { return r.json(); }).then(function(products) {
         var grid = document.getElementById('productsGrid');
-        if (!products || products.length === 0) { grid.innerHTML = '<p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem;">Pa gen pwodwi disponib.</p>'; return; }
+        if (!products || products.length === 0) { grid.innerHTML = '<p style="text-align:center;color:var(--gray);grid-column:1/-1;padding:2rem;">Pa gen pwodwi.</p>'; return; }
         var featured = products.filter(function(p) { return p.badge === 'Popilè' || p.badge === 'Nouvo' || p.badge === 'Eko'; });
-        var others = products.filter(function(p) { return !p.badge || (p.badge !== 'Popilè' && p.badge !== 'Nouvo' && p.badge !== 'Eko'); });
-        var display = featured.concat(others);
+        var display = featured.concat(products.filter(function(p) { return !featured.includes(p); }));
         grid.innerHTML = display.map(function(p) {
-            var img = p.image || p.image_url || 'logo.png';
-            return '<a href="product.html?id=' + p.id + '" class="product-card"><div class="product-img-wrap"><img src="' + img + '" alt="' + p.name + '" class="product-img" onerror="this.src=\'logo.png\'">' + (p.badge ? '<span class="product-badge">' + p.badge + '</span>' : '') + '</div><div class="product-info"><span class="product-cat">' + (p.category || '') + '</span><h3 class="product-name">' + p.name + '</h3><div class="product-price"><span class="current-price">$' + (p.price || 0).toFixed(2) + '</span>' + (p.old_price ? '<span class="old-price">$' + p.old_price.toFixed(2) + '</span>' : '') + '</div><button class="cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(\'' + p.name + '\',' + (p.price || 0) + ')">Ajoute nan panye</button></div></a>';
+            return '<a href="product.html?id=' + p.id + '" class="product-card"><div class="product-img-wrap"><img src="' + (p.image || p.image_url || 'logo.png') + '" alt="' + p.name + '" class="product-img" onerror="this.src=\'logo.png\'">' + (p.badge ? '<span class="product-badge">' + p.badge + '</span>' : '') + '</div><div class="product-info"><span class="product-cat">' + (p.category || '') + '</span><h3 class="product-name">' + p.name + '</h3><div class="product-price"><span class="current-price">$' + (p.price || 0).toFixed(2) + '</span>' + (p.old_price ? '<span class="old-price">$' + p.old_price.toFixed(2) + '</span>' : '') + '</div><span class="cart-btn" onclick="event.preventDefault();event.stopPropagation();addToCart(\'' + p.name + '\',' + (p.price || 0) + ')">Ajoute nan panye</span></div></a>';
         }).join('');
     }).catch(function() { document.getElementById('productsGrid').innerHTML = '<p style="text-align:center;color:var(--red);grid-column:1/-1;padding:2rem;">Pa ka chaje pwodwi.</p>'; });
     
@@ -190,8 +188,7 @@
         }
     });
     function verifyAdmin() {
-        var pw = document.getElementById('adminPasswordInput').value;
-        if (pw === 'OGPLUG45') {
+        if (document.getElementById('adminPasswordInput').value === 'OGPLUG45') {
             document.getElementById('adminPopup').style.display = 'none';
             window.location.href = 'admin-login.html';
         } else {
@@ -199,13 +196,14 @@
             document.getElementById('adminError').style.display = 'block';
         }
     }
-    function closeAdminPopup() {
-        document.getElementById('adminPopup').style.display = 'none';
-        document.getElementById('adminError').style.display = 'none';
+    function closeAdminPopup() { document.getElementById('adminPopup').style.display = 'none'; document.getElementById('adminError').style.display = 'none'; }
+    
+    // PWA - Enrejistre Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(function() {});
     }
     </script>
 
 </body>
 </html>
-
 
