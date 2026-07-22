@@ -6,109 +6,108 @@ const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
 const HOST = '0.0.0.0';
-
-// ===== FICHYE DONE =====
 const DATA_DIR = path.join(__dirname, 'data');
-const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
-const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
-const USERS_FILE = path.join(DATA_DIR, 'users.json');
-const CONTACTS_FILE = path.join(DATA_DIR, 'contacts.json');
 
-// ===== FONKSYON DONE 100% SOLID =====
+const ADMIN_EMAIL = 'metelluscarlinsky@gmail.com';
+const ADMIN_PASSWORD = 'OGPLUG45';
+const ADMIN_TOKEN = crypto.randomBytes(32).toString('hex');
+
+// Base de données en mémoire + fichiers JSON
+let DB = {
+    products: [],
+    orders: [],
+    users: [],
+    promos: [],
+    contacts: [],
+    visitors: []
+};
+
+// === FONCTIONS DE PERSISTANCE ===
 function ensureDataDir() {
     if (!fs.existsSync(DATA_DIR)) {
         fs.mkdirSync(DATA_DIR, { recursive: true });
-        console.log('📁 Dosye data kreye: ' + DATA_DIR);
     }
 }
 
-function loadJSON(filePath, defaultData) {
+function loadCollection(name, defaultData) {
     ensureDataDir();
+    const filePath = path.join(DATA_DIR, name + '.json');
     try {
         if (fs.existsSync(filePath)) {
             const content = fs.readFileSync(filePath, 'utf8').trim();
             if (content) {
                 const data = JSON.parse(content);
-                if (Array.isArray(data)) {
-                    console.log('✅ Chaje: ' + path.basename(filePath) + ' (' + data.length + ' antre)');
+                if (Array.isArray(data) && data.length > 0) {
+                    console.log('✅ Chaje ' + name + ': ' + data.length + ' antre');
                     return data;
                 }
             }
         }
     } catch (err) {
-        console.log('⚠️ Erè chaje ' + path.basename(filePath) + ': ' + err.message);
-        // Fè backup fichye ki koronpi a
-        try {
-            const backupPath = filePath + '.backup.' + Date.now();
-            fs.copyFileSync(filePath, backupPath);
-            console.log('📁 Backup kreye: ' + backupPath);
-        } catch (e) {}
+        console.log('⚠️ Erè chaje ' + name + ': ' + err.message);
     }
-    console.log('📄 Kreye nouvo ' + path.basename(filePath));
-    saveJSON(filePath, defaultData);
+    console.log('📄 ' + name + ': Itilize defo (' + defaultData.length + ' antre)');
     return JSON.parse(JSON.stringify(defaultData));
 }
 
-function saveJSON(filePath, data) {
+function saveCollection(name) {
     ensureDataDir();
+    const filePath = path.join(DATA_DIR, name + '.json');
+    const data = DB[name];
     try {
-        // Ekri nan fichye tanporè avan
-        const tmpPath = filePath + '.tmp';
-        fs.writeFileSync(tmpPath, JSON.stringify(data, null, 2), 'utf8');
-        // Renome tanporè a kòm fichye final (operasyon atomik)
         if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
+            fs.copyFileSync(filePath, filePath + '.backup');
         }
-        fs.renameSync(tmpPath, filePath);
-        console.log('💾 Sove: ' + path.basename(filePath) + ' (' + data.length + ' antre)');
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+        console.log('💾 Sove ' + name + ': ' + data.length + ' antre');
         return true;
     } catch (err) {
-        console.log('❌ Erè sove ' + path.basename(filePath) + ': ' + err.message);
-        // Eseye sove dirèkteman si rename echwe
-        try {
-            fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-            console.log('💾 Sove dirèk: ' + path.basename(filePath));
-            return true;
-        } catch (e) {
-            console.log('❌ Erè sove dirèk: ' + e.message);
-            return false;
-        }
+        console.log('❌ Erè sove ' + name + ': ' + err.message);
+        return false;
     }
 }
 
-// ===== ADMIN KONFIGIRASYON =====
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'metelluscarlinsky@gmail.com';
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'OGPLUG45';
-const ADMIN_TOKEN = crypto.randomBytes(32).toString('hex');
-
-console.log('');
-console.log('🔐 Token Admin jenere: ' + ADMIN_TOKEN.substring(0, 20) + '...');
-console.log('');
-
-// ===== DONE INISYAL =====
+// === DONNÉES PAR DÉFAUT ===
 const defaultProducts = [
-    { id: 1, name: 'Sak Pay Deluxe', category: 'Atizana', price: 45, old_price: 65, stock: 50, rating: 4.8, reviews: 128, badge: 'Nouvo', description: 'Sak pay atizanal fèt ak men ak anpil lanmou.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
-    { id: 2, name: 'Chemiz Brode', category: 'Rad', price: 35, old_price: 50, stock: 100, rating: 4.7, reviews: 95, badge: 'Popilè', description: 'Chemiz koton ak bèl broderi ayisyen.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
-    { id: 3, name: 'Tablo Dekoratif', category: 'Dekorasyon', price: 75, old_price: 95, stock: 25, rating: 4.9, reviews: 72, badge: '', description: 'Tablo pentire ak men pou dekore kay ou.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
-    { id: 4, name: 'Siwo Myèl Natirèl', category: 'Manje', price: 15, stock: 200, rating: 4.6, reviews: 200, badge: 'Eko', description: 'Siwo myèl 100% natirèl ki soti nan mòn Ayiti.', image: 'logo.png', image_url: 'logo.png', source: 'manual' },
+    { id: 1, name: 'Sak Pay Deluxe', category: 'Atizana', price: 45, old_price: 65, stock: 50, badge: 'Nouvo', description: 'Sak pay atizanal fèt ak men.', image: 'logo.png', image_url: 'logo.png' },
+    { id: 2, name: 'Chemiz Brode', category: 'Rad', price: 35, old_price: 50, stock: 100, badge: 'Popilè', description: 'Chemiz koton ak broderi.', image: 'logo.png', image_url: 'logo.png' },
+    { id: 3, name: 'Tablo Dekoratif', category: 'Dekorasyon', price: 75, old_price: 95, stock: 25, badge: '', description: 'Tablo pentire ak men.', image: 'logo.png', image_url: 'logo.png' },
+    { id: 4, name: 'Siwo Myèl Natirèl', category: 'Manje', price: 15, stock: 200, badge: 'Eko', description: 'Siwo myèl natirèl Ayiti.', image: 'logo.png', image_url: 'logo.png' },
 ];
 
-// ===== CHAJE DONE =====
-let products = loadJSON(PRODUCTS_FILE, defaultProducts);
-let orders = loadJSON(ORDERS_FILE, []);
-let users = loadJSON(USERS_FILE, []);
-let contacts = loadJSON(CONTACTS_FILE, []);
-
-// ===== KONTE ID =====
-function getMaxId(arr) {
-    return arr.length > 0 ? Math.max(...arr.map(item => item.id || 0)) : 0;
+const defaultPromos = [];
+for (let i = 1; i <= 10; i++) {
+    defaultPromos.push({
+        id: i,
+        code: 'OGSUN-PRO' + i,
+        affiliate_name: 'Afilye #' + i,
+        phone: '',
+        natcash: '',
+        comm2k: 500,
+        comm4k: 1000,
+        comm7k: 1500,
+        comm9k: 2000,
+        active: true,
+        orders_count: 0,
+        revenue: 0,
+        commission: 0
+    });
 }
 
-let productIdCounter = getMaxId(products) + 1;
-let orderCounter = getMaxId(orders) + 1;
-let userIdCounter = getMaxId(users) + 1;
+// === CHARGEMENT ===
+DB.products = loadCollection('products', defaultProducts);
+DB.orders = loadCollection('orders', []);
+DB.users = loadCollection('users', []);
+DB.promos = loadCollection('promos', defaultPromos);
+DB.contacts = loadCollection('contacts', []);
+DB.visitors = loadCollection('visitors', []);
 
-// ===== MIME TYPES =====
+// === COMPTEURS D'ID ===
+function getNextId(collection) {
+    return collection.length > 0 ? Math.max(...collection.map(item => item.id || 0)) + 1 : 1;
+}
+
+// === MIME TYPES ===
 const MIME = {
     '.html': 'text/html; charset=utf-8',
     '.css': 'text/css; charset=utf-8',
@@ -123,18 +122,16 @@ const MIME = {
     '.webp': 'image/webp',
 };
 
-// ===== FONKSYON =====
-function serveStaticFile(res, filePath) {
+function serveFile(res, filePath) {
     const ext = path.extname(filePath).toLowerCase();
-    const contentType = MIME[ext] || 'text/plain';
-    
+    const ct = MIME[ext] || 'text/plain';
     fs.readFile(filePath, (err, data) => {
         if (err) {
             res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
             res.end('<h1>404 - Paj pa jwenn</h1>');
             return;
         }
-        res.writeHead(200, { 'Content-Type': contentType });
+        res.writeHead(200, { 'Content-Type': ct });
         res.end(data);
     });
 }
@@ -142,10 +139,9 @@ function serveStaticFile(res, filePath) {
 function parseBody(req) {
     return new Promise((resolve) => {
         let body = '';
-        req.on('data', chunk => { body += chunk; });
+        req.on('data', c => { body += c; });
         req.on('end', () => {
-            try { resolve(JSON.parse(body)); }
-            catch { resolve({}); }
+            try { resolve(JSON.parse(body)); } catch { resolve({}); }
         });
     });
 }
@@ -155,96 +151,82 @@ function isAdmin(req) {
     return auth.replace('Bearer ', '') === ADMIN_TOKEN;
 }
 
-function jsonResponse(res, statusCode, data) {
-    res.writeHead(statusCode, { 'Content-Type': 'application/json; charset=utf-8' });
+function json(res, code, data) {
+    res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8' });
     res.end(JSON.stringify(data, null, 2));
 }
 
-// ===== SÈVÈ PRENSIPAL =====
+// === SERVEUR HTTP ===
 const server = http.createServer(async (req, res) => {
-    // CORS Headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    
-    if (req.method === 'OPTIONS') {
-        res.writeHead(200);
-        res.end();
-        return;
-    }
-    
+    if (req.method === 'OPTIONS') { res.writeHead(200); res.end(); return; }
+
     const parsedUrl = url.parse(req.url, true);
     const pathname = parsedUrl.pathname;
     const method = req.method;
-    
     console.log('📡 ' + method + ' ' + pathname);
-    
-    // ===== API ROUTES =====
-    
-    // GET /api - Info API
-    if (pathname === '/api' && method === 'GET') {
-        jsonResponse(res, 200, {
+
+    // === API INFO ===
+    if (pathname === '/api') {
+        json(res, 200, {
             name: 'OGSUN API',
-            version: '5.0',
+            version: '8.0',
             status: 'running',
-            products: products.length,
-            orders: orders.length,
-            users: users.length
+            products: DB.products.length,
+            orders: DB.orders.length,
+            users: DB.users.length,
+            promos: DB.promos.length,
+            visitors: DB.visitors.length
         });
         return;
     }
-    
-    // POST /api/admin/login
+
+    // === ADMIN LOGIN ===
     if (pathname === '/api/admin/login' && method === 'POST') {
         const body = await parseBody(req);
         if (body.email === ADMIN_EMAIL && body.password === ADMIN_PASSWORD) {
-            jsonResponse(res, 200, { success: true, token: ADMIN_TOKEN });
-            console.log('🔓 Admin konekte: ' + body.email);
+            json(res, 200, { success: true, token: ADMIN_TOKEN });
         } else {
-            jsonResponse(res, 401, { success: false, error: 'Imèl oswa kòd pa bon!' });
+            json(res, 401, { success: false, error: 'Imèl oswa kòd pa bon!' });
         }
         return;
     }
-    
-    // GET /api/admin/verify
+
+    // === ADMIN VERIFY ===
     if (pathname === '/api/admin/verify' && method === 'GET') {
-        jsonResponse(res, isAdmin(req) ? 200 : 401, isAdmin(req) ? { valid: true } : { valid: false });
+        json(res, isAdmin(req) ? 200 : 401, isAdmin(req) ? { valid: true } : { valid: false });
         return;
     }
-    
-    // ===== PRODUCTS =====
-    
-    // GET /api/products
-    if (pathname === '/api/products' && method === 'GET') {
-        jsonResponse(res, 200, products);
+
+    // === ADMIN STATS ===
+    if (pathname === '/api/admin/stats' && method === 'GET') {
+        if (!isAdmin(req)) { json(res, 401, { error: 'Admin only' }); return; }
+        const completed = DB.orders.filter(o => o.status === 'completed');
+        json(res, 200, {
+            totalProducts: DB.products.length,
+            totalOrders: DB.orders.length,
+            totalRevenue: completed.reduce((s, o) => s + (o.total || 0), 0),
+            pendingOrders: DB.orders.filter(o => o.status === 'pending').length,
+            totalUsers: DB.users.length,
+            totalPromos: DB.promos.filter(p => p.active).length,
+            totalVisitors: DB.visitors.length
+        });
         return;
     }
-    
-    // GET /api/products/:id
+
+    // === PRODUITS ===
+    if (pathname === '/api/products' && method === 'GET') { json(res, 200, DB.products); return; }
+
     const productMatch = pathname.match(/^\/api\/products\/(\d+)$/);
-    if (productMatch && method === 'GET') {
-        const id = parseInt(productMatch[1]);
-        const product = products.find(p => p.id === id);
-        jsonResponse(res, product ? 200 : 404, product || { error: 'Pwodwi pa jwenn' });
-        return;
-    }
-    
-    // POST /api/products - AJOUTE PWODWI
+
     if (pathname === '/api/products' && method === 'POST') {
-        if (!isAdmin(req)) {
-            jsonResponse(res, 401, { error: 'Admin only' });
-            return;
-        }
-        
+        if (!isAdmin(req)) { json(res, 401, { error: 'Admin only' }); return; }
         const body = await parseBody(req);
-        
-        if (!body.name || !body.price) {
-            jsonResponse(res, 400, { error: 'Non ak pri obligatwa!' });
-            return;
-        }
-        
-        const newProduct = {
-            id: productIdCounter++,
+        if (!body.name || !body.price) { json(res, 400, { error: 'Non ak pri obligatwa!' }); return; }
+        const newP = {
+            id: getNextId(DB.products),
             name: body.name,
             category: body.category || 'Atizana',
             price: parseFloat(body.price) || 0,
@@ -253,92 +235,100 @@ const server = http.createServer(async (req, res) => {
             badge: body.badge || '',
             description: body.description || '',
             image: body.image || body.image_url || 'logo.png',
-            image_url: body.image_url || body.image || 'logo.png',
-            source: body.source || 'manual'
+            image_url: body.image_url || body.image || 'logo.png'
         };
-        
-        products.push(newProduct);
-        const saved = saveJSON(PRODUCTS_FILE, products);
-        
-        console.log('✅ Pwodwi AJOUTE: #' + newProduct.id + ' - ' + newProduct.name + ' | Sove: ' + (saved ? 'OK' : 'ECHWE'));
-        
-        jsonResponse(res, 201, newProduct);
+        DB.products.push(newP);
+        saveCollection('products');
+        json(res, 201, newP);
         return;
     }
-    
-    // PUT /api/products/:id - MODIFYE PWODWI
-    if (productMatch && method === 'PUT') {
-        if (!isAdmin(req)) {
-            jsonResponse(res, 401, { error: 'Admin only' });
+
+    if (productMatch) {
+        const id = parseInt(productMatch[1]);
+        if (method === 'GET') {
+            const p = DB.products.find(pr => pr.id === id);
+            json(res, p ? 200 : 404, p || { error: 'Pa jwenn' });
             return;
         }
-        
-        const id = parseInt(productMatch[1]);
+        if (method === 'PUT') {
+            if (!isAdmin(req)) { json(res, 401, { error: 'Admin only' }); return; }
+            const body = await parseBody(req);
+            const idx = DB.products.findIndex(p => p.id === id);
+            if (idx !== -1) {
+                DB.products[idx] = { ...DB.products[idx], ...body, id };
+                saveCollection('products');
+                json(res, 200, DB.products[idx]);
+            } else {
+                json(res, 404, { error: 'Pa jwenn' });
+            }
+            return;
+        }
+        if (method === 'DELETE') {
+            if (!isAdmin(req)) { json(res, 401, { error: 'Admin only' }); return; }
+            DB.products = DB.products.filter(p => p.id !== id);
+            saveCollection('products');
+            json(res, 200, { message: 'Efase!' });
+            return;
+        }
+    }
+
+    // === PROMOS (GET & POST) ===
+    if (pathname === '/api/promos' && method === 'GET') {
+        json(res, 200, DB.promos);
+        return;
+    }
+
+    if (pathname === '/api/promos/verify' && method === 'POST') {
         const body = await parseBody(req);
-        const index = products.findIndex(p => p.id === id);
-        
-        if (index !== -1) {
-            products[index] = { ...products[index], ...body, id };
-            saveJSON(PRODUCTS_FILE, products);
-            console.log('✏️ Pwodwi MODIFYE: #' + id);
-            jsonResponse(res, 200, products[index]);
-        } else {
-            jsonResponse(res, 404, { error: 'Pwodwi pa jwenn' });
-        }
-        return;
-    }
-    
-    // DELETE /api/products/:id - EFASE PWODWI
-    if (productMatch && method === 'DELETE') {
-        if (!isAdmin(req)) {
-            jsonResponse(res, 401, { error: 'Admin only' });
-            return;
-        }
-        
-        const id = parseInt(productMatch[1]);
-        const productName = products.find(p => p.id === id)?.name || 'Unknown';
-        const before = products.length;
-        
-        products = products.filter(p => p.id !== id);
-        
-        if (products.length < before) {
-            const saved = saveJSON(PRODUCTS_FILE, products);
-            console.log('🗑️ Pwodwi EFASE: #' + id + ' - ' + productName + ' | Sove: ' + (saved ? 'OK' : 'ECHWE'));
-            jsonResponse(res, 200, { message: 'Efase!', product: productName });
-        } else {
-            jsonResponse(res, 404, { error: 'Pwodwi pa jwenn' });
-        }
-        return;
-    }
-    
-    // ===== ADMIN STATS =====
-    if (pathname === '/api/admin/stats' && method === 'GET') {
-        if (!isAdmin(req)) {
-            jsonResponse(res, 401, { error: 'Admin only' });
-            return;
-        }
-        
-        const completed = orders.filter(o => o.status === 'completed');
-        const pending = orders.filter(o => o.status === 'pending');
-        
-        jsonResponse(res, 200, {
-            totalProducts: products.length,
-            totalOrders: orders.length,
-            totalRevenue: completed.reduce((s, o) => s + (o.total || 0), 0),
-            pendingOrders: pending.length,
-            totalUsers: users.length
+        const inputCode = (body.code || '').trim().toUpperCase();
+        const promo = DB.promos.find(p => {
+            return (p.code || '').toUpperCase().trim() === inputCode && p.active === true;
         });
+        if (promo) {
+            json(res, 200, promo);
+        } else {
+            json(res, 200, { error: 'Kòd pa valab!', available_codes: DB.promos.filter(p => p.active).map(p => p.code) });
+        }
         return;
     }
-    
-    // ===== ORDERS =====
+
+    if (pathname === '/api/promos' && method === 'POST') {
+        if (!isAdmin(req)) { json(res, 401, { error: 'Admin only' }); return; }
+        const body = await parseBody(req);
+        const newPromo = {
+            id: getNextId(DB.promos),
+            code: (body.code || '').toUpperCase().trim(),
+            affiliate_name: body.affiliate_name || body.affiliate || '',
+            phone: body.phone || '',
+            natcash: body.natcash || '',
+            comm2k: parseInt(body.comm2k) || 500,
+            comm4k: parseInt(body.comm4k) || 1000,
+            comm7k: parseInt(body.comm7k) || 1500,
+            comm9k: parseInt(body.comm9k) || 2000,
+            active: true,
+            orders_count: 0,
+            revenue: 0,
+            commission: 0
+        };
+        DB.promos.push(newPromo);
+        saveCollection('promos');
+        json(res, 201, newPromo);
+        return;
+    }
+
+    // === COMMANDES ===
+    if (pathname === '/api/orders' && method === 'GET') {
+        if (!isAdmin(req)) { json(res, 401, { error: 'Admin only' }); return; }
+        json(res, 200, DB.orders);
+        return;
+    }
+
     if (pathname === '/api/orders' && method === 'POST') {
         const body = await parseBody(req);
         const items = body.items || [];
         const total = items.reduce((s, i) => s + ((i.price || 0) * (i.quantity || 1)), 0);
-        
         const order = {
-            id: orderCounter++,
+            id: getNextId(DB.orders),
             order_number: 'OGS-' + Date.now().toString().slice(-6),
             customer_name: body.customer_name || '',
             customer_phone: body.customer_phone || '',
@@ -349,111 +339,83 @@ const server = http.createServer(async (req, res) => {
             status: 'pending',
             created_at: new Date().toISOString()
         };
-        
-        orders.unshift(order);
-        saveJSON(ORDERS_FILE, orders);
-        console.log('🛒 Kòmand: ' + order.order_number + ' - $' + total);
-        jsonResponse(res, 201, { message: 'Kòmand kreye!', order_number: order.order_number, total: total });
+        DB.orders.unshift(order);
+        saveCollection('orders');
+        json(res, 201, { message: 'Kòmand kreye!', order_number: order.order_number, total: total });
         return;
     }
-    
-    if (pathname === '/api/orders' && method === 'GET') {
-        if (!isAdmin(req)) { jsonResponse(res, 401, { error: 'Admin only' }); return; }
-        jsonResponse(res, 200, orders);
-        return;
-    }
-    
-    // ===== USERS =====
+
+    // === UTILISATEURS ===
     if (pathname === '/api/users/register' && method === 'POST') {
         const body = await parseBody(req);
-        
-        if (!body.name || !body.email || !body.password) {
-            jsonResponse(res, 400, { error: 'Non, imèl, ak modpas obligatwa!' });
-            return;
-        }
-        
-        if (users.find(u => u.email === body.email)) {
-            jsonResponse(res, 400, { error: 'Imèl sa a deja itilize!' });
-            return;
-        }
-        
+        if (!body.name || !body.email || !body.password) { json(res, 400, { error: 'Non, imèl, modpas obligatwa!' }); return; }
+        if (DB.users.find(u => u.email === body.email)) { json(res, 400, { error: 'Imèl deja itilize!' }); return; }
         const user = {
-            id: userIdCounter++,
+            id: getNextId(DB.users),
             name: body.name,
             email: body.email,
             password: body.password,
             phone: body.phone || '',
             created_at: new Date().toISOString()
         };
-        
-        users.push(user);
-        saveJSON(USERS_FILE, users);
-        console.log('👤 Itilizatè: ' + user.name);
-        jsonResponse(res, 201, { success: true, user: { id: user.id, name: user.name, email: user.email } });
+        DB.users.push(user);
+        saveCollection('users');
+        json(res, 201, { success: true, user: { id: user.id, name: user.name, email: user.email, phone: user.phone } });
         return;
     }
-    
+
     if (pathname === '/api/users/login' && method === 'POST') {
         const body = await parseBody(req);
-        const user = users.find(u => u.email === body.email && u.password === body.password);
-        
-        if (user) {
-            jsonResponse(res, 200, { success: true, user: { id: user.id, name: user.name, email: user.email, phone: user.phone } });
-        } else {
-            jsonResponse(res, 401, { success: false, error: 'Imèl oswa modpas pa bon!' });
-        }
+        const user = DB.users.find(u => u.email === body.email && u.password === body.password);
+        json(res, user ? 200 : 401, user ? { success: true, user: { id: user.id, name: user.name, email: user.email, phone: user.phone } } : { success: false, error: 'Imèl oswa modpas pa bon!' });
         return;
     }
-    
+
     if (pathname === '/api/users' && method === 'GET') {
-        if (!isAdmin(req)) { jsonResponse(res, 401, { error: 'Admin only' }); return; }
-        const safeUsers = users.map(u => ({ id: u.id, name: u.name, email: u.email, phone: u.phone, created_at: u.created_at }));
-        jsonResponse(res, 200, safeUsers);
+        if (!isAdmin(req)) { json(res, 401, { error: 'Admin only' }); return; }
+        json(res, 200, DB.users.map(u => ({ id: u.id, name: u.name, email: u.email, phone: u.phone, created_at: u.created_at })));
         return;
     }
-    
-    // ===== CONTACTS =====
+
+    // === VISITEURS ===
+    if (pathname === '/api/visitors' && method === 'POST') {
+        const body = await parseBody(req);
+        DB.visitors.push({ id: getNextId(DB.visitors), page: body.page || 'unknown', device: body.device || 'desktop', created_at: new Date().toISOString() });
+        saveCollection('visitors');
+        json(res, 201, { message: 'Vizit anrejistre!' });
+        return;
+    }
+
+    if (pathname === '/api/visitors' && method === 'GET') {
+        if (!isAdmin(req)) { json(res, 401, { error: 'Admin only' }); return; }
+        const today = new Date().toISOString().split('T')[0];
+        json(res, 200, {
+            total: DB.visitors.length,
+            today: DB.visitors.filter(v => v.created_at && v.created_at.startsWith(today)).length,
+            mobile: DB.visitors.filter(v => v.device === 'mobile').length,
+            desktop: DB.visitors.filter(v => v.device !== 'mobile').length,
+            recent: DB.visitors.slice(-20).reverse()
+        });
+        return;
+    }
+
+    // === CONTACTS ===
     if (pathname === '/api/contacts' && method === 'POST') {
         const body = await parseBody(req);
-        contacts.unshift({ id: Date.now(), ...body, created_at: new Date().toISOString() });
-        saveJSON(CONTACTS_FILE, contacts);
-        console.log('📧 Kontak: ' + (body.name || 'Anonim'));
-        jsonResponse(res, 201, { message: 'Mesaj voye!' });
+        DB.contacts.unshift({ id: getNextId(DB.contacts), ...body, created_at: new Date().toISOString() });
+        saveCollection('contacts');
+        json(res, 201, { message: 'Mesaj voye!' });
         return;
     }
-    
-    if (pathname === '/api/contacts' && method === 'GET') {
-        if (!isAdmin(req)) { jsonResponse(res, 401, { error: 'Admin only' }); return; }
-        jsonResponse(res, 200, contacts);
-        return;
-    }
-    
-    // ===== SERVE FICHYE STATIK =====
+
+    // === FICHIERS STATIQUES ===
     let filePath = pathname === '/' ? 'index.html' : pathname.replace(/^\//, '');
     filePath = path.join(__dirname, '..', filePath);
-    
-    // Sekirite: anpeche aksè nan dosye backend
-    if (filePath.includes('backend/data') || filePath.includes('backend/server.js')) {
-        res.writeHead(403);
-        res.end('Aksè refize');
-        return;
-    }
-    
-    serveStaticFile(res, filePath);
+    serveFile(res, filePath);
 });
 
-// ===== KOUMANSE SÈVÈ =====
 server.listen(PORT, HOST, () => {
-    console.log('');
-    console.log('╔══════════════════════════════════════════╗');
-    console.log('║   🚀 OGSUN SERVER v5.0 - 100% SOLID      ║');
-    console.log('║   🌐 http://localhost:' + PORT + '                   ║');
-    console.log('║   💾 Data: ' + DATA_DIR + '                 ║');
-    console.log('║   📦 Products: ' + products.length + '                         ║');
-    console.log('║   👑 Admin: ' + ADMIN_EMAIL + '        ║');
-    console.log('║   ✅ SAVE: 100% GARANTI                  ║');
-    console.log('╚══════════════════════════════════════════╝');
-    console.log('');
+    console.log('🚀 OGSUN SERVER v8.0 PROMOS OK ➜ http://localhost:' + PORT);
 });
 
 
